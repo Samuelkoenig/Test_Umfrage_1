@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Umfrage</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Fonts einbinden -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <!-- CSS-Datei einbinden -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Fortschrittsleiste -->
+    <div id="progress-bar">
+        <div id="progress"></div>
+    </div>
+
+    <!-- Container für die Seiten -->
+    <div id="survey-container">
+        <!-- Willkommens-Seite -->
+        <div class="page" id="page1">
+            <h1>Willkommen zur Umfrage</h1>
+            <p>Vielen Dank für Ihr Interesse an unserer Studie. Bitte lesen Sie die folgenden Informationen sorgfältig durch.</p>
+            <p>[Hier können Sie eine allgemeine Einleitung zur Studie und der Datenverarbeitung einfügen.]</p>
+            <label class="checkbox-container">
+                Ich stimme der Teilnahme an dieser Studie zu.
+                <input type="checkbox" id="consent">
+                <span class="checkmark"></span>
+            </label>
+            <div class="navigation">
+                <button id="next1" class="next-btn" disabled>Weiter</button>
+            </div>
+        </div>
+
+        <!-- Seite mit demographischen Fragen -->
+        <div class="page" id="page2">
+            <h1>Demographische Daten</h1>
+            <p>Bitte beantworten Sie die folgenden Fragen.</p>
+            <!-- Multiple Choice Frage (eine Antwort) -->
+            <div class="question">
+                <p>1. Was ist Ihr Geschlecht?</p>
+                <label class="radio-container">Männlich
+                    <input type="radio" name="gender" value="männlich">
+                    <span class="radio-checkmark"></span>
+                </label>
+                <label class="radio-container">Weiblich
+                    <input type="radio" name="gender" value="weiblich">
+                    <span class="radio-checkmark"></span>
+                </label>
+                <label class="radio-container">Divers
+                    <input type="radio" name="gender" value="divers">
+                    <span class="radio-checkmark"></span>
+                </label>
+            </div>
+            <!-- 5-Punkte Likert-Skala -->
+            <div class="question">
+                <p>2. Ich habe bereits Erfahrung mit Chatbots.</p>
+                <div class="likert">
+                    <label class="radio-container">Stimme überhaupt nicht zu
+                        <input type="radio" name="experience" value="1">
+                        <span class="radio-checkmark"></span>
+                    </label>
+                    <label class="radio-container">Stimme nicht zu
+                        <input type="radio" name="experience" value="2">
+                        <span class="radio-checkmark"></span>
+                    </label>
+                    <label class="radio-container">Weder noch
+                        <input type="radio" name="experience" value="3">
+                        <span class="radio-checkmark"></span>
+                    </label>
+                    <label class="radio-container">Stimme zu
+                        <input type="radio" name="experience" value="4">
+                        <span class="radio-checkmark"></span>
+                    </label>
+                    <label class="radio-container">Stimme vollkommen zu
+                        <input type="radio" name="experience" value="5">
+                        <span class="radio-checkmark"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="navigation">
+                <button id="back2" class="back-btn">Zurück</button>
+                <button id="next2" class="next-btn">Weiter</button>
+            </div>
+        </div>
+
+        <!-- Informations-Seite -->
+        <div class="page" id="page3">
+            <h1>Informationen zum Szenario</h1>
+            <p>[Hier können Sie relevante Informationen über ein fiktives Szenario einfügen, das die Teilnehmer lesen sollen.]</p>
+            <div class="navigation">
+                <button id="back3" class="back-btn">Zurück</button>
+                <button id="next3" class="next-btn">Weiter</button>
+            </div>
+        </div>
+
+        <!-- Seite mit dem Chatbot -->
+        <div class="page" id="page4">
+            <h1>Chatbot Interaktion</h1>
+            <p>Bitte interagieren Sie mit unserem Chatbot.</p>
+            <!-- Chatbot iframe -->
+            <div id="chatbot-container">
+                <!-- Der Participant-ID wird im src-Attribut übergeben -->
+                <iframe id="chatbot-iframe" 
+                src="https://europe.webchat.botframework.com/embed/Test_Chatbot_1?s=si-b8q3yFxU.0DqzJZPYL9lkSHvdTIs4jr761v6C7fkSrtBB95hL6EE" 
+                style="height: 502px; width: 100%;"></iframe>
+            </div>
+            <div class="navigation">
+                <button id="back4" class="back-btn">Zurück</button>
+                <button id="next4" class="next-btn">Weiter</button>
+            </div>
+        </div>
+
+        <!-- Seite mit Zufriedenheitsfragen -->
+        <div class="page" id="page5">
+            <h1>Ihre Erfahrung</h1>
+            <p>Bitte bewerten Sie Ihre Erfahrung mit dem Chatbot.</p>
+            <!-- 7-Punkte Likert-Skala -->
+            <div class="question">
+                <p>1. Wie zufrieden sind Sie mit dem Chatbot?</p>
+                <div class="likert likert-7">
+                    <label class="radio-container">1
+                        <input type="radio" name="satisfaction" value="1">
+                        <span class="radio-checkmark"></span>
+                    </label>
+                    <label class="radio-container">2
+                        <input type="radio" name="satisfaction" value="2">
+                        <span class="radio-checkmark"></span>
+                    </label>
+                    <label class="radio-container">3
+                        <input type="radio" name="satisfaction" value="3">
+                        <span class="radio-checkmark"></span>
+                    </label>
+                    <label class="radio-container">4
+                        <input type="radio" name="satisfaction" value="4">
+                        <span class="radio-checkmark"></span>
+                    </label>
+                    <label class="radio-container">5
+                        <input type="radio" name="satisfaction" value="5">
+                        <span class="radio-checkmark"></span>
+                    </label>
+                    <label class="radio-container">6
+                        <input type="radio" name="satisfaction" value="6">
+                        <span class="radio-checkmark"></span>
+                    </label>
+                    <label class="radio-container">7
+                        <input type="radio" name="satisfaction" value="7">
+                        <span class="radio-checkmark"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="navigation">
+                <button id="back5" class="back-btn">Zurück</button>
+                <button id="submit" class="submit-btn">Absenden</button>
+            </div>
+        </div>
+
+        <!-- Dankes-Seite -->
+        <div class="page" id="thankyou">
+            <h1>Vielen Dank für Ihre Teilnahme!</h1>
+            <p>Ihre Antworten wurden erfolgreich übermittelt.</p>
+        </div>
+    </div>
+
+    <!-- JavaScript-Datei einbinden -->
+    <script src="script.js"></script>
+</body>
+</html>
