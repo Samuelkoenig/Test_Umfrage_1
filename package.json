@@ -5,7 +5,7 @@
     "express": "^4.21.1",
     "pg": "^8.13.1"
   },
-  "name": "version-2",
+  "name": "Test_Umfrage_1",
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
