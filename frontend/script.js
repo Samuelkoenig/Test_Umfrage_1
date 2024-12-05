@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function generateParticipantID() {
-        return 'ID-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+        return 'ID-' + Math.random().toString(36).substr(2, 25).toUpperCase();
     }
 
     function collectData() {
