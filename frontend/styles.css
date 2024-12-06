@@ -17,9 +17,10 @@ p {
     line-height: 1.6;
 }
 
+/* Container */
 #survey-container {
     max-width: 800px;
-    margin: 40px auto;
+    margin: 20px auto;
     padding: 0 20px;
     background-color: #fff;
     border-radius: 10px;
@@ -53,60 +54,105 @@ p {
 
 /* Fragen */
 .question {
-    margin-bottom: 30px;
+    margin-bottom: 30px; 
 }
 
 .question p {
-    margin-bottom: 15px;
-    font-weight: 500;
+    font-weight: bold; 
+    margin-bottom: 15px; 
 }
 
+/* Checkbox und Radio Container */
+.radio-container, .checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    white-space: normal; 
+}
+
+.question > .radio-container:not(:last-child),
+.question > .checkbox-container:not(:last-child) {
+    margin-bottom: 8px; 
+}
+
+/* Likert-Skalen */
 .likert {
     display: flex;
     flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 10px;
 }
 
 .likert label {
-    flex: 1;
-    margin-right: 10px;
-    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 220px;
+    line-height: 1.2;
+    word-break: break-word; 
+}
+
+.likert .radio-container {
+    align-items: center;
+    line-height: 1.2;
+}
+
+.likert-7 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
 }
 
 .likert-7 label {
     flex: 0 0 calc(14.28% - 10px);
+    margin-right: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; 
+    word-break: break-word; 
+    max-width: 60px; 
 }
 
-/* Radio Buttons */
-.radio-container {
-    display: block;
-    position: relative;
-    padding-left: 30px;
-    margin-bottom: 12px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.radio-container input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-}
-
-.radio-checkmark {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 22px;
+/* Radio und Checkbox */
+.radio-checkmark, .checkmark {
     width: 22px;
+    height: 22px;
     background-color: #eee;
     border-radius: 50%;
+    position: relative;
+    flex-shrink: 0;
 }
 
-.radio-container:hover input ~ .radio-checkmark {
+.checkmark {
+    border-radius: 4px; 
+}
+
+.checkbox-container .checkmark {
     background-color: #ccc;
 }
 
-.radio-container input:checked ~ .radio-checkmark {
+.checkbox-container:hover .checkmark {
+    background-color: #bbb; 
+}
+
+.checkbox-container input[type="checkbox"]:checked ~ .checkmark {
+    background-color: #3498db; 
+}
+
+.radio-container input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.radio-container:hover .radio-checkmark {
+    background-color: #ccc;
+}
+
+.radio-container input[type="radio"]:checked ~ .radio-checkmark {
     background-color: #3498db;
 }
 
@@ -116,11 +162,8 @@ p {
     display: none;
 }
 
-.radio-container input:checked ~ .radio-checkmark:after {
+.radio-container input[type="radio"]:checked ~ .radio-checkmark:after {
     display: block;
-}
-
-.radio-container .radio-checkmark:after {
     top: 6px;
     left: 6px;
     width: 10px;
@@ -129,38 +172,10 @@ p {
     background: white;
 }
 
-/* Checkbox */
-.checkbox-container {
-    display: block;
-    position: relative;
-    padding-left: 30px;
-    margin-top: 20px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.checkbox-container input {
+/* Checkbox Haken */
+.checkbox-container input[type="checkbox"] {
     position: absolute;
     opacity: 0;
-    cursor: pointer;
-}
-
-.checkbox-container .checkmark {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 22px;
-    width: 22px;
-    background-color: #eee;
-    border-radius: 4px;
-}
-
-.checkbox-container:hover input ~ .checkmark {
-    background-color: #ccc;
-}
-
-.checkbox-container input:checked ~ .checkmark {
-    background-color: #3498db;
 }
 
 .checkbox-container .checkmark:after {
@@ -169,11 +184,8 @@ p {
     display: none;
 }
 
-.checkbox-container input:checked ~ .checkmark:after {
+.checkbox-container input[type="checkbox"]:checked ~ .checkmark:after {
     display: block;
-}
-
-.checkbox-container .checkmark:after {
     left: 7px;
     top: 3px;
     width: 6px;
@@ -189,6 +201,8 @@ p {
     justify-content: space-between;
     align-items: center;
     margin-top: 30px;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .next-btn,
@@ -202,6 +216,7 @@ p {
     border-radius: 30px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    flex-shrink: 0;
 }
 
 .next-btn:disabled,
@@ -224,19 +239,54 @@ p {
     background-color: #2980b9;
 }
 
-/* Responsive Design */
+.special-submit {
+    background-color: #2ecc71;
+}
+
+.special-submit:hover {
+    background-color: #27ae60;
+}
+
+/* Responsive */
 @media (max-width: 600px) {
-    .likert label,
-    .likert-7 label {
-        flex: 1 1 100%;
+    #survey-container {
+        max-width: 100%;
+        margin: 0;
+        padding: 10px;
+        border-radius: 0;
+        box-shadow: none;
     }
 
-    .navigation {
-        flex-direction: column-reverse;
+    .page {
+        padding: 20px 10px;
     }
 
-    .navigation button {
+    .likert, .likert-7 {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .likert label, .likert .radio-container {
+        max-width: none;
         width: 100%;
-        margin-bottom: 10px;
+    }
+
+    .likert label {
+        gap: 10px;
+        line-height: 1.2;
+    }
+
+    .likert label, .likert-7 label {
+        white-space: normal; 
+    }
+
+    .likert-7 label {
+        justify-content: flex-start; 
+        margin-right: 0; 
+    }
+
+    .checkbox-container {
+        justify-content: flex-start;
     }
 }
+

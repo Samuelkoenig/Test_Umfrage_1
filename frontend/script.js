@@ -1,71 +1,72 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     let currentPage = 1;
     const totalPages = 5;
-    const participantID = generateParticipantID();
     const pages = document.querySelectorAll('.page');
     const progressBar = document.getElementById('progress');
     const consentCheckbox = document.getElementById('consent');
     const next1 = document.getElementById('next1');
     const chatbotIframe = document.getElementById('chatbot-iframe');
 
-    // Anzeigen der ersten Seite
-    showPage(currentPage);
+    let participantID = sessionStorage.getItem('participantID');
 
-    // Fortschrittsleiste aktualisieren
+    if (!participantID) {
+        participantID = await fetchParticipantIDFromServer();
+        sessionStorage.setItem('participantID', participantID);
+    }
+
+    restoreState();
+    showPage(currentPage);
     updateProgressBar();
 
-    // Event Listener für den Consent-Checkbox
+    const secret = await fetchSecret();
+    if (secret) {
+        chatbotIframe.src = `https://europe.webchat.botframework.com/embed/Test_Chatbot_1?s=${secret}&userID=${participantID}`;
+    }
+
     consentCheckbox.addEventListener('change', function() {
         next1.disabled = !this.checked;
+        saveState();
     });
 
-    // Event Listener für die Navigationsbuttons
     document.querySelectorAll('.next-btn').forEach(function(button) {
         button.addEventListener('click', function() {
             if (currentPage < totalPages) {
                 currentPage++;
                 showPage(currentPage);
                 updateProgressBar();
+                saveState();
             }
         });
     });
 
     document.querySelectorAll('.back-btn').forEach(function(button) {
         button.addEventListener('click', function() {
-            if (currentPage > 1) {
+            if (currentPage > 1 && currentPage <= totalPages) {
                 currentPage--;
                 showPage(currentPage);
                 updateProgressBar();
+                saveState();
             }
         });
     });
 
-    // Absenden-Button
-    document.getElementById('submit').addEventListener('click', function() {
-        // Daten sammeln
+    document.getElementById('submit').addEventListener('click', async function() {
         const data = collectData();
-        // Daten an den Server senden
-        submitData(data);
-        // Danke-Seite anzeigen
+        await submitData(data);
         currentPage++;
         showPage('thankyou');
         updateProgressBar();
+        sessionStorage.clear();
     });
 
-    // Chatbot iframe src setzen mit Participant-ID
-    chatbotIframe.src = `https://europe.webchat.botframework.com/embed/Test_Chatbot_1?s=si-b8q3yFxU.0DqzJZPYL9lkSHvdTIs4jr761v6C7fkSrtBB95hL6EE&userID=${participantID}`;
-
-    // Funktionen
     function showPage(pageNumber) {
-        pages.forEach(function(page) {
-            page.classList.remove('active');
-        });
+        pages.forEach(page => page.classList.remove('active'));
         if (pageNumber === 'thankyou') {
             document.getElementById('thankyou').classList.add('active');
         } else {
             document.getElementById(`page${pageNumber}`).classList.add('active');
         }
-        window.scrollTo(0, 0); // Scrollt nach oben bei Seitenwechsel
+        window.scrollTo(0, 0);
     }
 
     function updateProgressBar() {
@@ -73,39 +74,85 @@ document.addEventListener('DOMContentLoaded', function() {
         progressBar.style.width = `${progress}%`;
     }
 
-    function generateParticipantID() {
-        return 'ID-' + Math.random().toString(36).substr(2, 25).toUpperCase();
-    }
-
     function collectData() {
-        const data = {
+        return {
             participantID: participantID,
             gender: document.querySelector('input[name="gender"]:checked')?.value || '',
             experience: document.querySelector('input[name="experience"]:checked')?.value || '',
-            satisfaction: document.querySelector('input[name="satisfaction"]:checked')?.value || '',
+            satisfaction: document.querySelector('input[name="satisfaction"]:checked')?.value || ''
         };
-        return data;
     }
 
-    function submitData(data) {
-        // AJAX Request an den Server senden
-        fetch('/submit', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-        .then(function(response) {
-            if (response.ok) {
-                console.log('Daten erfolgreich gesendet');
-            } else {
+    async function submitData(data) {
+        try {
+            const response = await fetch('/submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            if (!response.ok) {
                 console.error('Fehler beim Senden der Daten');
             }
-        })
-        .catch(function(error) {
+        } catch (error) {
             console.error('Netzwerkfehler:', error);
             alert('Netzwerkfehler. Bitte überprüfe deine Verbindung und versuche es erneut.');
-        });
+        }
     }
+
+    async function fetchParticipantIDFromServer() {
+        const response = await fetch('/generateParticipantId');
+        const json = await response.json();
+        return json.participantID;
+    }
+
+    async function fetchSecret() {
+        const response = await fetch('/config');
+        const json = await response.json();
+        return json.secret;
+    }
+
+    function saveState() {
+        sessionStorage.setItem('currentPage', currentPage);
+        const genderVal = document.querySelector('input[name="gender"]:checked')?.value || '';
+        const experienceVal = document.querySelector('input[name="experience"]:checked')?.value || '';
+        const satisfactionVal = document.querySelector('input[name="satisfaction"]:checked')?.value || '';
+        const consentVal = consentCheckbox.checked;
+
+        const state = {
+            consent: consentVal,
+            gender: genderVal,
+            experience: experienceVal,
+            satisfaction: satisfactionVal
+        };
+        sessionStorage.setItem('formData', JSON.stringify(state));
+    }
+
+    function restoreState() {
+        const savedPage = sessionStorage.getItem('currentPage');
+        if (savedPage) {
+            currentPage = parseInt(savedPage, 10);
+        }
+
+        const savedData = sessionStorage.getItem('formData');
+        if (savedData) {
+            const state = JSON.parse(savedData);
+            if (state.consent) {
+                consentCheckbox.checked = true;
+                next1.disabled = false;
+            }
+            if (state.gender) {
+                const genderRadio = document.querySelector(`input[name="gender"][value="${state.gender}"]`);
+                if (genderRadio) genderRadio.checked = true;
+            }
+            if (state.experience) {
+                const expRadio = document.querySelector(`input[name="experience"][value="${state.experience}"]`);
+                if (expRadio) expRadio.checked = true;
+            }
+            if (state.satisfaction) {
+                const satRadio = document.querySelector(`input[name="satisfaction"][value="${state.satisfaction}"]`);
+                if (satRadio) satRadio.checked = true;
+            }
+        }
+    }
+
 });
