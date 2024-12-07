@@ -86,7 +86,7 @@ app.post('/submit', async (req, res) => {
 });
 
 app.get('/config', (req, res) => {
-    const secret = process.env.CHATBOT_SECRET || '';
+    const secret = process.env.DIRECT_LINE_SECRET || '';
     res.json({ secret: secret });
 });
 
