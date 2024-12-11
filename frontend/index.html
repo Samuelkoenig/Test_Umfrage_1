@@ -5,6 +5,7 @@
     <title>Umfrage</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="chatbot.css">
 </head>
 <body>
     <div id="progress-bar">
@@ -99,8 +100,19 @@
         <div class="page" id="page4">
             <h1>Chatbot Interaktion</h1>
             <p>Bitte interagieren Sie mit unserem Chatbot.</p>
-            <div id="chatbot-container">
-                <iframe id="chatbot-iframe" style="height: 502px; width: 100%;"></iframe>
+            <div id="custom-chat-container">
+                <div id="chat-messages"></div>
+                <div id="chat-input-area">
+                    <div id="typing-indicator" class="hidden">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                    <div id="input-wrapper">
+                        <textarea id="chat-input" placeholder="Nachricht" rows="1"></textarea>
+                        <button id="send-button">&#9658;</button>
+                    </div>
+                </div>
             </div>
             <div class="navigation">
                 <button id="back4" class="back-btn">Zurück</button>
@@ -164,6 +176,7 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
+    <script src="chatbot.js" defer></script>
 </body>
 </html>
