@@ -66,17 +66,17 @@ app.get('/generateParticipantId', async (req, res) => {
 });
 
 app.post('/submit', async (req, res) => {
-    const { participantID, gender, experience, satisfaction, conversationHistory } = req.body;
+    const { participantID, gender, experience, satisfaction } = req.body;
     if (!participantID || !gender || !experience || !satisfaction) {
         return res.status(400).json({ error: 'Alle Felder sind erforderlich.' });
     }
 
     try {
         const query = `
-            INSERT INTO survey_responses (participant_id, gender, experience, satisfaction, conversation_history)
-            VALUES ($1, $2, $3, $4, $5)
+            INSERT INTO survey_responses (participant_id, gender, experience, satisfaction)
+            VALUES ($1, $2, $3, $4)
         `;
-        const values = [participantID, gender, experience, satisfaction, conversationHistory];
+        const values = [participantID, gender, experience, satisfaction];
         await pool.query(query, values);
         res.sendStatus(200);
     } catch (error) {

@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     const progressBar = document.getElementById('progress');
     const consentCheckbox = document.getElementById('consent');
     const next1 = document.getElementById('next1');
+    const chatbotIframe = document.getElementById('chatbot-iframe');
 
     let participantID = sessionStorage.getItem('participantID');
 
@@ -17,7 +18,10 @@ document.addEventListener('DOMContentLoaded', async function() {
     showPage(currentPage);
     updateProgressBar();
 
-    const secret = await fetchSecret();                //kann wahrscheinlich weg
+    const secret = await fetchSecret();
+    if (secret) {
+        chatbotIframe.src = `https://webchat.botframework.com/embed/Test_Chatbot_1?s=${secret}&userID=${participantID}`;
+    }
 
     consentCheckbox.addEventListener('change', function() {
         next1.disabled = !this.checked;
@@ -48,9 +52,6 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     document.getElementById('submit').addEventListener('click', async function() {
         const data = collectData();
-        const participantID = sessionStorage.getItem('participantID');
-        const chatHistory = sessionStorage.getItem('chatHistory-' + participantID);
-        data.conversationHistory = chatHistory ? JSON.parse(chatHistory) : [];
         await submitData(data);
         currentPage++;
         showPage('thankyou');
@@ -104,10 +105,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         return json.participantID;
     }
 
-    async function fetchSecret() {                 // Diese Funktion kann jetzt eigentlich weg
-        const response = await fetch('/config');   // Diese Funktion kann jetzt eigentlich weg
-        const json = await response.json();        // Diese Funktion kann jetzt eigentlich weg
-        return json.secret;                        // Diese Funktion kann jetzt eigentlich weg
+    async function fetchSecret() {
+        const response = await fetch('/config');
+        const json = await response.json();
+        return json.secret;
     }
 
     function saveState() {
