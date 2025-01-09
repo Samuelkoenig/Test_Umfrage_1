@@ -25,7 +25,19 @@ p {
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /*min-height: calc(100vh - 40px);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;*/
 }
+
+#survey-container.chatbot-visible {
+    height: calc(100vh - 48px);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
 
 .page {
     display: none;
@@ -246,6 +258,43 @@ p {
 .special-submit:hover {
     background-color: #27ae60;
 }
+
+/* Container für den Open-Chatbot-Button unterhalb des Textes und oberhalb der Navigation */
+#open-chatbot-button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin: 20px 0;
+}
+
+/* Roter runder Button zum Öffnen des Chatbots */
+.open-chatbot-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #e74c3c;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 0;
+    transition: background-color 0.3s, transform 0.3s;
+    z-index: 1000;
+  }
+
+  .open-chatbot-btn:hover {
+    background: #c0392b;
+    transform: scale(1.05);
+  }
+
+  .open-chatbot-btn img {
+    width: 30px; 
+    height: 30px;
+    object-fit: contain; 
+    filter: invert(100%); 
+  }
 
 /* Responsive */
 @media (max-width: 600px) {
