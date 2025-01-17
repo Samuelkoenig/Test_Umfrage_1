@@ -13,6 +13,7 @@ body {
 body.chatbot-visible {
     overflow: hidden;
     height: 100%;
+    overscroll-behavior: none;
 }
 
 h1 {
@@ -351,7 +352,6 @@ p {
         height: calc(var(--vh, 1vh) * 100 - 8px);
         margin-top: 8px;
         margin-bottom: 0;
-        overflow: hidden;
     }
 
     .page {

@@ -21,6 +21,8 @@
 #chatbot-interface.chatbot-visible {
   display: flex;
   flex-direction: column;
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: auto;
 }
 
 /* Header mit Schließen-Button */
@@ -72,6 +74,8 @@
   padding: 10px;
   box-sizing: border-box;
   position: relative;
+  overscroll-behavior: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Scroll-Leisten dezent */
@@ -274,7 +278,6 @@
       bottom: 0;
       margin: 0;
       border-radius: 0;
-      overflow: hidden;
       z-index: 10; /* ganz oben */
   }
 
