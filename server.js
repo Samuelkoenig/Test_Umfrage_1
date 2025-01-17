@@ -77,19 +77,19 @@ app.get('/generateSurveyData', async (req, res) => {
 });
 
 app.post('/submit', async (req, res) => {
-    const { participantId, treatmentGroup, gender, experience, satisfaction, conversation_log } = req.body;
-    if (!participantId || !treatmentGroup || !gender || !experience || !satisfaction || !conversation_log) {
-        return res.status(400).json({ error: 'Alle Felder sind erforderlich.' });
+    const { participantId, treatmentGroup, conversationLog, ...responseData } = req.body;
+    if (!participantId || !treatmentGroup || !conversationLog) {
+      return res.status(400).json({ error: 'Alle Felder sind erforderlich.' });
     }
 
     try {
-        const query = `
-            INSERT INTO survey_responses (participant_id, treatmentGroup, gender, experience, satisfaction, conversation_log)
-            VALUES ($1, $2, $3, $4, $5, $6)
-        `;
-        const values = [participantId, treatmentGroup, gender, experience, satisfaction, conversation_log];
-        await pool.query(query, values);
-        res.sendStatus(200);
+      const query = `
+      INSERT INTO survey_responses (participant_id, treatment_group, response_data, conversation_log)
+      VALUES ($1, $2, $3, $4)
+    `;
+    const values = [participantId, treatmentGroup, JSON.stringify(responseData), conversationLog];
+    await pool.query(query, values);
+    res.sendStatus(200);
     } catch (error) {
         console.error('Fehler beim Einfügen der Daten:', error);
         res.status(500).json({ error: 'Interner Serverfehler.' });

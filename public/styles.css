@@ -32,11 +32,28 @@ p {
 }
 
 #survey-container.chatbot-visible {
-    height: calc(100vh - 48px);
+    max-width: 600px;
+    width: 100%; 
+    margin: 0 auto;
+    padding: 0; 
+    border: 1px solid #ccc;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    height: 750px;
+    max-height: calc(100vh - 8px);
+
+    margin-top: clamp(
+      8px,
+      calc(( (100vh - 8px) - 750px ) / 2),
+      9999px
+    );
+    margin-bottom: clamp(
+        0px,
+        calc(( (100vh - 8px) - 750px ) / 2),
+        9999px
+    );
   }
 
 .page {
@@ -48,13 +65,24 @@ p {
     display: block;
 }
 
+.page.chatbot-visible {
+    padding: 0;
+}
+
 /* Fortschrittsleiste */
 #progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     width: 100%;
+    margin: 0;
+    padding: 0;
     background-color: #e0e0e0;
     height: 8px;
     border-radius: 4px;
     overflow: hidden;
+    z-index: 100;
 }
 
 #progress {
@@ -261,9 +289,13 @@ p {
 
 /* Container für den Open-Chatbot-Button unterhalb des Textes und oberhalb der Navigation */
 #open-chatbot-button-container {
+    position: -webkit-sticky; 
+    position: sticky;
+    bottom: 20px;
     display: flex;
     justify-content: flex-end;
     margin: 20px 0;
+    z-index: 200;
 }
 
 /* Roter runder Button zum Öffnen des Chatbots */
@@ -304,6 +336,12 @@ p {
         padding: 10px;
         border-radius: 0;
         box-shadow: none;
+    }
+
+    #survey-container.chatbot-visible {
+        height: calc(100vh - 8px);
+        margin-top: 8px;
+        margin-bottom: 0;
     }
 
     .page {
