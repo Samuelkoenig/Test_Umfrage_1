@@ -118,6 +118,23 @@ function attachChatbotEventListeners() {
 
   adjustTextareaHeight(textarea, maxRows);
   updateVh();
+
+
+  // Event-Listener, der alle Touchmove-Events auf dem #chatbot-interface abfängt
+  const chatbotInterface = document.getElementById('chatbot-interface');
+  if (chatbotInterface) {
+    chatbotInterface.addEventListener('touchmove', function(e) {
+      // Falls das Target bzw. der Event-Pfad innerhalb des .chatbot-messages-container liegt, 
+      // erlauben wir das Scrollen (kein preventDefault).
+      // Ansonsten blockieren wir das Bouncing.
+      const isInMessagesContainer = e.target.closest('.chatbot-messages-container');
+      if (!isInMessagesContainer) {
+        e.preventDefault(); // Verhindert jegliches Scrollen/Bouncen
+      }
+      // Wenn du stattdessen nur vertikal scrollen möchtest, 
+      // kannst du noch "Gesten" in x-Richtung blockieren etc.
+    }, { passive: false });
+  }
 }
 
 /**************************************************************************
