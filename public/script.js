@@ -254,6 +254,7 @@ function cancelScrollDelays() {
  */
 function applyChatbotViewState() {
     const openChatbot = sessionStorage.getItem('openChatbot') === '1';
+    const documentBody = document.body;
     const scenarioDiv = document.getElementById('chatbot-scenario');
     const chatbotInterface = document.getElementById('chatbot-interface');
     const navigation = document.getElementById('chatbot-navigation');
@@ -264,6 +265,7 @@ function applyChatbotViewState() {
     if (!scenarioDiv || !chatbotInterface || !navigation || !openBtnContainer || !surveyContainer) return; 
 
     if (openChatbot && currentPage === chatbotPage) {
+        documentBody.classList.add('chatbot-visible')
         scenarioDiv.style.display = 'none';
         chatbotInterface.classList.remove('chatbot-hidden');
         chatbotInterface.classList.add('chatbot-visible');
@@ -273,6 +275,7 @@ function applyChatbotViewState() {
         pageContainers[chatbotPage - 1].classList.add('chatbot-visible');
         document.dispatchEvent(new Event('chatbotInterfaceOpened'));
     } else {
+        documentBody.classList.remove('chatbot-visible')
         scenarioDiv.style.display = 'block';
         chatbotInterface.classList.remove('chatbot-visible');
         chatbotInterface.classList.add('chatbot-hidden');

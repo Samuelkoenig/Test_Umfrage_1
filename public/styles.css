@@ -1,10 +1,19 @@
 /* Allgemeine Stile */
-body {
+html, body {
     margin: 0;
+    padding: 0;
+  }
+
+body {
     font-family: 'Roboto', sans-serif;
     background-color: #f5f7fa;
     color: #333;
 }
+
+body.chatbot-visible {
+    overflow: hidden;
+    height: 100%;
+  }
 
 h1 {
     font-size: 28px;
@@ -42,16 +51,16 @@ p {
     flex-direction: column;
     overflow: hidden;
     height: 750px;
-    max-height: calc(100vh - 8px);
+    max-height: calc(var(--vh, 1vh) * 100 - 8px);
 
     margin-top: clamp(
       8px,
-      calc(( (100vh - 8px) - 750px ) / 2),
+      calc(( (var(--vh, 1vh) * 100 - 8px) - 750px ) / 2),
       9999px
     );
     margin-bottom: clamp(
         0px,
-        calc(( (100vh - 8px) - 750px ) / 2),
+        calc(( (var(--vh, 1vh) * 100 - 8px) - 750px ) / 2),
         9999px
     );
   }
@@ -339,7 +348,7 @@ p {
     }
 
     #survey-container.chatbot-visible {
-        height: calc(100vh - 8px);
+        height: calc(var(--vh, 1vh) * 100 - 8px);
         margin-top: 8px;
         margin-bottom: 0;
     }
