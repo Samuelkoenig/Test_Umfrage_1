@@ -130,6 +130,19 @@ function attachMobileChatbotEventListeners() {
 
   attachNoBounceListeners();
 
+  const dummyInput = document.getElementById('dummyInput');
+  const realTextarea = document.getElementById('userInput');
+
+  realTextarea.addEventListener('mousedown', (e) => {
+    e.preventDefault(); // Verhindert den direkten Fokus
+    // 1) Fokus auf Dummy
+    dummyInput.focus();
+    // 2) Direkt danach Fokus aufs echte Textarea
+    setTimeout(() => {
+      realTextarea.focus();
+    }, 0);
+  });
+
   updateVh();
 }
 
