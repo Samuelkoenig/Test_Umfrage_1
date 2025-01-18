@@ -127,7 +127,7 @@ function attachMobileChatbotEventListeners() {
   textarea.addEventListener('focus', () => {
     setTimeout(() => {
       window.scrollTo(0, 0);
-    }, 200);
+    }, 50);
   });
 
   attachNoBounceListeners();
