@@ -22,7 +22,7 @@
   display: flex;
   flex-direction: column;
   overscroll-behavior: none;
-  -webkit-overflow-scrolling: auto;
+  /*-webkit-overflow-scrolling: auto;*/
 }
 
 /* Header mit Schließen-Button */
@@ -74,8 +74,8 @@
   padding: 10px;
   box-sizing: border-box;
   position: relative;
-  overscroll-behavior: auto;
-  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: none;
+  /*-webkit-overflow-scrolling: touch;*/
 }
 
 /* Scroll-Leisten dezent */
