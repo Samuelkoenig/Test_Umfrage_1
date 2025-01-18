@@ -33,6 +33,8 @@ let watermark = null;
 let typingIndicatorTimeout = null;
 let continueBtnEnabled = sessionStorage.getItem('continueBtnEnabled') === 'true';
 
+let startY = 0;
+
 /**
  * Event Listener for initializing the chatbot interface.
  * Executes the initializeChatbotUi() function as soon as the "surveyDataInitialized" event 
@@ -111,12 +113,6 @@ function attachChatbotEventListeners() {
     adjustTextareaHeight(textarea, maxRows);
   });
 
-  window.addEventListener('resize', updateVh);
-  window.addEventListener('orientationchange', updateVh);
-  if (window.visualViewport) {
-    window.visualViewport.addEventListener('resize', updateVh);
-  }
-
   adjustTextareaHeight(textarea, maxRows);
 }
 
@@ -132,22 +128,57 @@ function attachMobileChatbotEventListeners() {
     window.scrollTo(0, 0);
   });
 
-  const chatbotInterface = document.getElementById('chatbot-interface');
-  if (chatbotInterface) {
-    chatbotInterface.addEventListener('touchmove', function(e) {
-      // Falls das Target bzw. der Event-Pfad innerhalb des .chatbot-messages-container liegt, 
-      // erlauben wir das Scrollen (kein preventDefault).
-      // Ansonsten blockieren wir das Bouncing.
-      const isInMessagesContainer = e.target.closest('.chatbot-messages-container');
-      if (!isInMessagesContainer) {
-        e.preventDefault(); // Verhindert jegliches Scrollen/Bouncen
-      }
-      // Wenn du stattdessen nur vertikal scrollen möchtest, 
-      // kannst du noch "Gesten" in x-Richtung blockieren etc.
-    }, { passive: false });
-  }
+  attachNoBounceListeners();
 
   updateVh();
+}
+
+function onTouchStart(e) {
+  startY = e.touches[0].clientY;
+}
+
+function onTouchMove(e) {
+  // Prüfe, ob das Touchziel in .chatbot-messages-container liegt
+  const isInMessagesContainer = e.target.closest('.chatbot-messages-container');
+  if (!isInMessagesContainer) {
+    // Außerhalb des scrollbaren Bereichs => blockieren
+    e.preventDefault();
+    return;
+  }
+
+  // Innerhalb .chatbot-messages-container
+  const container = isInMessagesContainer;
+
+  // Wenn nicht scrollbar (Inhalt <= Höhe), blockieren wir das Bouncen
+  if (container.scrollHeight <= container.clientHeight) {
+    e.preventDefault();
+    return;
+  }
+
+  // Container ist scrollbar. Jetzt schauen wir, ob man am oberen oder unteren Ende ist
+  const scrollTop = container.scrollTop;
+  const atTop = (scrollTop <= 0);
+  const atBottom = (scrollTop + container.clientHeight >= container.scrollHeight);
+
+  // Aktuelle Fingerposition:
+  const currentY = e.touches[0].clientY;
+  // positive deltaY bedeutet "Wischen nach unten", negative "Wischen nach oben"
+  const deltaY = currentY - startY;
+
+  if (atTop && deltaY > 0) {
+    // Versucht von ganz oben weiter runterzuziehen => Bouncing -> block
+    e.preventDefault();
+  } else if (atBottom && deltaY < 0) {
+    // Versucht von ganz unten weiter hochzuziehen => Bouncing -> block
+    e.preventDefault();
+  }
+}
+
+// An dein #chatbot-interface anhängen, z. B.:
+function attachNoBounceListeners() {
+  const chatbotInterface = document.getElementById('chatbot-interface');
+  chatbotInterface.addEventListener('touchstart', onTouchStart, { passive: false });
+  chatbotInterface.addEventListener('touchmove', onTouchMove, { passive: false });
 }
 
 /**************************************************************************

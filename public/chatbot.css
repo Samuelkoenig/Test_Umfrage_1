@@ -74,7 +74,7 @@
   padding: 10px;
   box-sizing: border-box;
   position: relative;
-  overscroll-behavior: none;
+  overscroll-behavior: contain;
   /*-webkit-overflow-scrolling: touch;*/
 }
 
