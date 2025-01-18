@@ -349,7 +349,6 @@ p {
     }
 
     #survey-container.chatbot-visible {
-        position: fixed;
         height: calc(var(--vh, 1vh) * 100 - 8px);
         margin-top: 8px;
         margin-bottom: 0;

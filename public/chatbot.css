@@ -270,9 +270,9 @@
 @media (max-width: 600px) {
   /* In der mobilen Ansicht soll der Chatbot den ganzen Bildschirm einnehmen */
   #chatbot-interface {
-      position: fixed;
+      position: relative;
       height: calc(var(--vh, 1vh) * 100 - 8px);
-      top: 8px;
+      top: 0;
       left: 0;
       right: 0;
       bottom: 0;

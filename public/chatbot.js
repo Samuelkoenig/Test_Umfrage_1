@@ -125,7 +125,9 @@ function attachMobileChatbotEventListeners() {
     window.visualViewport.addEventListener('resize', updateVh);
   }
   textarea.addEventListener('focus', () => {
-    window.scrollTo(0, 0);
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 50);
   });
 
   attachNoBounceListeners();
