@@ -141,15 +141,13 @@ function onTouchStart(e) {
 
 function onTouchMove(e) {
   // Prüfe, ob das Touchziel in .chatbot-messages-container liegt
-  const isInMessagesContainer = e.target.closest('.chatbot-messages-container');
-  if (!isInMessagesContainer) {
+  const scrollableSelector = '.chatbot-messages-container, .input-container textarea';
+  const container = e.target.closest(scrollableSelector);
+  if (!container) {
     // Außerhalb des scrollbaren Bereichs => blockieren
     e.preventDefault();
     return;
   }
-
-  // Innerhalb .chatbot-messages-container
-  const container = isInMessagesContainer;
 
   // Wenn nicht scrollbar (Inhalt <= Höhe), blockieren wir das Bouncen
   if (container.scrollHeight <= container.clientHeight) {
@@ -575,12 +573,7 @@ function scrollMessagesToBottom() {
 
 
 function updateVh() {
-  const isFirefox = /firefox/i.test(navigator.userAgent);
-  if (isFirefox) {
-    // Ignoriere visualViewport, nimm nur window.innerHeight
-    const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
-  } else if (window.visualViewport) {
+  if (window.visualViewport) {
     const vh = window.visualViewport.height * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
   } else {
