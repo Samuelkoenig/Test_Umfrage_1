@@ -215,6 +215,8 @@
   max-height: calc(6 * 1.4375em + 16px); /* 6 Zeilen + Padding -> Alternative: calc(6 * 1.375em + 16px);*/
   min-height: calc(1.4375em + 16px); /* Mindesthöhe für eine Zeile -> Alternative: calc(1.375em + 16px);*/
   box-sizing: border-box;
+  overscroll-behavior: contain;
+  /*-webkit-overflow-scrolling: touch;*/
 }
 
 /* Placeholder-Stil anpassen */
