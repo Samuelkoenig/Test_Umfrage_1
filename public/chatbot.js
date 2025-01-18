@@ -125,9 +125,20 @@ function attachMobileChatbotEventListeners() {
     window.visualViewport.addEventListener('resize', updateVh);
   }
   textarea.addEventListener('focus', () => {
+      window.scrollTo(0, 0);
+  });
+
+  let temporarilyBlockScroll = false;
+
+  textarea.addEventListener('focus', () => {
+    temporarilyBlockScroll = true;
     setTimeout(() => {
       window.scrollTo(0, 0);
-    }, 200);
+      // Danach das Blocken wieder aufheben
+      setTimeout(() => {
+        temporarilyBlockScroll = false;
+      }, 50);
+    }, 50);
   });
 
   attachNoBounceListeners();
@@ -140,6 +151,12 @@ function onTouchStart(e) {
 }
 
 function onTouchMove(e) {
+
+  if (temporarilyBlockScroll) {
+    e.preventDefault();
+    return;
+  }
+
   // Prüfe, ob das Touchziel in .chatbot-messages-container liegt
   const isInMessagesContainer = e.target.closest('.chatbot-messages-container');
   if (!isInMessagesContainer) {
