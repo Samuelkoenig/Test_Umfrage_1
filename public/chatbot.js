@@ -611,7 +611,7 @@ function adjustTextareaHeight(textarea, maxRows = 6) {
   //console.log(`maxHeight: ${maxHeight}`); // Nur zum Testen
 
   if (scrollHeight <= maxHeight) {
-    textarea.style.overflowY = 'auto'; //hidden
+    textarea.style.overflowY = 'hidden'; //hidden
     textarea.style.height = scrollHeight + 'px';
   } else {
     textarea.style.overflowY = 'auto';
