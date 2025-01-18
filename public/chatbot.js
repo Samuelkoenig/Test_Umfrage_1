@@ -138,7 +138,7 @@ function onTouchStart(e) {
   startY = e.touches[0].clientY;
 
   // Prüfe, ob das Touchziel in .chatbot-messages-container ODER textarea liegt
-  const scrollableSelector = '.chatbot-messages-container, .input-container textarea';
+  const scrollableSelector = '.chatbot-messages-container, .input-container';
   activeContainer = e.target.closest(scrollableSelector) || null;
 }
 
