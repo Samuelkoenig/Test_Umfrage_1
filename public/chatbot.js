@@ -58,6 +58,7 @@ function initializeChatbotUi() {
     startConversation();
   }
 
+  attachMobileChatbotEventListeners();
   attachChatbotEventListeners();
   continueBtnStateMgmt();
 }
@@ -117,10 +118,20 @@ function attachChatbotEventListeners() {
   }
 
   adjustTextareaHeight(textarea, maxRows);
-  updateVh();
+}
 
+function attachMobileChatbotEventListeners() {
+  const textarea = document.getElementById('userInput');
 
-  // Event-Listener, der alle Touchmove-Events auf dem #chatbot-interface abfängt
+  window.addEventListener('resize', updateVh);
+  window.addEventListener('orientationchange', updateVh);
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', updateVh);
+  }
+  textarea.addEventListener('focus', () => {
+    window.scrollTo(0, 0);
+  });
+
   const chatbotInterface = document.getElementById('chatbot-interface');
   if (chatbotInterface) {
     chatbotInterface.addEventListener('touchmove', function(e) {
@@ -135,6 +146,8 @@ function attachChatbotEventListeners() {
       // kannst du noch "Gesten" in x-Richtung blockieren etc.
     }, { passive: false });
   }
+
+  updateVh();
 }
 
 /**************************************************************************
