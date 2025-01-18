@@ -125,23 +125,12 @@ function attachMobileChatbotEventListeners() {
     window.visualViewport.addEventListener('resize', updateVh);
   }
   textarea.addEventListener('focus', () => {
-    window.scrollTo(0, 0);
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 50);
   });
 
   attachNoBounceListeners();
-
-  const dummyInput = document.getElementById('dummyInput');
-  const realTextarea = document.getElementById('userInput');
-
-  realTextarea.addEventListener('mousedown', (e) => {
-    e.preventDefault(); // Verhindert den direkten Fokus
-    // 1) Fokus auf Dummy
-    dummyInput.focus();
-    // 2) Direkt danach Fokus aufs echte Textarea
-    setTimeout(() => {
-      realTextarea.focus();
-    }, 0);
-  });
 
   updateVh();
 }
@@ -586,7 +575,12 @@ function scrollMessagesToBottom() {
 
 
 function updateVh() {
-  if (window.visualViewport) {
+  const isFirefox = /firefox/i.test(navigator.userAgent);
+  if (isFirefox) {
+    // Ignoriere visualViewport, nimm nur window.innerHeight
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  } else if (window.visualViewport) {
     const vh = window.visualViewport.height * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
   } else {
