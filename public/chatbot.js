@@ -580,6 +580,10 @@ function updateVh() {
     const vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
   }
+
+  const currentlyOpen = (sessionStorage.getItem('openChatbot') === '1');
+  const currentPage = sessionStorage.getItem('currentPage');
+  if (currentlyOpen && (currentPage === chatbotPage)) window.scrollTo(0, 0);
 }
 
 /**
