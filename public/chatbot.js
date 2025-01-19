@@ -131,7 +131,7 @@ function attachMobileChatbotEventListeners() {
   });
 
   document.addEventListener('chatbot_ui_input_focused', () => {
-    window.scrollTo(0, 0);
+    setTimeout(() => {window.scrollTo(0, 0)}, 400);
   });
 
   attachNoBounceListeners();
