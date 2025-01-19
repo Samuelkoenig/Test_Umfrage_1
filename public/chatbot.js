@@ -137,22 +137,9 @@ function attachMobileChatbotEventListeners() {
 function onTouchStart(e) {
   startY = e.touches[0].clientY;
 
-  // Wir erweitern das Selector-Pattern um .input-container:
-  const scrollableSelector = '.chatbot-messages-container, .input-container textarea, .input-container';
-  let container = e.target.closest(scrollableSelector);
-
-  // Fallunterscheidung: Wurde .input-container getroffen?
-  if (container && container.classList.contains('input-container')) {
-    // Falls ja, prüfen wir, ob die textarea scrollt:
-    const userInput = container.querySelector('#userInput');
-    if (userInput && userInput.style.overflowY === 'auto') {
-      // Ist die textarea scrollbar? Dann scrollen wir tatsächlich diese.
-      container = userInput;
-    } else {
-      // Ansonsten blockieren wir (kein aktiver Container).
-      container = null;
-    }
-  }
+  // Prüfe, ob das Touchziel in .chatbot-messages-container ODER textarea liegt
+  const scrollableSelector = '.chatbot-messages-container, .input-container textarea';
+  activeContainer = e.target.closest(scrollableSelector) || null;
 }
 
 function onTouchMove(e) {
