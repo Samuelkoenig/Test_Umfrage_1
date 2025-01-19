@@ -149,6 +149,15 @@ function onTouchMove(e) {
     return;
   }
 
+  //console.log(`activeContainer: ${activeContainer.id}`); // Nur zum Testen
+  if (activeContainer.id === 'userInput') {
+    const textarea = document.getElementById('userInput');
+      if (textarea.style.overflowY === "hidden") {
+        e.preventDefault();
+        return;
+      }
+  }
+
   // Ist der Container überhaupt scrollbar?
   if (activeContainer.scrollHeight <= activeContainer.clientHeight) {
     // Nein => blockieren
