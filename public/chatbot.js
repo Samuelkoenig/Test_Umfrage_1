@@ -102,6 +102,7 @@ function attachChatbotEventListeners() {
 
   textarea.addEventListener('input', function() {
     adjustTextareaHeight(textarea, maxRows);
+    window.scrollTo(0, 0); // Only for the firefox mobile version
   });
 
   window.addEventListener('resize', function () {
@@ -127,11 +128,6 @@ function attachMobileChatbotEventListeners() {
   }
   textarea.addEventListener('focus', () => {
     window.scrollTo(0, 0);
-    document.dispatchEvent(new Event('chatbot_ui_input_focused'));
-  });
-
-  document.addEventListener('chatbot_ui_input_focused', () => {
-    setTimeout(() => {window.scrollTo(0, 0)}, 400);
   });
 
   attachNoBounceListeners();
