@@ -616,10 +616,10 @@ function adjustTextareaHeight(textarea, maxRows = 6) {
   const totalVerticalPadding = paddingTop + paddingBottom + borderTop + borderBottom;
   const maxHeight = (lineHeight * maxRows) + totalVerticalPadding;
 
-  //console.log(`scrollHeight: ${scrollHeight}`); // Nur zum Testen
-  //console.log(`maxHeight: ${maxHeight}`); // Nur zum Testen
+  console.log(`scrollHeight: ${scrollHeight}`); // Nur zum Testen
+  console.log(`maxHeight: ${maxHeight}`); // Nur zum Testen
 
-  if (scrollHeight <= maxHeight) {
+  if (scrollHeight <= maxHeight + 2) {
     textarea.style.overflowY = 'hidden'; //hidden
     textarea.style.height = scrollHeight + 'px';
   } else {
