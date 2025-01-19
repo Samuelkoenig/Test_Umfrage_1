@@ -102,7 +102,6 @@ function attachChatbotEventListeners() {
 
   textarea.addEventListener('input', function() {
     adjustTextareaHeight(textarea, maxRows);
-    window.scrollTo(0, 0); // Only for the firefox mobile version
   });
 
   window.addEventListener('resize', function () {
