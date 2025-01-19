@@ -126,7 +126,7 @@ function attachMobileChatbotEventListeners() {
     window.visualViewport.addEventListener('resize', updateVh);
   }
   textarea.addEventListener('focus', () => {
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
   });
 
   attachNoBounceListeners();
@@ -138,7 +138,7 @@ function onTouchStart(e) {
   startY = e.touches[0].clientY;
 
   // Prüfe, ob das Touchziel in .chatbot-messages-container ODER textarea liegt
-  const scrollableSelector = '.chatbot-messages-container, .input-container textarea';
+  const scrollableSelector = '.chatbot-messages-container, .input-container textarea ';
   activeContainer = e.target.closest(scrollableSelector) || null;
 }
 
@@ -149,7 +149,7 @@ function onTouchMove(e) {
     return;
   }
 
-  //console.log(`activeContainer: ${activeContainer.id}`); // Nur zum Testen
+  console.log(`activeContainer: ${activeContainer}`); // Nur zum Testen
   if (activeContainer.id === 'userInput') {
     const textarea = document.getElementById('userInput');
       if (textarea.style.overflowY === "hidden") {
@@ -616,10 +616,10 @@ function adjustTextareaHeight(textarea, maxRows = 6) {
   const totalVerticalPadding = paddingTop + paddingBottom + borderTop + borderBottom;
   const maxHeight = (lineHeight * maxRows) + totalVerticalPadding;
 
-  //console.log(`scrollHeight: ${scrollHeight}`); // Nur zum Testen
-  //console.log(`maxHeight: ${maxHeight}`); // Nur zum Testen
+  console.log(`scrollHeight: ${scrollHeight}`); // Nur zum Testen
+  console.log(`maxHeight: ${maxHeight}`); // Nur zum Testen
 
-  if (scrollHeight <= maxHeight) {
+  if (scrollHeight <= maxHeight + 2) {
     textarea.style.overflowY = 'hidden'; //hidden
     textarea.style.height = scrollHeight + 'px';
   } else {
