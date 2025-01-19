@@ -209,6 +209,7 @@
   border-radius: 20px;
   overflow: hidden;
   box-sizing: border-box;
+  min-height: 40px;
   /* Optionale Anpassungen zur Passform: */
   /* Padding kann hier gesetzt werden, falls nötig */
 }
@@ -229,7 +230,7 @@
   resize: none;
   overflow-y: auto; /* Anfangs keine Scroll-Leiste */
   max-height: calc(6 * 1.4em + 16px); /* 6 Zeilen + Padding -> Alternative: calc(6 * 1.375em + 16px);*/
-  min-height: calc(1.4em + 16px); /* Mindesthöhe für eine Zeile -> Alternative: calc(1.375em + 16px);*/
+  min-height: 40px; /*calc(1.4em + 16px);*/ /* Mindesthöhe für eine Zeile -> Alternative: calc(1.375em + 16px);*/
   box-sizing: border-box;
   overscroll-behavior: contain;
   /*-webkit-overflow-scrolling: touch;*/
