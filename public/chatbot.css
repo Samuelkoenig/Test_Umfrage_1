@@ -42,6 +42,7 @@
   color: #3498db;
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
+  /*font-weight: bold;*/
   line-height: 1.4375;
   cursor: pointer;
   padding: 5px 10px;
@@ -200,24 +201,37 @@
   overflow: hidden;
 }
 
+.textarea-wrapper {
+  flex: 1;
+  border: 1px solid #ccc;  
+  border-radius: 20px;
+  overflow: hidden;
+  box-sizing: border-box;
+  /* Optionale Anpassungen zur Passform: */
+  /* Padding kann hier gesetzt werden, falls nötig */
+}
+
 /* Eingabefeld-Stile */
 .input-container textarea {
-  flex: 1;
+  margin: 0;
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
   line-height: 1.4375;
   padding: 8px 10px; 
-  border: 1px solid #ccc;
-  border-radius: 20px;
+  border: none;
+  border-radius: 0;
   outline: none;
   transition: border-color 0.3s;
   resize: none;
   overflow-y: auto; /* Anfangs keine Scroll-Leiste */
-  max-height: calc(6 * 1.4375em + 16px); /* 6 Zeilen + Padding -> Alternative: calc(6 * 1.375em + 16px);*/
-  min-height: calc(1.4375em + 16px); /* Mindesthöhe für eine Zeile -> Alternative: calc(1.375em + 16px);*/
+  max-height: calc(6 * 1.4375em + 14px); /* 6 Zeilen + Padding -> Alternative: calc(6 * 1.375em + 16px);*/
+  min-height: calc(1.4375em + 14px); /* Mindesthöhe für eine Zeile -> Alternative: calc(1.375em + 16px);*/
   box-sizing: border-box;
   overscroll-behavior: contain;
   /*-webkit-overflow-scrolling: touch;*/
+  width: 100%;
+  height: 100%;
+  background: transparent;
 }
 
 /* Placeholder-Stil anpassen */
