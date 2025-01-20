@@ -149,7 +149,7 @@ function onTouchMove(e) {
     return;
   }
 
-  console.log(`activeContainer: ${activeContainer}`); // Nur zum Testen
+  //console.log(`activeContainer: ${activeContainer}`); // Nur zum Testen
   if (activeContainer.id === 'userInput') {
     const textarea = document.getElementById('userInput');
       if (textarea.style.overflowY === "hidden") {
@@ -164,9 +164,6 @@ function onTouchMove(e) {
     e.preventDefault();
     return;
   }
-
-  const chatbotHeader = document.getElementById('chatbot-header');
-  chatbotHeader.classList.add('text-class-list');
 
   // Container ist scrollbar. Jetzt schauen wir, ob man am oberen oder unteren Ende ist
   const scrollTop = activeContainer.scrollTop;
@@ -186,7 +183,6 @@ function onTouchMove(e) {
 
 function onTouchEnd(e) {
   activeContainer = null;
-  chatbotHeader.classList.remove('text-class-list');
 }
 
 // An dein #chatbot-interface anhängen, z. B.:
