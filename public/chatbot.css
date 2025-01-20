@@ -35,6 +35,10 @@
   border-bottom: 1px solid #ddd;
 }
 
+.chatbot-header.text-class-list {
+  background: #3498db;
+}
+
 .close-chatbot-btn, 
 .continue-survey-btn {
   background: none;

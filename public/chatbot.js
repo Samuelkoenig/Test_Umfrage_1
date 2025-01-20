@@ -165,6 +165,9 @@ function onTouchMove(e) {
     return;
   }
 
+  const chatbotHeader = document.getElementById('chatbot-header');
+  chatbotHeader.classList.add('text-class-list');
+
   // Container ist scrollbar. Jetzt schauen wir, ob man am oberen oder unteren Ende ist
   const scrollTop = activeContainer.scrollTop;
   const atTop = (scrollTop <= 0);
@@ -183,6 +186,7 @@ function onTouchMove(e) {
 
 function onTouchEnd(e) {
   activeContainer = null;
+  chatbotHeader.classList.remove('text-class-list');
 }
 
 // An dein #chatbot-interface anhängen, z. B.:
