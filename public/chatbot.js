@@ -91,7 +91,7 @@ function attachChatbotEventListeners() {
 
   visibleUserInput.addEventListener('mousedown', () => {
     realUserInput.focus({ preventScroll: true });
-    setTimeout(() => visibleUserInput.focus(), 0);
+    //setTimeout(() => visibleUserInput.focus(), 300);
   });
 
   visibleUserInput.addEventListener('input', () => {
@@ -177,7 +177,7 @@ function onTouchMove(e) {
     return;
   }
 
-  //console.log(`activeContainer: ${activeContainer}`); // Nur zum Testen
+  console.log(`activeContainer: ${activeContainer}`); // Nur zum Testen
   if (activeContainer.id === 'visibleUserInput') {
     const visibleUserInput = document.getElementById('visibleUserInput');
     if (visibleUserInput.style.overflowY === "hidden") {
