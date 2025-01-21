@@ -127,10 +127,10 @@ function attachMobileChatbotEventListeners() {
   }
   textarea.addEventListener('focus', () => {
     window.scrollTo(0, 0);
-    setTimeout(() => { window.scrollTo(0,0); }, 100);
-    setTimeout(() => { window.scrollTo(0,0); }, 200);
-    setTimeout(() => { window.scrollTo(0,0); }, 300);
-    scrollMessagesToBottom()
+    scrollMessagesToBottom();
+    setTimeout(() => { window.scrollTo(0,0); scrollMessagesToBottom() }, 100);
+    setTimeout(() => { window.scrollTo(0,0); scrollMessagesToBottom() }, 200);
+    setTimeout(() => { window.scrollTo(0,0); scrollMessagesToBottom() }, 300);
   });
 
   attachNoBounceListeners();
@@ -608,9 +608,9 @@ function updateVh() {
     const vh = window.visualViewport.height * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
 
-    const offset = window.visualViewport.offsetTop;
-    const chatbotInterface = document.getElementById('chatbot-interface');
-    chatbotInterface.style.transform = `translateY(${offset}px)`;
+    //const offset = window.visualViewport.offsetTop;
+    //const chatbotInterface = document.getElementById('chatbot-interface');
+    //chatbotInterface.style.transform = `translateY(${offset}px)`;
 
   } else {
     const vh = window.innerHeight * 0.01;
