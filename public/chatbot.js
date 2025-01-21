@@ -126,11 +126,10 @@ function attachMobileChatbotEventListeners() {
     window.visualViewport.addEventListener('resize', updateVh);
   }
   textarea.addEventListener('focus', () => {
-    //window.scrollTo(0, 0);
-    setTimeout(() => {
-      // Scrolle den Header in den sichtbaren Bereich
-      document.getElementById('progress-bar').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 300);
+    window.scrollTo(0, 0);
+    setTimeout(() => { window.scrollTo(0,0); }, 100);
+    setTimeout(() => { window.scrollTo(0,0); }, 200);
+    setTimeout(() => { window.scrollTo(0,0); }, 300);
   });
 
   attachNoBounceListeners();
@@ -608,6 +607,11 @@ function updateVh() {
   if (window.visualViewport) {
     const vh = window.visualViewport.height * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
+
+    const offset = window.visualViewport.offsetTop;
+    const chatbotInterface = document.getElementById('chatbot-interface');
+    chatbotInterface.style.transform = `translateY(${offset}px)`;
+
   } else {
     const vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
