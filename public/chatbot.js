@@ -610,12 +610,12 @@ function updateVh() {
     const vh = window.visualViewport.height * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
 
-    const offset = window.visualViewport.offsetTop;
-    const chatbotInterface = document.getElementById('chatbot-interface');
+    //const offset = window.visualViewport.offsetTop;
+    //const chatbotInterface = document.getElementById('chatbot-interface');
     //const progressBar = document.getElementById('progress-bar');
-    chatbotInterface.style.transform = `translateY(${offset}px)`;
+    //chatbotInterface.style.transform = `translateY(${offset}px)`;
     //progressBar.style.transform = `translateY(${offset}px)`;
-    scrollMessagesToBottom();
+    //scrollMessagesToBottom();
 
   } else {
     const vh = window.innerHeight * 0.01;
