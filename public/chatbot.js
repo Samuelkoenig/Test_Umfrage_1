@@ -152,10 +152,11 @@ function onTouchMove(e) {
   //console.log(`activeContainer: ${activeContainer}`); // Nur zum Testen
   if (activeContainer.id === 'userInput') {
     const textarea = document.getElementById('userInput');
-      if (textarea.style.overflowY === "hidden") {
-        e.preventDefault();
-        return;
-      }
+    if (textarea.style.overflowY === "hidden") {
+      e.preventDefault();
+      return;
+    }
+    addMessage('Test', 'user');
   }
 
   // Ist der Container überhaupt scrollbar?
