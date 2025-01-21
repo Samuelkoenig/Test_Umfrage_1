@@ -130,6 +130,7 @@ function attachMobileChatbotEventListeners() {
     setTimeout(() => { window.scrollTo(0,0); }, 100);
     setTimeout(() => { window.scrollTo(0,0); }, 200);
     setTimeout(() => { window.scrollTo(0,0); }, 300);
+    scrollMessagesToBottom()
   });
 
   attachNoBounceListeners();
@@ -174,7 +175,6 @@ function onTouchMove(e) {
       e.preventDefault();
       return;
     }
-    addMessage('Test', 'user');
   }
 
   // Ist der Container überhaupt scrollbar?
