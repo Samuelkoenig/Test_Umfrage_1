@@ -126,7 +126,11 @@ function attachMobileChatbotEventListeners() {
     window.visualViewport.addEventListener('resize', updateVh);
   }
   textarea.addEventListener('focus', () => {
-    window.scrollTo(0, 0);
+    //window.scrollTo(0, 0);
+    setTimeout(() => {
+      // Scrolle den Header in den sichtbaren Bereich
+      document.querySelector('.chatbot-header').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 300);
   });
 
   attachNoBounceListeners();
