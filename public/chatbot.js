@@ -614,6 +614,7 @@ function updateVh() {
     const progressBar = document.getElementById('progress-bar');
     chatbotInterface.style.transform = `translateY(${offset}px)`;
     progressBar.style.transform = `translateY(${offset}px)`;
+    scrollMessagesToBottom()
 
   } else {
     const vh = window.innerHeight * 0.01;
