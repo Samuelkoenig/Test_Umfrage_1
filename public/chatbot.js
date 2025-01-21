@@ -91,7 +91,7 @@ function attachChatbotEventListeners() {
 
   visibleUserInput.addEventListener('mousedown', () => {
     realUserInput.focus({ preventScroll: true });
-    //setTimeout(() => visibleUserInput.focus(), 300);
+    setTimeout(() => visibleUserInput.focus(), 300);
   });
 
   visibleUserInput.addEventListener('input', () => {
