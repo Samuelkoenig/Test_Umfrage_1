@@ -129,7 +129,7 @@ function attachMobileChatbotEventListeners() {
     //window.scrollTo(0, 0);
     setTimeout(() => {
       // Scrolle den Header in den sichtbaren Bereich
-      document.querySelector('.chatbot-header').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.getElementById('progress-bar').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 300);
   });
 
