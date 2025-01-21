@@ -139,7 +139,22 @@ function onTouchStart(e) {
 
   // Prüfe, ob das Touchziel in .chatbot-messages-container ODER textarea liegt
   const scrollableSelector = '.chatbot-messages-container, .input-container textarea';
-  activeContainer = e.target.closest(scrollableSelector) || null;
+  let potentialContainer = e.target.closest(scrollableSelector) || null;
+
+  // Wenn der potenzielle Container die textarea ist,
+  // prüfen, ob der Touch-Punkt tatsächlich innerhalb der textarea liegt.
+  if (potentialContainer && potentialContainer.id === 'userInput') {
+    const rect = potentialContainer.getBoundingClientRect();
+    const touchX = e.touches[0].clientX;
+    const touchY = e.touches[0].clientY;
+
+    // Falls der Berührungspunkt außerhalb der textarea-Grenzen liegt:
+    if (touchX < rect.left || touchX > rect.right || touchY < rect.top || touchY > rect.bottom) {
+      potentialContainer = null;
+    }
+  }
+
+  activeContainer = potentialContainer;
 }
 
 function onTouchMove(e) {
