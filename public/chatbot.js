@@ -71,7 +71,7 @@ function initializeChatbotUi() {
  * 
  * - When the user clicks on the send button, the sendUserMessage() function is called and 
  *   the height of the textarea is adjusted. 
- * - Optionally: When the user clicks enter in the textarea, this is treated as clicking the 
+ * - Optionally: When the user clicks enter in the textarea, this is treated as clicking the
  *   send button (this applies when the variable enterMeansSent is set to true). 
  * - The height of the textarea is adjusted each time the user interacts with the textarea. 
  * - Each time the size of the browser window is adjusted or the chatbot interface is opened, 
@@ -82,17 +82,33 @@ function initializeChatbotUi() {
  * @returns {void}
  */
 function attachChatbotEventListeners() {
-  const textarea = document.getElementById('userInput');
+  const realUserInput = document.getElementById('realUserInput');
+  const visibleUserInput = document.getElementById('visibleUserInput');
   const sendBtn = document.getElementById('sendBtn');
   const maxRows = 6;
 
+  synchronizeUserInput(realUserInput, visibleUserInput);
+
+  visibleUserInput.addEventListener('mousedown', () => {
+    realUserInput.focus({ preventScroll: true });
+    setTimeout(() => visibleUserInput.focus(), 0);
+  });
+
+  visibleUserInput.addEventListener('input', () => {
+    realUserInput.value = visibleUserInput.innerText;
+    if (!visibleUserInput.innerText.trim()) {
+      visibleUserInput.innerHTML = '';
+    }
+    adjustVisibleUserInputHeight(visibleUserInput, maxRows);
+  });
+
   sendBtn.addEventListener('click', function() {
     sendUserMessage();
-    adjustTextareaHeight(textarea, maxRows);
+    adjustVisibleUserInputHeight(visibleUserInput, maxRows);
   });
 
   if (enterMeansSend) {
-    textarea.addEventListener('keydown', function(e) {
+    visibleUserInput.addEventListener('keydown', function(e) {
       if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault();
         sendBtn.click();
@@ -100,34 +116,30 @@ function attachChatbotEventListeners() {
     });
   } // Optional if pressing enter should cause the user message to be sent. 
 
-  textarea.addEventListener('input', function() {
-    adjustTextareaHeight(textarea, maxRows);
-  });
-
   window.addEventListener('resize', function () {
     scrollMessagesToBottom();
-    adjustTextareaHeight(textarea, maxRows);
+    adjustVisibleUserInputHeight(visibleUserInput, maxRows);
   });
 
   document.addEventListener('chatbotInterfaceOpened', function () {
     scrollMessagesToBottom();
-    adjustTextareaHeight(textarea, maxRows);
+    adjustVisibleUserInputHeight(visibleUserInput, maxRows);
   });
 
-  adjustTextareaHeight(textarea, maxRows);
+  adjustVisibleUserInputHeight(visibleUserInput, maxRows);
 }
 
 function attachMobileChatbotEventListeners() {
-  const textarea = document.getElementById('userInput');
+  const visibleUserInput = document.getElementById('visibleUserInput');
 
   window.addEventListener('resize', updateVh);
   window.addEventListener('orientationchange', updateVh);
   if (window.visualViewport) {
     window.visualViewport.addEventListener('resize', updateVh);
   }
-  textarea.addEventListener('focus', () => {
-    window.scrollTo(0, 0);
-    scrollMessagesToBottom();
+  visibleUserInput.addEventListener('focus', () => {
+    //window.scrollTo(0, 0);
+    //scrollMessagesToBottom();
   });
 
   attachNoBounceListeners();
@@ -139,12 +151,12 @@ function onTouchStart(e) {
   startY = e.touches[0].clientY;
 
   // Prüfe, ob das Touchziel in .chatbot-messages-container ODER textarea liegt
-  const scrollableSelector = '.chatbot-messages-container, .input-container textarea';
+  const scrollableSelector = '.chatbot-messages-container, .input-container visible-user-input';
   let potentialContainer = e.target.closest(scrollableSelector) || null;
 
   // Wenn der potenzielle Container die textarea ist,
   // prüfen, ob der Touch-Punkt tatsächlich innerhalb der textarea liegt.
-  if (potentialContainer && potentialContainer.id === 'userInput') {
+  if (potentialContainer && potentialContainer.id === 'visibleUserInput') {
     const rect = potentialContainer.getBoundingClientRect();
     const touchX = e.touches[0].clientX;
     const touchY = e.touches[0].clientY;
@@ -166,9 +178,9 @@ function onTouchMove(e) {
   }
 
   //console.log(`activeContainer: ${activeContainer}`); // Nur zum Testen
-  if (activeContainer.id === 'userInput') {
-    const textarea = document.getElementById('userInput');
-    if (textarea.style.overflowY === "hidden") {
+  if (activeContainer.id === 'visibleUserInput') {
+    const visibleUserInput = document.getElementById('visibleUserInput');
+    if (visibleUserInput.style.overflowY === "hidden") {
       e.preventDefault();
       return;
     }
@@ -207,6 +219,10 @@ function attachNoBounceListeners() {
   chatbotInterface.addEventListener('touchstart', onTouchStart, { passive: false });
   chatbotInterface.addEventListener('touchmove', onTouchMove, { passive: false });
   chatbotInterface.addEventListener('touchend', onTouchEnd, { passive: false });
+}
+
+function synchronizeUserInput(realUserInput, visibleUserInput) {
+  visibleUserInput.innerText = realUserInput.value;
 }
 
 /**************************************************************************
@@ -360,10 +376,12 @@ function processInitialActivities(data) {
  */
 async function sendUserMessage() {
   const treatmentGroup = sessionStorage.getItem('treatmentGroup');
-  const input = document.getElementById('userInput');
-  const text = input.value.trim();
+  const realUserInput = document.getElementById('realUserInput');
+  const visibleUserInput = document.getElementById('visibleUserInput');
+  const text = realUserInput.value.trim();
   if (!text) return;
-  input.value = '';
+  realUserInput.value = '';
+  visibleUserInput.innerText = '';
 
   addMessage(text, 'user');
   addMessageToState(text, 'user', null); 
@@ -621,10 +639,10 @@ function updateVh() {
  * @param {number} maxRows - The maximum number of rows in the text input field. 
  * @returns {void}
  */
-function adjustTextareaHeight(textarea, maxRows = 6) {
-  textarea.style.height = 'auto';
-  const scrollHeight = textarea.scrollHeight;
-  const computedStyle = window.getComputedStyle(textarea);
+function adjustVisibleUserInputHeight(visibleUserInput, maxRows = 6) {
+  visibleUserInput.style.height = 'auto';
+  const scrollHeight = visibleUserInput.scrollHeight;
+  const computedStyle = window.getComputedStyle(visibleUserInput);
   const lineHeight = parseInt(computedStyle.lineHeight);
   const paddingTop = parseInt(computedStyle.paddingTop);
   const paddingBottom = parseInt(computedStyle.paddingBottom);
@@ -637,12 +655,12 @@ function adjustTextareaHeight(textarea, maxRows = 6) {
   console.log(`maxHeight: ${maxHeight}`); // Nur zum Testen
 
   if (scrollHeight <= maxHeight + 2) {
-    textarea.style.overflowY = 'hidden'; //hidden
-    textarea.style.height = scrollHeight + 'px';
+    visibleUserInput.style.overflowY = 'hidden'; //hidden
+    visibleUserInput.style.height = scrollHeight + 'px';
   } else {
-    textarea.style.overflowY = 'auto';
-    textarea.style.height = maxHeight + 'px';
-    textarea.scrollTop = textarea.scrollHeight;
+    visibleUserInput.style.overflowY = 'auto';
+    visibleUserInput.style.height = maxHeight + 'px';
+    visibleUserInput.scrollTop = visibleUserInput.scrollHeight;
   }
 
   scrollMessagesToBottom();

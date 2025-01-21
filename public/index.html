@@ -131,7 +131,18 @@
                         </div>
                         <div class="input-container">
                             <div class="textarea-wrapper">
-                                <textarea id="userInput" placeholder="Nachricht" rows="1"></textarea>
+                                <textarea 
+                                    id="realUserInput" 
+                                    class="real-user-input"
+                                    placeholder="Nachricht" 
+                                    rows="1"
+                                ></textarea>
+                                <div 
+                                    id="visibleUserInput"
+                                    class="visible-user-input"
+                                    contenteditable="true"
+                                    data-placeholder="Nachricht"
+                                ></div>
                             </div>
                             <button id="sendBtn" class="send-btn" title="Nachricht senden">
                                 <img src="img/send-icon.svg" alt="Send Icon" />
