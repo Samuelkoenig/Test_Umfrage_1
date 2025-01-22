@@ -213,50 +213,37 @@
   /* Padding kann hier gesetzt werden, falls nötig */
 }
 
-.real-user-input {
-  position: absolute;
-  top: -9999px;
-  left: -9999px;
-  width: 0;
-  height: 0;
-  opacity: 0;
-  pointer-events: none;
-}
-
 /* Eingabefeld-Stile */
-.visible-user-input {
+.input-container textarea {
   flex: 1;
   display: 'block';
   margin: 0;
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
   line-height: 1.4;
-  white-space: pre-wrap;
-  word-wrap: break-word;
   padding: 8px 10px; 
   border: none;
   border-radius: 0;
   outline: none;
   transition: border-color 0.3s;
   resize: none;
-  resize: none;
   overflow-y: auto; /* Anfangs keine Scroll-Leiste */
   max-height: calc(6 * 1.4em + 16px); /* 6 Zeilen + Padding -> Alternative: calc(6 * 1.375em + 16px);*/
   min-height: 39px; /*calc(1.4em + 16px);*/ /* Mindesthöhe für eine Zeile -> Alternative: calc(1.375em + 16px);*/
   box-sizing: border-box;
-  /*overscroll-behavior: contain;*/
+  overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
   width: 100%;
+  height: 100%;
   background: transparent;
 }
 
-.visible-user-input:empty:before {
-  content: attr(data-placeholder);
+/* Placeholder-Stil anpassen */
+.input-container textarea::placeholder {
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
   line-height: 1.4375;
   color: #999;
-  pointer-events: none;
 }
 
 .input-container textarea::-webkit-scrollbar {
@@ -270,7 +257,7 @@
 
 .textarea-wrapper:focus-within {
   border-color: #3498db;
-  transition: 0.2s;
+  transition: 0.2;
 }
 
 /* Senden-Button */

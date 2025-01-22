@@ -1,188 +1,208 @@
 <!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <title>Chatbot Interface</title>
-  <!-- Wichtig: Das Viewport-Meta-Tag hilft, das Layout korrekt zu skalieren -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    /* Standard-Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    /* Die Variable --vh wird im JS dynamisch angepasst. */
-    :root {
-      --vh: 100%;
-    }
-
-    html, body {
-      width: 100%;
-      height: 100%;
-      overflow: hidden; /* Verhindert ungewolltes Scrollen des Hintergrunds. */
-      font-family: sans-serif;
-    }
-
-    /* Der Container füllt die "echte" Bildschirmhöhe aus (Workaround dank --vh). */
-    .chat-container {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      height: calc(var(--vh, 1vh) * 100);
-      /* overflow: hidden;  // Falls du kein Overflow des Chat-Bereichs willst. */
-    }
-
-    /* Obere Leiste, fix am oberen Rand */
-    .top-bar {
-      flex-shrink: 0;
-      background-color: #eee;
-      padding: 10px;
-      /* Aktuell noch ohne Inhalt, kann später gefüllt werden */
-    }
-
-    /* Nachrichtenbereich in der Mitte, soll scrollbar sein */
-    .messages {
-      flex: 1 1 auto;             /* Nimmt den verbleibenden Platz ein */
-      overflow-y: auto;          /* Ermöglicht Scrollen für Chatverlauf */
-      background-color: #f9f9f9;
-      padding: 10px;
-    }
-
-    /* Untere Leiste, fix am unteren Rand */
-    .bottom-bar {
-      flex-shrink: 0;
-      background-color: #eee;
-      display: flex;
-      align-items: center;
-      padding: 10px;
-    }
-
-    .bottom-bar input[type="text"] {
-      flex: 1 1 auto;
-      padding: 8px;
-      margin-right: 8px;
-    }
-
-    .bottom-bar button {
-      flex-shrink: 0;
-      padding: 10px 20px;
-      cursor: pointer;
-    }
-
-    /* Einfache Darstellung der Nutzer- und Bot-Nachrichten */
-    .message {
-      margin: 5px 0;
-      padding: 8px 10px;
-      border-radius: 5px;
-      max-width: 80%;
-      word-wrap: break-word;
-    }
-
-    .user-message {
-      background-color: #cce5ff;
-      align-self: flex-end;
-      text-align: right;
-    }
-
-    .bot-message {
-      background-color: #e2e2e2;
-      align-self: flex-start;
-      text-align: left;
-    }
-
-  </style>
+    <meta charset="UTF-8">
+    <title>Umfrage</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="chatbot.css">
 </head>
 <body>
-  <div class="chat-container">
-    <!-- Obere Leiste (noch leer) -->
-    <div class="top-bar">
-      <!-- Hier kannst du später etwas wie Logo, Chatbot-Name etc. platzieren -->
+    <div id="progress-bar">
+        <div id="progress"></div>
     </div>
 
-    <!-- Nachrichtenbereich (scrollbar) -->
-    <div class="messages" id="messages"></div>
+    <div id="survey-container">
+        <!-- Seite 1 -->
+        <div class="page" id="page1">
+            <h1>Willkommen zur Umfrage</h1>
+            <p>[Allgemeine Einleitung zur Studie]</p>
+            <label class="checkbox-container">
+                <input type="checkbox" id="consent">
+                <span class="checkmark"></span>
+                Ich stimme der Teilnahme an dieser Studie zu.
+            </label>
+            <div class="navigation">
+                <button id="next1" class="next-btn" disabled>Starten</button>
+            </div>
+        </div>
 
-    <!-- Untere Leiste mit Eingabefeld und Button -->
-    <div class="bottom-bar">
-      <input type="text" id="userInput" placeholder="Nachricht eingeben...">
-      <button id="sendBtn">Senden</button>
+        <!-- Seite 2 -->
+        <div class="page" id="page2">
+            <h1>Demographische Daten</h1>
+            <div class="question">
+                <p>1. Was ist Ihr Geschlecht?</p>
+                <label class="radio-container">
+                    <input type="radio" name="gender" value="männlich">
+                    <span class="radio-checkmark"></span>
+                    Männlich
+                </label>
+                <label class="radio-container">
+                    <input type="radio" name="gender" value="weiblich">
+                    <span class="radio-checkmark"></span>
+                    Weiblich
+                </label>
+                <label class="radio-container">
+                    <input type="radio" name="gender" value="divers">
+                    <span class="radio-checkmark"></span>
+                    Divers
+                </label>
+            </div>
+
+            <div class="question">
+                <p>2. Ich habe bereits Erfahrung mit Chatbots.</p>
+                <div class="likert">
+                    <label class="radio-container">
+                        <input type="radio" name="experience" value="1">
+                        <span class="radio-checkmark"></span>
+                        Stimme überhaupt nicht zu
+                    </label>
+                    <label class="radio-container">
+                        <input type="radio" name="experience" value="2">
+                        <span class="radio-checkmark"></span>
+                        Stimme nicht zu
+                    </label>
+                    <label class="radio-container">
+                        <input type="radio" name="experience" value="3">
+                        <span class="radio-checkmark"></span>
+                        Weder noch
+                    </label>
+                    <label class="radio-container">
+                        <input type="radio" name="experience" value="4">
+                        <span class="radio-checkmark"></span>
+                        Stimme zu
+                    </label>
+                    <label class="radio-container">
+                        <input type="radio" name="experience" value="5">
+                        <span class="radio-checkmark"></span>
+                        Stimme vollkommen zu
+                    </label>
+                </div>
+            </div>
+
+            <div class="navigation">
+                <button id="back2" class="back-btn">Zurück</button>
+                <button id="next2" class="next-btn">Weiter</button>
+            </div>
+        </div>
+
+        <!-- Seite 3 -->
+        <div class="page" id="page3">
+            <h1>Informationen zum Szenario</h1>
+            <p>[Fiktives Szenario]</p>
+            <div class="navigation">
+                <button id="back3" class="back-btn">Zurück</button>
+                <button id="next3" class="next-btn">Weiter</button>
+            </div>
+        </div>
+
+            <!-- Seite 4 -->
+            <div class="page" id="page4">
+                <div id="chatbot-scenario">
+                    <h1>Chatbot Interaktion</h1>
+                    <p>Hier folgt die textliche Erklärung eines hypothetischen Szenarios für die Interaktion mit dem Chatbot.<br><br>
+                        Hier folgt die textliche Erklärung eines hypothetischen Szenarios für die Interaktion mit dem Chatbot.<br><br>
+                        Hier folgt die textliche Erklärung eines hypothetischen Szenarios für die Interaktion mit dem Chatbot.<br><br>
+                        Hier folgt die textliche Erklärung eines hypothetischen Szenarios für die Interaktion mit dem Chatbot.<br><br>
+                        Hier folgt die textliche Erklärung eines hypothetischen Szenarios für die Interaktion mit dem Chatbot.<br><br>
+                        Hier folgt die textliche Erklärung eines hypothetischen Szenarios für die Interaktion mit dem Chatbot.<br><br>
+                        Hier folgt die textliche Erklärung eines hypothetischen Szenarios für die Interaktion mit dem Chatbot.<br><br>
+                        Hier folgt die textliche Erklärung eines hypothetischen Szenarios für die Interaktion mit dem Chatbot.<br><br>
+                        Hier folgt die textliche Erklärung eines hypothetischen Szenarios für die Interaktion mit dem Chatbot.<br><br>
+                        Hier folgt die textliche Erklärung eines hypothetischen Szenarios für die Interaktion mit dem Chatbot.<br>
+                    </p>
+                </div>
+                <div id="open-chatbot-button-container">
+                    <button id="openChatbotBtn" class="open-chatbot-btn" title="Chatbot öffnen">
+                        <img src="img/chatbot-icon.svg" alt="Chatbot Icon" />
+                    </button>
+                </div>
+
+                <!-- Chatbot-Interface-Container -->
+                <div id="chatbot-interface" class="chatbot-hidden">
+                    <div class="chatbot-header">
+                        <button id="closeChatbotBtn" class="close-chatbot-btn">Chatbot schließen</button>
+                        <button id="continueSurveytBtn" class="continue-survey-btn" disabled>Weiter</button>
+                    </div>
+                    <div class="chatbot-content">
+                        <div class="chatbot-messages-container">
+                            <div class="messages" id="messages"></div>
+                        </div>
+                        <div class="input-container">
+                            <div class="textarea-wrapper">
+                                <textarea id="userInput" placeholder="Nachricht" rows="1"></textarea>
+                            </div>
+                            <button id="sendBtn" class="send-btn" title="Nachricht senden">
+                                <img src="img/send-icon.svg" alt="Send Icon" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="navigation" id="chatbot-navigation">
+                    <button id="back4" class="back-btn">Zurück</button>
+                    <button id="next4" class="next-btn">Weiter</button>
+                </div>
+            </div>
+
+        <!-- Seite 5 -->
+        <div class="page" id="page5">
+            <h1>Ihre Erfahrung</h1>
+            <div class="question">
+                <p>1. Wie zufrieden sind Sie mit dem Chatbot?</p>
+                <div class="likert likert-7">
+                    <label class="radio-container">
+                        <input type="radio" name="satisfaction" value="1">
+                        <span class="radio-checkmark"></span>
+                        1
+                    </label>
+                    <label class="radio-container">
+                        <input type="radio" name="satisfaction" value="2">
+                        <span class="radio-checkmark"></span>
+                        2
+                    </label>
+                    <label class="radio-container">
+                        <input type="radio" name="satisfaction" value="3">
+                        <span class="radio-checkmark"></span>
+                        3
+                    </label>
+                    <label class="radio-container">
+                        <input type="radio" name="satisfaction" value="4">
+                        <span class="radio-checkmark"></span>
+                        4
+                    </label>
+                    <label class="radio-container">
+                        <input type="radio" name="satisfaction" value="5">
+                        <span class="radio-checkmark"></span>
+                        5
+                    </label>
+                    <label class="radio-container">
+                        <input type="radio" name="satisfaction" value="6">
+                        <span class="radio-checkmark"></span>
+                        6
+                    </label>
+                    <label class="radio-container">
+                        <input type="radio" name="satisfaction" value="7">
+                        <span class="radio-checkmark"></span>
+                        7
+                    </label>
+                </div>
+            </div>
+            <div class="navigation">
+                <button id="back5" class="back-btn">Zurück</button>
+                <button id="submit" class="submit-btn special-submit">Absenden</button>
+            </div>
+        </div>
+
+        <!-- Danke-Seite -->
+        <div class="page" id="thankyou">
+            <h1>Vielen Dank für Ihre Teilnahme!</h1>
+            <p>Ihre Antworten wurden erfolgreich übermittelt.</p>
+        </div>
     </div>
-  </div>
 
-  <script>
-    /**
-     * Workaround für iOS Safari:
-     * Setzt die CSS-Variable --vh auf die 'echte' Höhe (innerHeight) des Fensters.
-     * Dadurch bleiben Layout-Elemente ("fullscreen") stabiler, wenn
-     * die virtuelle Tastatur erscheint.
-     */
-    function setVh() {
-      const vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty('--vh', `${vh}px`);
-    }
-    // Beim Laden der Seite, beim Resizen und bei einer Orientierungsänderung aufrufen
-    window.addEventListener('resize', setVh);
-    window.addEventListener('orientationchange', setVh);
-    document.addEventListener('DOMContentLoaded', setVh);
-
-    const messagesDiv = document.getElementById('messages');
-    const userInput = document.getElementById('userInput');
-    const sendBtn = document.getElementById('sendBtn');
-
-    // Nachricht absenden bei Klick auf "Senden"
-    sendBtn.addEventListener('click', sendMessage);
-
-    // Alternativ: Bei Enter-Taste
-    userInput.addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') {
-        sendMessage();
-      }
-    });
-
-    function updateVh() {
-      if (window.visualViewport) {
-        const vh = window.visualViewport.height * 0.01;
-        document.documentElement.style.setProperty('--vh', `${vh}px`);
-      } else {
-        const vh = window.innerHeight * 0.01;
-        document.documentElement.style.setProperty('--vh', `${vh}px`);
-      }
-    }
-
-    window.addEventListener('resize', updateVh);
-    window.addEventListener('orientationchange', updateVh);
-    document.addEventListener('DOMContentLoaded', updateVh);
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener('resize', updateVh);
-    }
-
-    /**
-     * Simpler "Echo"-Chat:
-     * - Zeigt die eigene Nachricht an
-     * - Gibt dieselbe Nachricht als Bot-Antwort zurück
-     */
-    function sendMessage() {
-      const text = userInput.value.trim();
-      if (!text) return;
-
-      // Nutzer-Nachricht
-      const userMsg = document.createElement('div');
-      userMsg.classList.add('message', 'user-message');
-      userMsg.innerText = text;
-      messagesDiv.appendChild(userMsg);
-
-      // "Chatbot"-Nachricht (hier nur ein Echo)
-      const botMsg = document.createElement('div');
-      botMsg.classList.add('message', 'bot-message');
-      botMsg.innerText = 'Chatbot: ' + text;
-      messagesDiv.appendChild(botMsg);
-
-      // Eingabefeld leeren und Scroll an das Ende
-      userInput.value = '';
-      messagesDiv.scrollTop = messagesDiv.scrollHeight;
-    }
-  </script>
+    <script src="script.js"></script>
+    <script src="chatbot.js"></script>
 </body>
 </html>
