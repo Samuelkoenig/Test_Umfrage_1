@@ -154,6 +154,9 @@
     window.addEventListener('resize', updateVh);
     window.addEventListener('orientationchange', updateVh);
     document.addEventListener('DOMContentLoaded', updateVh);
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', updateVh);
+    }
 
     /**
      * Simpler "Echo"-Chat:
