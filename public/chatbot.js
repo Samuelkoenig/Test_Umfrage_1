@@ -24,7 +24,6 @@
  * - typingIndicatorTimeout @type {number|null}: The timer id for the typing animation delay. 
  * - continueBtnEnabled @type {boolean}: Variable to specify whether the continueSurveytBtn ist enabled.
  */
-const chatbotPage = 4;                   // To be specified: the page number where the chatbot appears!
 const enterMeansSend = true;             // To be specified: whether a message is sent when pressing enter!
 const typingAnimationDelay = 500         // To be specified: delay of the typing animation!
 const initialTypingAnimationDelay = 250  // To be specified: typing animation delay of initial bot message!
@@ -611,13 +610,13 @@ function updateVh() {
     const vh = window.visualViewport.height * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
 
-    const currentlyOpen = (sessionStorage.getItem('openChatbot') === '1');
+    const currentlyOpenCopy = (sessionStorage.getItem('openChatbot') === '1');
     const page = parseInt(sessionStorage.getItem('currentPage'), 10);
     const chatbotInterface = document.getElementById('chatbot-interface');
     const progressBar = document.getElementById('progress-bar');
     setTimeout(() => { 
       const offset = window.visualViewport.offsetTop;
-      if ((page === chatbotPage) && currentlyOpen) {
+      if ((page === chatbotPage) && currentlyOpenCopy) {
         chatbotInterface.style.transform = `translateY(${offset}px)`;
         progressBar.style.transform = `translateY(${offset}px)`;
         scrollMessagesToBottom();
