@@ -275,6 +275,22 @@ function applyChatbotViewState() {
         pageContainers[chatbotPage - 1].classList.add('chatbot-visible');
         document.dispatchEvent(new Event('chatbotInterfaceOpened'));
 
+        setTimeout(() => {
+            updateVh();
+          }, 50);
+        
+        setTimeout(() => {
+            updateVh();
+        }, 50);
+
+        setTimeout(() => {
+            updateVh();
+        }, 50);
+
+        setTimeout(() => {
+            updateVh();
+        }, 50);
+
     } else {
         documentBody.classList.remove('chatbot-visible')
         scenarioDiv.style.display = 'block';

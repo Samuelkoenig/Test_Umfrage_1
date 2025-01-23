@@ -293,13 +293,7 @@
   /* In der mobilen Ansicht soll der Chatbot den ganzen Bildschirm einnehmen */
   #chatbot-interface {
       position: fixed; /*relative*/
-      /*height: calc(var(--vh, 1vh) * 100 - 8px); */
-      height: calc(100dvh - 8px); 
-      @supports not (height: 100dvh) {
-        #chatbot-interface {
-          height: calc(var(--vh, 1vh) * 100 - 8px);
-        }
-      }
+      height: calc(var(--vh, 1vh) * 100 - 8px); 
       /*@supports (height: -webkit-fill-available) {
         height: -webkit-fill-available;
       }
