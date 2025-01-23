@@ -275,6 +275,31 @@ function applyChatbotViewState() {
         pageContainers[chatbotPage - 1].classList.add('chatbot-visible');
         document.dispatchEvent(new Event('chatbotInterfaceOpened'));
 
+        setTimeout(() => {
+            const vhTest = window.visualViewport.height * 0.01;
+            addMessage(`vh value: ${vhTest}`, 'user');
+        }, 200);
+
+        setTimeout(() => {
+            const vhTest = window.visualViewport.height * 0.01;
+            addMessage(`vh value: ${vhTest}`, 'user');
+        }, 200);
+
+        setTimeout(() => {
+            const vhTest = window.visualViewport.height * 0.01;
+            addMessage(`vh value: ${vhTest}`, 'user');
+        }, 200);
+
+        setTimeout(() => {
+            const vhTest = window.visualViewport.height * 0.01;
+            addMessage(`vh value: ${vhTest}`, 'user');
+        }, 200);
+
+        setTimeout(() => {
+            const vhTest = window.visualViewport.height * 0.01;
+            addMessage(`vh value: ${vhTest}`, 'user');
+        }, 200);
+
     } else {
         documentBody.classList.remove('chatbot-visible')
         scenarioDiv.style.display = 'block';
