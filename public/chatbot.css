@@ -294,7 +294,10 @@
   #chatbot-interface {
       position: fixed; /*relative*/
       height: calc(var(--vh, 1vh) * 100 - 8px); 
-      height: calc(100dvh - 8px);
+      @supports (height: -webkit-fill-available) {
+        height: -webkit-fill-available;
+      }
+      padding-bottom: env(safe-area-inset-bottom);
       width: 100%;  
       top: 0;
       left: 0;
@@ -305,13 +308,6 @@
       border-radius: 0;
       z-index: 10;
       overflow: hidden; /*kann eventuell weg*/
-  }
-
-  #chatbot-interface.safe-opening {
-    @supports (height: -webkit-fill-available) {
-      height: -webkit-fill-available;
-    }
-    padding-bottom: env(safe-area-inset-bottom);
   }
 
   /* Der Survey Container dahinter wird nicht mehr sichtbar sein, weil der Chatbot fullscreen ist */
