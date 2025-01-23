@@ -647,15 +647,17 @@ function alignChatbotUi() {
     }, 100);*/
 
     requestAnimationFrame(() => { 
-      const offset = window.visualViewport.offsetTop;
-      if ((page === chatbotPage) && currentlyOpenCopy) {
-        chatbotInterface.style.transform = `translateY(${offset}px)`;
-        progressBar.style.transform = `translateY(${offset}px)`;
-        scrollMessagesToBottom();
-      } else {
-        chatbotInterface.style.transform = `translateY(0px)`;
-        progressBar.style.transform = `translateY(0px)`;
-      }
+      requestAnimationFrame(() => { 
+        const offset = window.visualViewport.offsetTop;
+        if ((page === chatbotPage) && currentlyOpenCopy) {
+          chatbotInterface.style.transform = `translateY(${offset}px)`;
+          progressBar.style.transform = `translateY(${offset}px)`;
+          scrollMessagesToBottom();
+        } else {
+          chatbotInterface.style.transform = `translateY(0px)`;
+          progressBar.style.transform = `translateY(0px)`;
+        }
+      });
     });
 
   } 
