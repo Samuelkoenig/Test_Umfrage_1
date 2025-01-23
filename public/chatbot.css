@@ -294,10 +294,10 @@
   #chatbot-interface {
       position: fixed; /*relative*/
       height: calc(var(--vh, 1vh) * 100 - 8px); 
-      @supports (height: -webkit-fill-available) {
+      /*@supports (height: -webkit-fill-available) {
         height: -webkit-fill-available;
-      }
-      /*padding-bottom: env(safe-area-inset-bottom);*/
+      }*/
+      padding-bottom: env(safe-area-inset-bottom);
       width: 100%;  
       top: 0;
       left: 0;
