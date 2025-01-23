@@ -119,13 +119,25 @@ function attachChatbotEventListeners() {
 }
 
 function attachMobileChatbotEventListeners() {
-  const textarea = document.getElementById('userInput');
+  //const textarea = document.getElementById('userInput');
 
-  window.addEventListener('resize', updateVh);
-  window.addEventListener('orientationchange', updateVh);
+  window.addEventListener('resize', () => {
+    updateVh();
+    alignChatbotUi();
+  });
+
+  window.addEventListener('orientationchange', () => {
+    updateVh();
+    alignChatbotUi();
+  });
+
   if (window.visualViewport) {
-    window.visualViewport.addEventListener('resize', updateVh);
+    window.visualViewport.addEventListener('resize', () => {
+      updateVh();
+      alignChatbotUi();
+    });
   }
+
   /*textarea.addEventListener('focus', () => {
     window.scrollTo(0, 0);
     scrollMessagesToBottom();
@@ -609,12 +621,20 @@ function updateVh() {
   if (window.visualViewport) {
     const vh = window.visualViewport.height * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
+  } else {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  }
+}
 
+function alignChatbotUi() {
+  if (window.visualViewport) {
     const currentlyOpenCopy = (sessionStorage.getItem('openChatbot') === '1');
     const page = parseInt(sessionStorage.getItem('currentPage'), 10);
     const chatbotInterface = document.getElementById('chatbot-interface');
     const progressBar = document.getElementById('progress-bar');
-    setTimeout(() => { 
+
+    /*setTimeout(() => { 
       const offset = window.visualViewport.offsetTop;
       if ((page === chatbotPage) && currentlyOpenCopy) {
         chatbotInterface.style.transform = `translateY(${offset}px)`;
@@ -624,11 +644,21 @@ function updateVh() {
         chatbotInterface.style.transform = `translateY(0px)`;
         progressBar.style.transform = `translateY(0px)`;
       }
-    }, 100);
-  } else {
-    const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
-  }
+    }, 100);*/
+
+    requestAnimationFrame(() => { 
+      const offset = window.visualViewport.offsetTop;
+      if ((page === chatbotPage) && currentlyOpenCopy) {
+        chatbotInterface.style.transform = `translateY(${offset}px)`;
+        progressBar.style.transform = `translateY(${offset}px)`;
+        scrollMessagesToBottom();
+      } else {
+        chatbotInterface.style.transform = `translateY(0px)`;
+        progressBar.style.transform = `translateY(0px)`;
+      }
+    });
+
+  } 
 }
 
 /**
