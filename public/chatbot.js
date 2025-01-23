@@ -136,24 +136,8 @@ function attachMobileChatbotEventListeners() {
     window.visualViewport.addEventListener('resize', () => {
       updateVh();
       alignChatbotUi();
-
-      setTimeout(() => {
-        updateVh();
-        alignChatbotUi();
-      }, 200);
-      setTimeout(() => {
-        updateVh();
-        alignChatbotUi();
-      }, 200);
-      setTimeout(() => {
-        updateVh();
-        alignChatbotUi();
-      }, 200);
-      setTimeout(() => {
-        updateVh();
-        alignChatbotUi();
-      }, 200);
-
+      const vhTest = window.visualViewport.height * 0.01;
+      addMessage(`vh value: ${vhTest}`, 'user');
     });
   }
 
