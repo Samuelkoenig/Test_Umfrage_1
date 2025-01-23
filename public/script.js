@@ -281,17 +281,15 @@ function applyChatbotViewState() {
         window.scrollTo(0, 0);
         document.body.offsetHeight;
         setTimeout(() => {
-            updateVh();
             window.scrollTo({
                 top: document.body.scrollHeight,
                 behavior: 'smooth' // Optional: für sanftes Scrollen
               });
+              updateVh();
             documentBody.classList.add('chatbot-visible');
           }, 200);
 
         document.dispatchEvent(new Event('chatbotInterfaceOpened'));
-
-        window.scrollTo(0, 0);
 
     } else {
         documentBody.classList.remove('chatbot-visible');
