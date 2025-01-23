@@ -187,6 +187,7 @@ function showPage(pageNumber) {
             sessionStorage.setItem('openChatbot', '0');
         }
         applyChatbotViewState();
+        updateVh();
     } else {
         //sessionStorage.setItem('openChatbot', '0'); // If active, chatbot ui is closed automatically. 
         applyChatbotViewState();
