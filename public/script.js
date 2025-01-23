@@ -282,10 +282,16 @@ function applyChatbotViewState() {
         document.body.offsetHeight;
         setTimeout(() => {
             updateVh();
+            window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: 'smooth' // Optional: für sanftes Scrollen
+              });
             documentBody.classList.add('chatbot-visible');
           }, 200);
 
         document.dispatchEvent(new Event('chatbotInterfaceOpened'));
+
+        window.scrollTo(0, 0);
 
     } else {
         documentBody.classList.remove('chatbot-visible');
@@ -320,7 +326,6 @@ function openChatbotLogic() {
         document.dispatchEvent(new CustomEvent('userArrivedAtChatbot'));
     }
     sessionStorage.setItem('openChatbot', '1');
-    applyChatbotViewState();
     applyChatbotViewState();
 }
 
