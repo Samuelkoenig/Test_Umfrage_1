@@ -321,6 +321,7 @@ function openChatbotLogic() {
     }
     sessionStorage.setItem('openChatbot', '1');
     applyChatbotViewState();
+    applyChatbotViewState();
 }
 
 /**
