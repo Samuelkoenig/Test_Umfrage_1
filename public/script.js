@@ -274,13 +274,11 @@ function applyChatbotViewState() {
         surveyContainer.classList.add('chatbot-visible');
         pageContainers[chatbotPage - 1].classList.add('chatbot-visible');
         document.dispatchEvent(new Event('chatbotInterfaceOpened'));
-
-        documentBody.classList.remove('chatbot-visible')
+        
+        updateVh();
         requestAnimationFrame(() => {
-            updateVh();
-            alignChatbotUi();
-            documentBody.classList.add('chatbot-visible')
-        });
+            checkChatbotVisibility();
+          });
 
     } else {
         documentBody.classList.remove('chatbot-visible')
@@ -293,6 +291,33 @@ function applyChatbotViewState() {
         pageContainers[chatbotPage - 1].classList.remove('chatbot-visible');
     }
 }
+
+function checkChatbotVisibility() {
+    const chatbot = document.getElementById('chatbot-interface');
+    if (!chatbot) return;
+  
+    // Sichtbarer Viewport -> window.innerHeight oder visualViewport.height
+    const viewportHeight = window.innerHeight;
+    // Position + Höhe des Chatbots
+    const rect = chatbot.getBoundingClientRect();
+  
+    // Wenn das Chatbot-Element „unten rausguckt“, hat iOS Safari vermutlich
+    // die falsche Höhe geliefert:
+    if (rect.bottom > viewportHeight) {
+      // Korrigiere noch einmal die Höhe:
+      updateVh();
+      
+      // Optional: nochmal checken, falls eine zweite Korrektur nötig ist.
+      setTimeout(() => {
+        const rect2 = chatbot.getBoundingClientRect();
+        if (rect2.bottom > window.innerHeight) {
+          // Falls immer noch nicht passt,
+          // ggf. nochmal updateVh() oder logging:
+          updateVh();
+        }
+      }, 200);
+    }
+  }
 
 /**
  * Opens the chatbot interface.
