@@ -274,6 +274,14 @@ function applyChatbotViewState() {
         surveyContainer.classList.add('chatbot-visible');
         pageContainers[chatbotPage - 1].classList.add('chatbot-visible');
         document.dispatchEvent(new Event('chatbotInterfaceOpened'));
+
+        documentBody.classList.remove('chatbot-visible')
+        requestAnimationFrame(() => {
+            updateVh();
+            alignChatbotUi();
+            documentBody.classList.add('chatbot-visible')
+        });
+
     } else {
         documentBody.classList.remove('chatbot-visible')
         scenarioDiv.style.display = 'block';
@@ -284,12 +292,6 @@ function applyChatbotViewState() {
         surveyContainer.classList.remove('chatbot-visible');
         pageContainers[chatbotPage - 1].classList.remove('chatbot-visible');
     }
-
-    requestAnimationFrame(() => {
-        updateVh();
-        alignChatbotUi();
-        }
-    );
 }
 
 /**
