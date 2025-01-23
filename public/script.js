@@ -262,7 +262,7 @@ function applyChatbotViewState() {
     const surveyContainer = document.getElementById('survey-container');
     const pageContainers = document.getElementsByClassName('page');
 
-    chatbotInterface.classList.add('safe-opening');
+    //chatbotInterface.classList.add('safe-opening');
 
     if (!scenarioDiv || !chatbotInterface || !navigation || !openBtnContainer || !surveyContainer) return; 
 
@@ -290,7 +290,7 @@ function applyChatbotViewState() {
     updateVh();
     updateVh();
 
-    chatbotInterface.classList.remove('safe-opening');
+    //chatbotInterface.classList.remove('safe-opening');
 }
 
 /**

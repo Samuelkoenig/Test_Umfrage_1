@@ -294,6 +294,7 @@
   #chatbot-interface {
       position: fixed; /*relative*/
       height: calc(var(--vh, 1vh) * 100 - 8px); 
+      height: calc(100dvh - 8px);
       width: 100%;  
       top: 0;
       left: 0;
