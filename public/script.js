@@ -285,10 +285,8 @@ function applyChatbotViewState() {
         pageContainers[chatbotPage - 1].classList.remove('chatbot-visible');
     }
 
-    setTimeout(() => {
-        updateVh();
-        alignChatbotUi();
-    }, 100);
+    updateVh();
+    updateVh();
 }
 
 /**
