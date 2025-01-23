@@ -142,7 +142,11 @@ function attachEventListeners() {
         input.addEventListener('change', inputFieldLogic);
     });
 
-    document.getElementById('openChatbotBtn').addEventListener('click', openChatbotLogic);
+    document.getElementById('openChatbotBtn').addEventListener('click', () => {
+        openChatbotLogic();
+        closeChatbotLogic();
+        openChatbotLogic();
+    });
     document.getElementById('closeChatbotBtn').addEventListener('click', closeChatbotLogic);
     document.getElementById('continueSurveytBtn').addEventListener('click', continueSurveyLogic);
 
@@ -275,7 +279,7 @@ function applyChatbotViewState() {
         pageContainers[chatbotPage - 1].classList.add('chatbot-visible');
         document.dispatchEvent(new Event('chatbotInterfaceOpened'));
 
-        setTimeout(() => {
+        /*setTimeout(() => {
             const vhTest = window.visualViewport.height * 0.01;
             addMessage(`vh value: ${vhTest}`, 'user');
         }, 200);
@@ -298,7 +302,7 @@ function applyChatbotViewState() {
         setTimeout(() => {
             const vhTest = window.visualViewport.height * 0.01;
             addMessage(`vh value: ${vhTest}`, 'user');
-        }, 200);
+        }, 200);*/
 
     } else {
         documentBody.classList.remove('chatbot-visible')
