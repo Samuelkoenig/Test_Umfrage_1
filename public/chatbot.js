@@ -113,7 +113,6 @@ function attachChatbotEventListeners() {
   document.addEventListener('chatbotInterfaceOpened', function () {
     scrollMessagesToBottom();
     adjustTextareaHeight(textarea, maxRows);
-    updateVh();
   });
 
   adjustTextareaHeight(textarea, maxRows);

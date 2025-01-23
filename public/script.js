@@ -269,7 +269,7 @@ function applyChatbotViewState() {
     if (!scenarioDiv || !chatbotInterface || !navigation || !openBtnContainer || !surveyContainer) return; 
 
     if (openChatbot && currentPage === chatbotPage) {
-        documentBody.classList.add('chatbot-visible')
+        //documentBody.classList.add('chatbot-visible');
         scenarioDiv.style.display = 'none';
         chatbotInterface.classList.remove('chatbot-hidden');
         chatbotInterface.classList.add('chatbot-visible');
@@ -277,35 +277,18 @@ function applyChatbotViewState() {
         openBtnContainer.style.display = 'none';
         surveyContainer.classList.add('chatbot-visible');
         pageContainers[chatbotPage - 1].classList.add('chatbot-visible');
+
+        window.scrollTo(0, 0);
+        document.body.offsetHeight;
+        setTimeout(() => {
+            updateVh();
+            documentBody.classList.add('chatbot-visible');
+          }, 200);
+
         document.dispatchEvent(new Event('chatbotInterfaceOpened'));
 
-        /*setTimeout(() => {
-            const vhTest = window.visualViewport.height * 0.01;
-            addMessage(`vh value: ${vhTest}`, 'user');
-        }, 200);
-
-        setTimeout(() => {
-            const vhTest = window.visualViewport.height * 0.01;
-            addMessage(`vh value: ${vhTest}`, 'user');
-        }, 200);
-
-        setTimeout(() => {
-            const vhTest = window.visualViewport.height * 0.01;
-            addMessage(`vh value: ${vhTest}`, 'user');
-        }, 200);
-
-        setTimeout(() => {
-            const vhTest = window.visualViewport.height * 0.01;
-            addMessage(`vh value: ${vhTest}`, 'user');
-        }, 200);
-
-        setTimeout(() => {
-            const vhTest = window.visualViewport.height * 0.01;
-            addMessage(`vh value: ${vhTest}`, 'user');
-        }, 200);*/
-
     } else {
-        documentBody.classList.remove('chatbot-visible')
+        documentBody.classList.remove('chatbot-visible');
         scenarioDiv.style.display = 'block';
         chatbotInterface.classList.remove('chatbot-visible');
         chatbotInterface.classList.add('chatbot-hidden');
