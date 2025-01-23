@@ -284,8 +284,11 @@ function applyChatbotViewState() {
         surveyContainer.classList.remove('chatbot-visible');
         pageContainers[chatbotPage - 1].classList.remove('chatbot-visible');
     }
-    
-    updateVh();
+
+    setTimeout(() => {
+        updateVh();
+        alignChatbotUi();
+    }, 100);
 }
 
 /**
