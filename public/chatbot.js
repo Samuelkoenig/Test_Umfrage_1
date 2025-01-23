@@ -136,6 +136,24 @@ function attachMobileChatbotEventListeners() {
     window.visualViewport.addEventListener('resize', () => {
       updateVh();
       alignChatbotUi();
+
+      setTimeout(() => {
+        updateVh();
+        alignChatbotUi();
+      }, 200);
+      setTimeout(() => {
+        updateVh();
+        alignChatbotUi();
+      }, 200);
+      setTimeout(() => {
+        updateVh();
+        alignChatbotUi();
+      }, 200);
+      setTimeout(() => {
+        updateVh();
+        alignChatbotUi();
+      }, 200);
+
     });
   }
 
