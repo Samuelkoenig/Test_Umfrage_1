@@ -290,7 +290,7 @@ function applyChatbotViewState() {
     updateVh();
     updateVh();
 
-    chatbotInterface.classList.add('safe-opening');
+    chatbotInterface.classList.remove('safe-opening');
 }
 
 /**
