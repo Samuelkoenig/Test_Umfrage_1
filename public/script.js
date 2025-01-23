@@ -262,8 +262,6 @@ function applyChatbotViewState() {
     const surveyContainer = document.getElementById('survey-container');
     const pageContainers = document.getElementsByClassName('page');
 
-    //chatbotInterface.classList.add('safe-opening');
-
     if (!scenarioDiv || !chatbotInterface || !navigation || !openBtnContainer || !surveyContainer) return; 
 
     if (openChatbot && currentPage === chatbotPage) {
@@ -287,10 +285,11 @@ function applyChatbotViewState() {
         pageContainers[chatbotPage - 1].classList.remove('chatbot-visible');
     }
 
-    updateVh();
-    updateVh();
-
-    //chatbotInterface.classList.remove('safe-opening');
+    requestAnimationFrame(() => {
+        updateVh();
+        alignChatbotUi();
+        }
+    );
 }
 
 /**
