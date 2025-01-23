@@ -275,18 +275,20 @@ function applyChatbotViewState() {
         chatbotInterface.classList.add('chatbot-visible');
         navigation.style.display = 'none';
         openBtnContainer.style.display = 'none';
+        //pageContainers[chatbotPage - 1].classList.add('chatbot-visible');
+        //documentBody.classList.add('chatbot-visible');
 
-        window.scrollTo(0, 0);
-        document.body.offsetHeight;
+        //window.scrollTo(0, 0);
+        //document.body.offsetHeight;
         setTimeout(() => {
             window.scrollTo({
                 top: document.body.scrollHeight,
                 behavior: 'smooth' // Optional: für sanftes Scrollen
                 });
             updateVh();
-            //surveyContainer.classList.add('chatbot-visible');
-            //pageContainers[chatbotPage - 1].classList.add('chatbot-visible');
-            //documentBody.classList.add('chatbot-visible');
+            surveyContainer.classList.add('chatbot-visible');
+            pageContainers[chatbotPage - 1].classList.add('chatbot-visible');
+            documentBody.classList.add('chatbot-visible');
         }, 200);
 
         document.dispatchEvent(new Event('chatbotInterfaceOpened'));
