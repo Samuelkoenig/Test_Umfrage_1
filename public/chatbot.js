@@ -113,6 +113,7 @@ function attachChatbotEventListeners() {
   document.addEventListener('chatbotInterfaceOpened', function () {
     scrollMessagesToBottom();
     adjustTextareaHeight(textarea, maxRows);
+    updateVh();
   });
 
   adjustTextareaHeight(textarea, maxRows);
@@ -618,13 +619,13 @@ function scrollMessagesToBottom() {
 
 
 function updateVh() {
-  if (window.visualViewport) {
+  /*if (window.visualViewport) {
     const vh = window.visualViewport.height * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
-  } else {
+  } else {*/
     const vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
-  }
+  //}
 }
 
 function alignChatbotUi() {
