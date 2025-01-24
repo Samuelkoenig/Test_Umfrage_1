@@ -382,14 +382,14 @@ async function sendUserMessage() {
   if (!text) return;
   input.value = '';
 
-  userInput.blur();
+  input.blur();
   const selection = window.getSelection();
   if (selection) {
     selection.removeAllRanges();
   }
-  userInput.focus();
-  userInput.setSelectionRange(0, 0);
-  sendBtn.click();
+  input.focus();
+  input.setSelectionRange(0, 0);
+  document.getElementById('sendBtn').click();
 
   addMessage(text, 'user');
   addMessageToState(text, 'user', null); 
