@@ -381,7 +381,11 @@ async function sendUserMessage() {
   const text = input.value.trim();
   if (!text) return;
   input.value = '';
-  input.blur();
+  
+  const selection = window.getSelection();
+  if (selection) {
+    selection.removeAllRanges();
+  }
 
   addMessage(text, 'user');
   addMessageToState(text, 'user', null); 
