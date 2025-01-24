@@ -639,7 +639,7 @@ function alignChatbotUi() {
       if ((page === chatbotPage) && currentlyOpenCopy) {
         chatbotInterface.style.transform = `translateY(${offset}px)`;
         progressBar.style.transform = `translateY(${offset}px)`;
-        document.getElementById('userInput').focus();
+        //document.getElementById('userInput').focus();
         chatbotInterface.offsetHeight;
         scrollMessagesToBottom();
       } else {
