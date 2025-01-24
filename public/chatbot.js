@@ -639,8 +639,12 @@ function alignChatbotUi() {
       if ((page === chatbotPage) && currentlyOpenCopy) {
         chatbotInterface.style.transform = `translateY(${offset}px)`;
         progressBar.style.transform = `translateY(${offset}px)`;
+        if (document.getElementById('userInput').matches(':focus')) {
+          document.getElementById('userInput').focus();
+          chatbotInterface.offsetHeight;
+        }
         //document.getElementById('userInput').focus();
-        chatbotInterface.offsetHeight;
+        //chatbotInterface.offsetHeight;
         scrollMessagesToBottom();
       } else {
         chatbotInterface.style.transform = `translateY(0px)`;
