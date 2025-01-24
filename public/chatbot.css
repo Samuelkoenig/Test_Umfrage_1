@@ -67,6 +67,7 @@
   flex-direction: column;
   background: #ffffff;
   overflow: hidden;
+  z-index: 8; /*0;*/
 }
 
 /* Nachrichtenbereich */
@@ -101,7 +102,7 @@
   font-size: 16px;
   word-wrap: break-word;
   position: relative;
-  z-index: 0;
+  z-index: 10; /*0;*/
 }
 
 /* Entfernt den unteren Rand der letzten Nachricht */
@@ -135,7 +136,7 @@
   border-width: 0 25px 25px 0;
   border-style: solid;
   border-color: transparent #3498db transparent transparent;
-  z-index: -1;
+  z-index: 9; /*-1;*/
 }
 
 .messages .user-message::before {
@@ -148,7 +149,7 @@
   border-width: 0 0 25px 25px;
   border-style: solid;
   border-color: transparent transparent transparent #3498db;
-  z-index: -1;
+  z-index: 9; /*-1;*/
 }
 
 /* Typing indicator*/
@@ -222,8 +223,6 @@
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
   line-height: 1.4;
-  user-select: none;
-  -webkit-user-select: none;
   padding: 8px 10px; 
   border: none;
   border-radius: 0;
@@ -297,10 +296,6 @@
   #chatbot-interface {
       position: fixed; /*relative*/
       height: calc(var(--vh, 1vh) * 100 - 8px); 
-      /*@supports (height: -webkit-fill-available) {
-        height: -webkit-fill-available;
-      }
-      padding-bottom: env(safe-area-inset-bottom);*/
       width: 100%;  
       top: 0;
       left: 0;
@@ -309,7 +304,7 @@
       margin: 0;
       margin-top: 8px; /*0*/
       border-radius: 0;
-      z-index: 10;
+      z-index: 7;
       /*overflow: hidden; /*kann eventuell weg*/
   }
 
