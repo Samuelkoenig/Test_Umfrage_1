@@ -642,7 +642,9 @@ function alignChatbotUi() {
         inputTest = document.getElementById('userInput');
         if (inputTest.matches(':focus')) {
           //addMessage('Test', 'user');
-          document.getElementById('userInput').focus();
+          setTimeout(() => {
+            document.getElementById('userInput').focus();
+          })
           chatbotInterface.offsetHeight;
         }
         //document.getElementById('userInput').focus();
