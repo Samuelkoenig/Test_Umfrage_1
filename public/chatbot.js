@@ -378,13 +378,9 @@ function processInitialActivities(data) {
 async function sendUserMessage() {
   const treatmentGroup = sessionStorage.getItem('treatmentGroup');
   const input = document.getElementById('userInput');
-  input.style.userSelect = 'none';
-  input.style.webkitUserSelect = 'none';
   const text = input.value.trim();
   if (!text) return;
   input.value = ''; 
-  input.style.userSelect = '';
-  input.style.webkitUserSelect = '';
 
   addMessage(text, 'user');
   addMessageToState(text, 'user', null); 
