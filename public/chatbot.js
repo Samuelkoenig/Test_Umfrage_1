@@ -629,6 +629,7 @@ function updateVh() {
 
 function alignChatbotUi() {
   if (window.visualViewport) {
+    addMessage('Test', 'user')
     const currentlyOpenCopy = (sessionStorage.getItem('openChatbot') === '1');
     const page = parseInt(sessionStorage.getItem('currentPage'), 10);
     const chatbotInterface = document.getElementById('chatbot-interface');
