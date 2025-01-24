@@ -647,10 +647,10 @@ function alignChatbotUi() {
           })
         }*/
 
-        requestAnimationFrame(() => {
+        setTimeout(() => {
           progressBar.scrollIntoView({
             behavior: 'smooth'
-          })
+          }, 200)
         })
 
         scrollMessagesToBottom();
