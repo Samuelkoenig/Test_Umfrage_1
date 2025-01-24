@@ -646,8 +646,14 @@ function alignChatbotUi() {
             document.getElementById('userInput').focus()
           })
         }
-        progressBar.scrollIntoView({
-          behavior: 'smooth'
+
+        setTimeout(() => {
+          chatbotInterface.scrollIntoView({
+            behavior: 'smooth'
+          })
+          progressBar.scrollIntoView({
+            behavior: 'smooth'
+          })
         })
         scrollMessagesToBottom();
       } else {
