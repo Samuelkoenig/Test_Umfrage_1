@@ -635,30 +635,29 @@ function alignChatbotUi() {
     const progressBar = document.getElementById('progress-bar');
 
     window.requestAnimationFrame(() => { 
-      setTimeout(() => {
-        const offset = window.visualViewport.offsetTop;
-        if ((page === chatbotPage) && currentlyOpenCopy) {
-          chatbotInterface.style.transform = `translateY(${offset}px)`;
-          progressBar.style.transform = `translateY(${offset}px)`;
-          inputTest = document.getElementById('userInput');
-          if (inputTest.matches(':focus')) {
-            window.requestAnimationFrame(() => {
-              document.getElementById('userInput').focus()
-            })
-          }
+      const offset = window.visualViewport.offsetTop;
+      if ((page === chatbotPage) && currentlyOpenCopy) {
+        chatbotInterface.style.transform = `translateY(${offset}px)`;
+        progressBar.style.transform = `translateY(${offset}px)`;
+        
+        inputTest = document.getElementById('userInput');
+        /*if (inputTest.matches(':focus')) {
+          window.requestAnimationFrame(() => {
+            document.getElementById('userInput').focus()
+          })
+        }*/
 
-          /*setTimeout(() => {
-            progressBar.scrollIntoView({
-              behavior: 'smooth'
-            }, 100)
-          })*/
+        /*setTimeout(() => {
+          progressBar.scrollIntoView({
+            behavior: 'smooth'
+          }, 100)
+        })*/
 
-          scrollMessagesToBottom();
-        } else {
-          chatbotInterface.style.transform = `translateY(0px)`;
-          progressBar.style.transform = `translateY(0px)`;
-        }
-      }, 100)
+        scrollMessagesToBottom();
+      } else {
+        chatbotInterface.style.transform = `translateY(0px)`;
+        progressBar.style.transform = `translateY(0px)`;
+      }
     });
 
 
