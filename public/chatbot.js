@@ -635,30 +635,35 @@ function alignChatbotUi() {
     const progressBar = document.getElementById('progress-bar');
 
     window.requestAnimationFrame(() => { 
-      const offset = window.visualViewport.offsetTop;
-      addMessage(`Offset: ${offset})`, 'user')
-      if ((page === chatbotPage) && currentlyOpenCopy) {
-        chatbotInterface.style.transform = `translateY(${offset}px)`;
-        progressBar.style.transform = `translateY(${offset}px)`;
-        
-        inputTest = document.getElementById('userInput');
-        /*if (inputTest.matches(':focus')) {
-          window.requestAnimationFrame(() => {
-            document.getElementById('userInput').focus()
-          })
-        }*/
+      setTimeout(() => {
 
-        setTimeout(() => {
-          progressBar.scrollIntoView({
-            behavior: 'smooth'
-          }, 200)
-        })
+        const offset = window.visualViewport.offsetTop;
+        addMessage(`Offset: ${offset})`, 'user')
+        if ((page === chatbotPage) && currentlyOpenCopy) {
+          chatbotInterface.style.transform = `translateY(${offset}px)`;
+          progressBar.style.transform = `translateY(${offset}px)`;
+          
+          inputTest = document.getElementById('userInput');
+          /*if (inputTest.matches(':focus')) {
+            window.requestAnimationFrame(() => {
+              document.getElementById('userInput').focus()
+            })
+          }*/
 
-        scrollMessagesToBottom();
-      } else {
-        chatbotInterface.style.transform = `translateY(0px)`;
-        progressBar.style.transform = `translateY(0px)`;
-      }
+          /*setTimeout(() => {
+            progressBar.scrollIntoView({
+              behavior: 'smooth'
+            }, 200)
+          })*/
+
+          scrollMessagesToBottom();
+        } else {
+          chatbotInterface.style.transform = `translateY(0px)`;
+          progressBar.style.transform = `translateY(0px)`;
+        }
+
+      }, 100)
+      
     });
 
 
