@@ -640,6 +640,7 @@ function alignChatbotUi() {
         chatbotInterface.style.transform = `translateY(${offset}px)`;
         progressBar.style.transform = `translateY(${offset}px)`;
         if (document.getElementById('userInput').matches(':focus')) {
+          addMessage('Test', 'user');
           document.getElementById('userInput').focus();
           chatbotInterface.offsetHeight;
         }
