@@ -90,7 +90,6 @@ function attachChatbotEventListeners() {
   sendBtn.addEventListener('click', function() {
     sendUserMessage();
     adjustTextareaHeight(textarea, maxRows);
-    document.getElementById('chatbot-interface').offsetHeight;
   });
 
   if (enterMeansSend) {
@@ -640,6 +639,8 @@ function alignChatbotUi() {
       if ((page === chatbotPage) && currentlyOpenCopy) {
         chatbotInterface.style.transform = `translateY(${offset}px)`;
         progressBar.style.transform = `translateY(${offset}px)`;
+        document.getElementById('userInput').focus();
+        chatbotInterface.offsetHeight;
         scrollMessagesToBottom();
       } else {
         chatbotInterface.style.transform = `translateY(0px)`;
