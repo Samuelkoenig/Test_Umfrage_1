@@ -636,6 +636,7 @@ function alignChatbotUi() {
 
     window.requestAnimationFrame(() => { 
       const offset = window.visualViewport.offsetTop;
+      addMessage(`Offset: ${offset})`, 'user')
       if ((page === chatbotPage) && currentlyOpenCopy) {
         chatbotInterface.style.transform = `translateY(${offset}px)`;
         progressBar.style.transform = `translateY(${offset}px)`;
