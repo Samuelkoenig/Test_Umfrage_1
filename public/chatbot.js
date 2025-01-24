@@ -629,7 +629,6 @@ function updateVh() {
 
 function alignChatbotUi() {
   if (window.visualViewport) {
-    addMessage('Test', 'user')
     const currentlyOpenCopy = (sessionStorage.getItem('openChatbot') === '1');
     const page = parseInt(sessionStorage.getItem('currentPage'), 10);
     const chatbotInterface = document.getElementById('chatbot-interface');
@@ -648,13 +647,11 @@ function alignChatbotUi() {
         }
 
         setTimeout(() => {
-          chatbotInterface.scrollIntoView({
-            behavior: 'smooth'
-          })
           progressBar.scrollIntoView({
             behavior: 'smooth'
-          })
+          }, 100)
         })
+
         scrollMessagesToBottom();
       } else {
         chatbotInterface.style.transform = `translateY(0px)`;
