@@ -645,8 +645,9 @@ function alignChatbotUi() {
             document.getElementById('userInput').focus()
           })
         }
-        //document.getElementById('userInput').focus();
-        //chatbotInterface.offsetHeight;
+        progressBar.scrollIntoView({
+          behavior: 'smooth'
+        })
         scrollMessagesToBottom();
       } else {
         chatbotInterface.style.transform = `translateY(0px)`;
