@@ -380,7 +380,7 @@ async function sendUserMessage() {
   const input = document.getElementById('userInput');
   const text = input.value.trim();
   if (!text) return;
-  input.value = '';
+  input.value = ''; 
 
   input.blur();
   const selection = window.getSelection();
