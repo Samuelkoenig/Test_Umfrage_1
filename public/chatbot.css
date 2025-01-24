@@ -327,6 +327,10 @@
       border-radius: 10px;
   }
 
+  #survey-container.chatbot-visible {
+      overflow: hidden;
+  }
+
   /* Dynamische Anpassung an Containerbreite in Desktop-Ansicht */
   .chatbot-messages-container,
   .input-container input[type="text"] {
