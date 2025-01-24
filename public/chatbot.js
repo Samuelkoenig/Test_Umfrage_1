@@ -378,18 +378,13 @@ function processInitialActivities(data) {
 async function sendUserMessage() {
   const treatmentGroup = sessionStorage.getItem('treatmentGroup');
   const input = document.getElementById('userInput');
+  input.style.userSelect = 'none';
+  input.style.webkitUserSelect = 'none';
   const text = input.value.trim();
   if (!text) return;
   input.value = ''; 
-
-  input.blur();
-  const selection = window.getSelection();
-  if (selection) {
-    selection.removeAllRanges();
-  }
-  input.focus();
-  input.setSelectionRange(0, 0);
-  document.getElementById('sendBtn').click();
+  input.style.userSelect = '';
+  input.style.webkitUserSelect = '';
 
   addMessage(text, 'user');
   addMessageToState(text, 'user', null); 
