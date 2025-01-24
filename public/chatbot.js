@@ -90,6 +90,7 @@ function attachChatbotEventListeners() {
   sendBtn.addEventListener('click', function() {
     sendUserMessage();
     adjustTextareaHeight(textarea, maxRows);
+    document.getElementById('chatbot-interface').offsetHeight;
   });
 
   if (enterMeansSend) {
