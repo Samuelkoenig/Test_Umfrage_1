@@ -67,7 +67,6 @@
   flex-direction: column;
   background: #ffffff;
   overflow: hidden;
-  z-index: 8; /*0;*/
 }
 
 /* Nachrichtenbereich */
@@ -102,7 +101,7 @@
   font-size: 16px;
   word-wrap: break-word;
   position: relative;
-  z-index: 10; /*0;*/
+  z-index: 0;
 }
 
 /* Entfernt den unteren Rand der letzten Nachricht */
@@ -136,7 +135,7 @@
   border-width: 0 25px 25px 0;
   border-style: solid;
   border-color: transparent #3498db transparent transparent;
-  z-index: 9; /*-1;*/
+  z-index: -1;
 }
 
 .messages .user-message::before {
@@ -149,7 +148,7 @@
   border-width: 0 0 25px 25px;
   border-style: solid;
   border-color: transparent transparent transparent #3498db;
-  z-index: 9; /*-1;*/
+  z-index: -1;
 }
 
 /* Typing indicator*/
@@ -304,7 +303,7 @@
       margin: 0;
       margin-top: 8px; /*0*/
       border-radius: 0;
-      z-index: 7;
+      z-index: -1 /*10;*/
       /*overflow: hidden; /*kann eventuell weg*/
   }
 
