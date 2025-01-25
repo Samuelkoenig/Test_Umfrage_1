@@ -67,6 +67,20 @@ p {
 
 #survey-container.chatbot-visible-locked {
     overflow: hidden;
+
+    height: 750px;
+    max-height: calc(var(--vh, 1vh) * 100 - 8px);
+
+    margin-top: clamp(
+      8px,
+      calc(( (var(--vh, 1vh) * 100 - 8px) - 750px ) / 2),
+      9999px
+    );
+    margin-bottom: clamp(
+        0px,
+        calc(( (var(--vh, 1vh) * 100 - 8px) - 750px ) / 2),
+        9999px
+    );
 }
 
 .page {
