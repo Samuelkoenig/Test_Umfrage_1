@@ -640,15 +640,15 @@ function alignChatbotUi() {
         //addMessage(`Offset: ${offset})`, 'user') //Nur zum Testen
         if ((page === chatbotPage) && currentlyOpenCopy) {
           
-          window.scrollTo({
+          /*window.scrollTo({
             top: 0,
             left: 0,
             behavior: 'smooth' 
-          });
+          });*/
           
-          //const offset = window.visualViewport.offsetTop;
-          //chatbotInterface.style.transform = `translateY(${offset}px)`;
-          //progressBar.style.transform = `translateY(${offset}px)`;
+          const offset = window.visualViewport.offsetTop;
+          chatbotInterface.style.transform = `translateY(${offset}px)`;
+          progressBar.style.transform = `translateY(${offset}px)`;
           
           /*inputTest = document.getElementById('userInput');
           if (inputTest.matches(':focus')) {
@@ -665,8 +665,8 @@ function alignChatbotUi() {
 
           scrollMessagesToBottom();
         } else {
-          //chatbotInterface.style.transform = `translateY(0px)`;
-          //progressBar.style.transform = `translateY(0px)`;
+          chatbotInterface.style.transform = `translateY(0px)`;
+          progressBar.style.transform = `translateY(0px)`;
         }
 
       }, 100)
