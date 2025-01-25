@@ -306,11 +306,6 @@
       z-index: 10;
       /*overflow: hidden; /*kann eventuell weg*/
   }
-
-  /* Der Survey Container dahinter wird nicht mehr sichtbar sein, weil der Chatbot fullscreen ist */
-  #survey-container.chatbot-visible {
-      overflow: hidden;
-  }
 }
 
 /* Desktop-/Browser-Ansicht: Anpassung des Containers, der wie der Survey-Container mittig ausgerichtet ist */
@@ -347,10 +342,6 @@
           calc(( (var(--vh, 1vh) * 100 - 8px) - 750px ) / 2),
           9999px
       );*/
-  }
-
-  #survey-container.chatbot-visible {
-      overflow: hidden;
   }
 
   /* Dynamische Anpassung an Containerbreite in Desktop-Ansicht */

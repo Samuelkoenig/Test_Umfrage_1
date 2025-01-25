@@ -662,7 +662,7 @@ function alignChatbotUi() {
           progressBar.style.transform = `translateY(0px)`;
         }
 
-      }, 120)
+      }, 150)
       
     });
 
