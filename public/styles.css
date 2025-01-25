@@ -41,12 +41,12 @@ p {
     flex-direction: column;*/
 }
 
-#survey-container.chatbot-visible {
+/*#survey-container.chatbot-visible {
     max-width: 600px;
     width: 100%; 
     margin: 0 auto;
     padding: 0; 
-    /*border: 1px solid #ccc;*/
+    /*border: 1px solid #ccc;*/ /*
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -63,24 +63,10 @@ p {
         calc(( (var(--vh, 1vh) * 100 - 8px) - 750px ) / 2),
         9999px
     );
-}
+}*/
 
 #survey-container.chatbot-visible-locked {
     overflow: hidden;
-
-    height: 750px;
-    max-height: calc(var(--vh, 1vh) * 100 - 8px);
-
-    margin-top: clamp(
-      8px,
-      calc(( (var(--vh, 1vh) * 100 - 8px) - 750px ) / 2),
-      9999px
-    );
-    margin-bottom: clamp(
-        0px,
-        calc(( (var(--vh, 1vh) * 100 - 8px) - 750px ) / 2),
-        9999px
-    );
 }
 
 .page {
@@ -370,11 +356,19 @@ p {
         box-shadow: none;
     }
 
-    #survey-container.chatbot-visible {
+    #survey-container.chatbot-visible-locked {
+        max-width: 600px;
+        width: 100%; 
+        margin: 0 auto;
+        padding: 0; 
+        /*border: 1px solid #ccc;*/
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
         height: calc(var(--vh, 1vh) * 100 - 8px);
         margin-top: 8px;
         margin-bottom: 0;
-    }
+    }    
 
     .page {
         padding: 20px 10px;
@@ -406,5 +400,31 @@ p {
 
     .checkbox-container {
         justify-content: flex-start;
+    }
+}
+
+@media (min-width: 600.1px) {
+    #survey-container.chatbot-visible {
+        max-width: 600px;
+        width: 100%; 
+        margin: 0 auto;
+        padding: 0; 
+        /*border: 1px solid #ccc;*/
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        height: 750px;
+        max-height: calc(var(--vh, 1vh) * 100 - 8px);
+    
+        margin-top: clamp(
+          8px,
+          calc(( (var(--vh, 1vh) * 100 - 8px) - 750px ) / 2),
+          9999px
+        );
+        margin-bottom: clamp(
+            0px,
+            calc(( (var(--vh, 1vh) * 100 - 8px) - 750px ) / 2),
+            9999px
+        );
     }
 }
