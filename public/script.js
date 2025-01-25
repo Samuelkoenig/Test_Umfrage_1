@@ -284,7 +284,7 @@ function applyChatbotViewState() {
             window.scrollTo({
                 top: document.body.scrollHeight,
                 behavior: 'smooth' 
-                });
+            });
             updateVh();
             surveyContainer.classList.add('chatbot-visible');
             pageContainers[chatbotPage - 1].classList.add('chatbot-visible');

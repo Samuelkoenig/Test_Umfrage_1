@@ -638,13 +638,13 @@ function alignChatbotUi() {
       setTimeout(() => {
 
         const offset = window.visualViewport.offsetTop;
-        addMessage(`Offset: ${offset})`, 'user')
+        //addMessage(`Offset: ${offset})`, 'user') //Nur zum Testen
         if ((page === chatbotPage) && currentlyOpenCopy) {
           chatbotInterface.style.transform = `translateY(${offset}px)`;
           progressBar.style.transform = `translateY(${offset}px)`;
           
-          inputTest = document.getElementById('userInput');
-          /*if (inputTest.matches(':focus')) {
+          /*inputTest = document.getElementById('userInput');
+          if (inputTest.matches(':focus')) {
             window.requestAnimationFrame(() => {
               document.getElementById('userInput').focus()
             })
@@ -662,7 +662,7 @@ function alignChatbotUi() {
           progressBar.style.transform = `translateY(0px)`;
         }
 
-      }, 100)
+      }, 120)
       
     });
 
