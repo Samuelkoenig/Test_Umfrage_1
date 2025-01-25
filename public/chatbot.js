@@ -636,12 +636,13 @@ function alignChatbotUi() {
 
     window.requestAnimationFrame(() => { 
       setTimeout(() => {
+        window.scrollTo(0, 0);
 
         const offset = window.visualViewport.offsetTop;
         //addMessage(`Offset: ${offset})`, 'user') //Nur zum Testen
         if ((page === chatbotPage) && currentlyOpenCopy) {
-          chatbotInterface.style.transform = `translateY(${offset}px)`;
-          progressBar.style.transform = `translateY(${offset}px)`;
+          //chatbotInterface.style.transform = `translateY(${offset}px)`;
+          //progressBar.style.transform = `translateY(${offset}px)`;
           
           /*inputTest = document.getElementById('userInput');
           if (inputTest.matches(':focus')) {
