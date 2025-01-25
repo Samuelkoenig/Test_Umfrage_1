@@ -275,7 +275,7 @@ function applyChatbotViewState() {
         chatbotInterface.classList.add('chatbot-visible');
         navigation.style.display = 'none';
         openBtnContainer.style.display = 'none';
-        surveyContainer.classList.add('chatbot-visible');
+        //surveyContainer.classList.add('chatbot-visible');
         pageContainers[chatbotPage - 1].classList.add('chatbot-visible');
         //documentBody.classList.add('chatbot-visible');
 
@@ -287,7 +287,7 @@ function applyChatbotViewState() {
                 behavior: 'smooth' 
             });
             updateVh();
-            //surveyContainer.classList.add('chatbot-visible');
+            surveyContainer.classList.add('chatbot-visible');
             //pageContainers[chatbotPage - 1].classList.add('chatbot-visible');
             surveyContainer.classList.add('chatbot-visible-locked');
             pageContainers[chatbotPage - 1].classList.add('chatbot-visible-locked');
