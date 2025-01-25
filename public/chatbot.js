@@ -639,7 +639,13 @@ function alignChatbotUi() {
 
         //addMessage(`Offset: ${offset})`, 'user') //Nur zum Testen
         if ((page === chatbotPage) && currentlyOpenCopy) {
-          window.scrollTo(0, 0);
+          
+          window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth' 
+          });
+          
           //const offset = window.visualViewport.offsetTop;
           //chatbotInterface.style.transform = `translateY(${offset}px)`;
           //progressBar.style.transform = `translateY(${offset}px)`;
