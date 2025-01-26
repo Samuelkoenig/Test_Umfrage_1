@@ -645,15 +645,19 @@ function alignChatbotUi() {
 
     if ((page === chatbotPage) && currentlyOpenCopy) {
       window.requestAnimationFrame(() => {
-        const offset = window.visualViewport.offsetTop;
-        chatbotInterface.style.transform = `translateY(${offset}px)`;
-        progressBar.style.transform = `translateY(${offset}px)`;
-        scrollMessagesToBottom();
+        setTimeout(() => {
+          const offset = window.visualViewport.offsetTop;
+          chatbotInterface.style.transform = `translateY(${offset}px)`;
+          progressBar.style.transform = `translateY(${offset}px)`;
+          scrollMessagesToBottom();
+        }, 100)
       })
     } else {
       window.requestAnimationFrame(() => {
-        chatbotInterface.style.transform = `translateY(0px)`;
-        progressBar.style.transform = `translateY(0px)`;
+        setTimeout(() => {
+          chatbotInterface.style.transform = `translateY(0px)`;
+          progressBar.style.transform = `translateY(0px)`;
+      }, 100)
       })
     }
 
