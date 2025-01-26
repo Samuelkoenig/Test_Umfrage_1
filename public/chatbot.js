@@ -634,21 +634,62 @@ function alignChatbotUi() {
     const chatbotInterface = document.getElementById('chatbot-interface');
     const progressBar = document.getElementById('progress-bar');
 
+    if ((page === chatbotPage) && currentlyOpenCopy) {
+      setTimeout(() => {
+        progressBar.scrollIntoView({
+          behavior: 'smooth'
+        }, 50)
+      })
+    }
+
+    if ((page === chatbotPage) && currentlyOpenCopy) {
+      setTimeout(() => {
+        progressBar.scrollIntoView({
+          behavior: 'smooth'
+        }, 100)
+      })
+    }
+
+    if ((page === chatbotPage) && currentlyOpenCopy) {
+      setTimeout(() => {
+        progressBar.scrollIntoView({
+          behavior: 'smooth'
+        }, 200)
+      })
+    }
+
+    if ((page === chatbotPage) && currentlyOpenCopy) {
+      setTimeout(() => {
+        progressBar.scrollIntoView({
+          behavior: 'smooth'
+        }, 300)
+      })
+    }
+
+  }
+}
+
+/*
+function alignChatbotUi() {
+  if (window.visualViewport) {
+    const currentlyOpenCopy = (sessionStorage.getItem('openChatbot') === '1');
+    const page = parseInt(sessionStorage.getItem('currentPage'), 10);
+    const chatbotInterface = document.getElementById('chatbot-interface');
+    const progressBar = document.getElementById('progress-bar');
+
     window.requestAnimationFrame(() => { 
       setTimeout(() => {
 
         //addMessage(`Offset: ${offset})`, 'user') //Nur zum Testen
         if ((page === chatbotPage) && currentlyOpenCopy) {
           
-          /*window.scrollTo({
-            top: 0,
-            left: 0,
-            behavior: 'smooth' 
-          });*/
+          window.scrollTo({
+            top: 0
+          });
           
-          const offset = window.visualViewport.offsetTop;
-          chatbotInterface.style.transform = `translateY(${offset}px)`;
-          progressBar.style.transform = `translateY(${offset}px)`;
+          //const offset = window.visualViewport.offsetTop;
+          //chatbotInterface.style.transform = `translateY(${offset}px)`;
+          //progressBar.style.transform = `translateY(${offset}px)`;
           
           /*inputTest = document.getElementById('userInput');
           if (inputTest.matches(':focus')) {
@@ -661,12 +702,12 @@ function alignChatbotUi() {
             progressBar.scrollIntoView({
               behavior: 'smooth'
             }, 200)
-          })*/
+          })*/ /*
 
           scrollMessagesToBottom();
         } else {
-          chatbotInterface.style.transform = `translateY(0px)`;
-          progressBar.style.transform = `translateY(0px)`;
+          //chatbotInterface.style.transform = `translateY(0px)`;
+          //progressBar.style.transform = `translateY(0px)`;
         }
 
       }, 100)
@@ -693,9 +734,9 @@ function alignChatbotUi() {
         chatbotInterface.style.transform = `translateY(0px)`;
         progressBar.style.transform = `translateY(0px)`;
       }
-    }, 200);*/
+    }, 200);*/ /*
   } 
-}
+} */
 
 /**
  * Dynamically adjusts the height of the user message input field. 
