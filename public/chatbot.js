@@ -636,34 +636,34 @@ function alignChatbotUi() {
 
     if ((page === chatbotPage) && currentlyOpenCopy) {
       setTimeout(() => {
-        progressBar.scrollIntoView({
-          behavior: 'smooth'
-        }, 50)
-      })
+        window.scrollTo({
+          top: 0
+        })
+      }, 50)
     }
 
     if ((page === chatbotPage) && currentlyOpenCopy) {
       setTimeout(() => {
-        progressBar.scrollIntoView({
-          behavior: 'smooth'
-        }, 100)
-      })
+        window.scrollTo({
+          top: 0
+        })
+      }, 100)
     }
 
     if ((page === chatbotPage) && currentlyOpenCopy) {
       setTimeout(() => {
-        progressBar.scrollIntoView({
-          behavior: 'smooth'
-        }, 200)
-      })
+        window.scrollTo({
+          top: 0
+        })
+      }, 200)
     }
 
     if ((page === chatbotPage) && currentlyOpenCopy) {
       setTimeout(() => {
-        progressBar.scrollIntoView({
-          behavior: 'smooth'
-        }, 300)
-      })
+        window.scrollTo({
+          top: 0
+        })
+      }, 300)
     }
 
   }
