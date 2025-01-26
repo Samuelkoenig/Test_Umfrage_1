@@ -292,7 +292,7 @@ function applyChatbotViewState() {
             surveyContainer.classList.add('chatbot-visible-locked');
             pageContainers[chatbotPage - 1].classList.add('chatbot-visible-locked');
             documentBody.classList.add('chatbot-visible');
-        }, 10000);
+        }, 50);
 
         document.dispatchEvent(new Event('chatbotInterfaceOpened'));
 
