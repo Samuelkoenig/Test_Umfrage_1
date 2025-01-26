@@ -640,25 +640,21 @@ function alignChatbotUi() {
           top: 0
         });
         scrollMessagesToBottom();
-      }, 50)
-    }
-
-    if ((page === chatbotPage) && currentlyOpenCopy) {
-      setTimeout(() => {
-        window.scrollTo({
-          top: 0
-        });
-        scrollMessagesToBottom();
       }, 100)
     }
 
     if ((page === chatbotPage) && currentlyOpenCopy) {
-      setTimeout(() => {
-        window.scrollTo({
-          top: 0
-        });
+      window.requestAnimationFrame(() => {
+        const offset = window.visualViewport.offsetTop;
+        chatbotInterface.style.transform = `translateY(${offset}px)`;
+        progressBar.style.transform = `translateY(${offset}px)`;
         scrollMessagesToBottom();
-      }, 150)
+      })
+    } else {
+      window.requestAnimationFrame(() => {
+        chatbotInterface.style.transform = `translateY(0px)`;
+        progressBar.style.transform = `translateY(0px)`;
+      })
     }
 
   }
