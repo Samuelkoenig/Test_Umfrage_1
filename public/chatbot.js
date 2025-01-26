@@ -638,7 +638,8 @@ function alignChatbotUi() {
       setTimeout(() => {
         window.scrollTo({
           top: 0
-        })
+        });
+        scrollMessagesToBottom();
       }, 50)
     }
 
@@ -646,7 +647,8 @@ function alignChatbotUi() {
       setTimeout(() => {
         window.scrollTo({
           top: 0
-        })
+        });
+        scrollMessagesToBottom();
       }, 100)
     }
 
@@ -654,16 +656,9 @@ function alignChatbotUi() {
       setTimeout(() => {
         window.scrollTo({
           top: 0
-        })
-      }, 200)
-    }
-
-    if ((page === chatbotPage) && currentlyOpenCopy) {
-      setTimeout(() => {
-        window.scrollTo({
-          top: 0
-        })
-      }, 300)
+        });
+        scrollMessagesToBottom();
+      }, 150)
     }
 
   }
