@@ -111,7 +111,7 @@ function referenceElements() {
 }
 
 /**
- * Adds event listeners to all relevant DOM elements (buttons and inputs).
+ * Adds event listeners to all relevant survey DOM elements (buttons and inputs).
  * 
  * - Logic for clicking on the consent checkbox to activate/ deactivate the start 
  *   survey button. 
@@ -252,6 +252,8 @@ function cancelScrollDelays() {
  * - Checks the value of the openChatbot variable in the session storage.
  * - Switches between the survey view and the chatbot interface view. 
  *   Displays the correct view based on the values of openChatbot and currentPage.
+ * - When opening the chatbot interface, calls the mobileChatbotActivation() function to 
+ *   ensure that the chatbot is correctly displayed on mobile devices.
  * - If the chatbot interface gets opened, triggers the event "chatbotInterfaceOpened".
  * 
  * @returns {void}
@@ -269,7 +271,6 @@ function applyChatbotViewState() {
     if (!scenarioDiv || !chatbotInterface || !navigation || !openBtnContainer || !surveyContainer) return; 
 
     if (openChatbot && currentPage === chatbotPage) {
-        //documentBody.classList.add('chatbot-visible');
         scenarioDiv.style.display = 'none';
         chatbotInterface.classList.remove('chatbot-hidden');
         chatbotInterface.classList.add('chatbot-visible');
@@ -277,18 +278,9 @@ function applyChatbotViewState() {
         openBtnContainer.style.display = 'none';
         surveyContainer.classList.add('chatbot-visible');
         pageContainers[chatbotPage - 1].classList.add('chatbot-visible');
-        //documentBody.classList.add('chatbot-visible');
 
-        //window.scrollTo(0, 0);
-        //document.body.offsetHeight;
         setTimeout(() => {
-            window.scrollTo({
-                top: document.body.scrollHeight,
-                behavior: 'smooth' 
-            });
-            updateVh();
-            //surveyContainer.classList.add('chatbot-visible');
-            //pageContainers[chatbotPage - 1].classList.add('chatbot-visible');
+            mobileChatbotActivation()
             surveyContainer.classList.add('chatbot-visible-locked');
             pageContainers[chatbotPage - 1].classList.add('chatbot-visible-locked');
             documentBody.classList.add('chatbot-visible');

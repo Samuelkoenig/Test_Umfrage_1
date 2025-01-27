@@ -6,11 +6,34 @@
  */
 
 /**************************************************************************
- * Initialization of mobile device event listeners
+ * Initialization of variables and mobile device event listeners
  **************************************************************************/
 
+/**
+ * Definition of the variables used in the script.
+ * - startY @type {number}: The y-coordinate of a touch point. 
+ * - activeContainer @type {Element|null}: The DOM element to which a scroll movement refers. 
+ */
+let startY = 0;
+let activeContainer = null;
+
+/**
+ * Adds event listeners to all mobile display-related events.
+ * 
+ * - The purpose of this function is to improve the view and robustness of the chatbot 
+ *   interface on mobile devices. 
+ * - When the visual size of the window is changed ('resize' and 'orientationchange' events, 
+ *   e.g. by showing or hiding the virtual keyboard or browser bar), the new height of the 
+ *   visual area of the window is calculated (using updateVh()) and the chatbot interface is 
+ *   re-aligend so that it is displayed fullscreen on mobile devices (using alignChatbotUi()).
+ * - The function attachNoBounceListeners() is executed to implement the desired scrolling 
+ *   behaviour within the chatbot interface on mobile devices. 
+ * - The function updateVh() is executed to initially get the height of the visual window
+ *   area. 
+ * 
+ * @returns {void}
+ */
 function attachMobileChatbotEventListeners() {
-  //const textarea = document.getElementById('userInput');
 
   window.addEventListener('resize', () => {
     updateVh();
@@ -29,21 +52,20 @@ function attachMobileChatbotEventListeners() {
     });
   }
 
-  /*textarea.addEventListener('focus', () => {
-    window.scrollTo(0, 0);
-    scrollMessagesToBottom();
-    setTimeout(() => { window.scrollTo(0,0); scrollMessagesToBottom() }, 50);
-    setTimeout(() => { window.scrollTo(0,0); scrollMessagesToBottom() }, 100);
-    setTimeout(() => { window.scrollTo(0,0); scrollMessagesToBottom() }, 200);
-    setTimeout(() => { window.scrollTo(0,0); scrollMessagesToBottom() }, 300);
-  });*/
-
   attachNoBounceListeners();
 
   updateVh();
 }
 
-// An dein #chatbot-interface anhängen, z. B.:
+/**
+ * Adds event listeners to scroll events within the chatbot interface.
+ * 
+ * - Captures every scrolling movement of the user within the chatbot interface on mobile 
+ *   devices and executes the functions onTouchStart, onTouchMove and onTouchEnd to ensure 
+ *   the desired scrolling behaviour of the chatbot interface on mobile devices. 
+ * 
+ * @returns {void}
+ */
 function attachNoBounceListeners() {
   const chatbotInterface = document.getElementById('chatbot-interface');
   chatbotInterface.addEventListener('touchstart', onTouchStart, { passive: false });
@@ -52,24 +74,35 @@ function attachNoBounceListeners() {
 }
 
 /**************************************************************************
- * Touch scroll behaviour
+ * Chatbot touch scroll behaviour
  **************************************************************************/
 
+/**
+ * Captures the start position of any touch movement by the user. 
+ * 
+ * - This function is executes when the user starts a touch move. 
+ * - Tracks the y-coordinate of the first touch point.
+ * - Checks whether the nearest DOM element of the first touch point is the either the 
+ *   chatbot-messages-container or the userInput textarea; defines the potentialContainer 
+ *   variable either as one of these elements or null otherwise. 
+ * - If the potentialContainer is the userInput textarea, checks again whether the first 
+ *   touch point is indeed within the boundaries of the message input field; if this is not 
+ *   the case sets the potentialContainer variable to null. 
+ * - Defines the activeContainer variable as the resulting value of the potentialContainer. 
+ * 
+ * @param {TouchEvent} e - The touch event object.
+ * @returns {void}
+ */
 function onTouchStart(e) {
   startY = e.touches[0].clientY;
 
-  // Prüfe, ob das Touchziel in .chatbot-messages-container ODER textarea liegt
   const scrollableSelector = '.chatbot-messages-container, .input-container textarea';
   let potentialContainer = e.target.closest(scrollableSelector) || null;
 
-  // Wenn der potenzielle Container die textarea ist,
-  // prüfen, ob der Touch-Punkt tatsächlich innerhalb der textarea liegt.
   if (potentialContainer && potentialContainer.id === 'userInput') {
     const rect = potentialContainer.getBoundingClientRect();
     const touchX = e.touches[0].clientX;
     const touchY = e.touches[0].clientY;
-
-    // Falls der Berührungspunkt außerhalb der textarea-Grenzen liegt:
     if (touchX < rect.left || touchX > rect.right || touchY < rect.top || touchY > rect.bottom) {
       potentialContainer = null;
     }
@@ -78,14 +111,43 @@ function onTouchStart(e) {
   activeContainer = potentialContainer;
 }
 
+/**
+ * Controls scrolling within the active container. 
+ * 
+ * - This function is executed when the user moves their finger across the screen. 
+ * - The purpose of this function is to prevent overscrolling on mobile devices in the
+ *   chatbot interface (e.g. scrolling beyond the virtual keyboard) to ensure a fullscreen
+ *   chatbot view. 
+ * - (a) If the start of the touch movement is outside the chatbot-messages-container and 
+ *   outside the userInput textarea (so when activeContainer is null), scrolling gets 
+ *   disabled. 
+ * - (b) If the start of the touch movement is inside the userInput textarea, it is checked
+ *   whether this input field is permitted for scrolling (this is the case when the number of 
+ *   rows of the user message in the input field exceeds the maximum number of rows). 
+ *   If the userInput is not permitted for scrolling (textarea.style.overflowY === "hidden"), 
+ *   scrolling gets disabled. 
+ * - (c) If the start of the touch movement is inside the chatbot-messages-container, it is
+ *   checked whether this container is permitted for scrolling (this is the case when the 
+ *   total height of this container (scrollHeight) is larger than the visible height 
+ *   (cleintHeight)). If the chatbot-messages-container is not permitted for scrolling, 
+ *   scrolling gets disabled. 
+ * - (d) If the start of the touch move is inside the userInput textarea or the 
+ *   chatbot-messages-container, scrolling is enabled. However, when the user is on top of the 
+ *   scrollable area and tries to scroll further upwards, or when the user is on the botton of
+ *   the scrollable area and tries to scroll further downwards, scrolling is disabled in order 
+ *   to prevent the scroll move to be transferred to the parent element. 
+ * 
+ * @param {TouchEvent} e - The touch event object.
+ * @returns {void}
+ */
 function onTouchMove(e) {
-  // Wenn wir keinen scrollbaren Container haben: blockieren
+  // (a) Disable scrolling for non-permitted areas:
   if (!activeContainer) {
     e.preventDefault();
     return;
   }
 
-  //console.log(`activeContainer: ${activeContainer}`); // Nur zum Testen
+  // (b) Check whether scrolling in the userIpnut is allowed:
   if (activeContainer.id === 'userInput') {
     const textarea = document.getElementById('userInput');
     if (textarea.style.overflowY === "hidden") {
@@ -94,37 +156,51 @@ function onTouchMove(e) {
     }
   }
 
-  // Ist der Container überhaupt scrollbar?
+  // (c) Check whether scrolling in the chatbot-messages-container is allowed: 
   if (activeContainer.scrollHeight <= activeContainer.clientHeight) {
-    // Nein => blockieren
     e.preventDefault();
     return;
   }
 
-  // Container ist scrollbar. Jetzt schauen wir, ob man am oberen oder unteren Ende ist
+  // (d) Conditionally enable scrolling in permitted areas: 
   const scrollTop = activeContainer.scrollTop;
   const atTop = (scrollTop <= 0);
   const atBottom = (scrollTop + activeContainer.clientHeight >= activeContainer.scrollHeight);
-
-  // Aktuelle Fingerposition:
   const currentY = e.touches[0].clientY;
-  // positive deltaY => Wischen nach unten, negative => Wischen nach oben
   const deltaY = currentY - startY;
-
-  // Bouncing an Top oder Bottom verhindern
   if ((atTop && deltaY > 0) || (atBottom && deltaY < 0)) {
     e.preventDefault();
   }
 }
 
+/**
+ * Resets the active container at the end of any touch movement by the user.
+ * 
+ * - This function is executes when the user finishes a touch move. 
+ * - Resets the activeContainer variable at the end of the touch move. 
+ * 
+ * @param {TouchEvent} e - The touch event object.
+ * @returns {void}
+ */
 function onTouchEnd(e) {
   activeContainer = null;
 }
 
 /**************************************************************************
- * 
+ * Chatbot display adjustements
  **************************************************************************/
 
+/**
+ * Updates the visual height (vh) value. 
+ * 
+ * - The purpose of this function is to update the height of the visible area for the css 
+ *   specifications each time this value changes, so that the height of the chatbot interface 
+ *   can be dynamically adjusted to the available space. 
+ * - Determines the height of the visible area in the browser window. 
+ * - Sets the css --vh property to the corresponding height. 
+ * 
+ * @returns {void}
+ */
 function updateVh() {
   if (window.visualViewport) {
     const vh = window.visualViewport.height * 0.01;
@@ -135,6 +211,25 @@ function updateVh() {
   }
 }
 
+/**
+ * Ensures that the chatbot interface is displayed correctly after visual height changes. 
+ * 
+ * - (a) Standard behaviour: Sets a timeout of 100 milliseconds after a visual height change 
+ *   (to ensure that all layout changes are finished), and then initiates an automatic scroll 
+ *   to the top of the page and scrolls to the bottom of the message container. 
+ * - (b) Fallback: If the chatbot interface is still not aligned on top of the visible area,
+ *   the offset is determined and added as an additional margin via the css specification 
+ *   translateY to the chatbot-interface and the progress-bar. Additionally, it is scrolled 
+ *   to the bottom of the message container. When the chatbot interface is closed, this 
+ *   additional margin is resetted to 0. For this operations, the requestAnimationFrame 
+ *   function and a timeout are used to ensure that all prior layout changes have been 
+ *   finished. 
+ * - This function is designed to catch default browser behaviours which are undesired in 
+ *   this use case (especially the behaviour of safari and firefox to move a focused textare
+ *   element to the center of the visible area). 
+ * 
+ * @returns {void}
+ */
 function alignChatbotUi() {
   if (window.visualViewport) {
     const currentlyOpenCopy = (sessionStorage.getItem('openChatbot') === '1');
@@ -142,6 +237,7 @@ function alignChatbotUi() {
     const chatbotInterface = document.getElementById('chatbot-interface');
     const progressBar = document.getElementById('progress-bar');
 
+    // (a) Standard behaviour: Scroll to the top of the page:
     if ((page === chatbotPage) && currentlyOpenCopy) {
       setTimeout(() => {
         window.scrollTo({
@@ -151,6 +247,7 @@ function alignChatbotUi() {
       }, 100)
     }
 
+    // (b) Fallback: Set an artificial margin: 
     if ((page === chatbotPage) && currentlyOpenCopy) {
       window.requestAnimationFrame(() => {
         setTimeout(() => {
@@ -172,73 +269,20 @@ function alignChatbotUi() {
   }
 }
 
-/*
-function alignChatbotUi() {
-  if (window.visualViewport) {
-    const currentlyOpenCopy = (sessionStorage.getItem('openChatbot') === '1');
-    const page = parseInt(sessionStorage.getItem('currentPage'), 10);
-    const chatbotInterface = document.getElementById('chatbot-interface');
-    const progressBar = document.getElementById('progress-bar');
-
-    window.requestAnimationFrame(() => { 
-      setTimeout(() => {
-
-        //addMessage(`Offset: ${offset})`, 'user') //Nur zum Testen
-        if ((page === chatbotPage) && currentlyOpenCopy) {
-          
-          window.scrollTo({
-            top: 0
-          });
-          
-          //const offset = window.visualViewport.offsetTop;
-          //chatbotInterface.style.transform = `translateY(${offset}px)`;
-          //progressBar.style.transform = `translateY(${offset}px)`;
-          
-          /*inputTest = document.getElementById('userInput');
-          if (inputTest.matches(':focus')) {
-            window.requestAnimationFrame(() => {
-              document.getElementById('userInput').focus()
-            })
-          }*/
-
-          /*setTimeout(() => {
-            progressBar.scrollIntoView({
-              behavior: 'smooth'
-            }, 200)
-          })*/ /*
-
-          scrollMessagesToBottom();
-        } else {
-          //chatbotInterface.style.transform = `translateY(0px)`;
-          //progressBar.style.transform = `translateY(0px)`;
-        }
-
-      }, 100)
-      
-    });
-
-
-
-    /*setTimeout(() => { 
-      const offset = window.visualViewport.offsetTop;
-      if ((page === chatbotPage) && currentlyOpenCopy) {
-        chatbotInterface.style.transform = `translateY(${offset}px)`;
-        progressBar.style.transform = `translateY(${offset}px)`;
-        inputTest = document.getElementById('userInput');
-        if (inputTest.matches(':focus')) {
-          window.requestAnimationFrame(() => {
-            document.getElementById('userInput').focus()
-          })
-        }
-        //document.getElementById('userInput').focus();
-        //chatbotInterface.offsetHeight;
-        scrollMessagesToBottom();
-      } else {
-        chatbotInterface.style.transform = `translateY(0px)`;
-        progressBar.style.transform = `translateY(0px)`;
-      }
-    }, 200);*/ /*
-  } 
-} */
-
-
+/**
+ * Automatically scrolls to the bottom when the chatbot interface is opened. 
+ * 
+ * - This function is executed when the chatbot interface is opened in order to trigger a
+ *   re-calculation of the height of the visible area. 
+ * - After that, the new height of the visible area is determined using the updateVh()
+ *   function. 
+ * 
+ * @returns {void}
+ */
+function mobileChatbotActivation() {
+  window.scrollTo({
+    top: document.body.scrollHeight,
+    behavior: 'smooth' 
+  });
+  updateVh();
+}

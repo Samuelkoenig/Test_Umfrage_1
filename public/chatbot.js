@@ -34,9 +34,6 @@ let watermark = null;
 let typingIndicatorTimeout = null;
 let continueBtnEnabled = sessionStorage.getItem('continueBtnEnabled') === 'true';
 
-let startY = 0;
-let activeContainer = null;
-
 /**
  * Event Listener for initializing the chatbot interface.
  * Executes the initializeChatbotUi() function as soon as the "surveyDataInitialized" event 
@@ -68,7 +65,7 @@ function initializeChatbotUi() {
 }
 
 /**
- * Adds event listeners to all relevant DOM elements (buttons and inputs).
+ * Adds event listeners to all relevant chatbot interface DOM elements (buttons and inputs).
  * 
  * - When the user clicks on the send button, the sendUserMessage() function is called and 
  *   the height of the textarea is adjusted. 
