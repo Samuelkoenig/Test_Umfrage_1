@@ -232,13 +232,12 @@ function updateVh() {
  */
 function alignChatbotUi() {
   if (window.visualViewport) {
-    const currentlyOpenCopy = (sessionStorage.getItem('openChatbot') === '1');
     const page = parseInt(sessionStorage.getItem('currentPage'), 10);
     const chatbotInterface = document.getElementById('chatbot-interface');
     const progressBar = document.getElementById('progress-bar');
 
     // (a) Standard behaviour: Scroll to the top of the page:
-    if ((page === chatbotPage) && currentlyOpenCopy) {
+    if (page === chatbotPage) {
       setTimeout(() => {
         window.scrollTo({
           top: 0

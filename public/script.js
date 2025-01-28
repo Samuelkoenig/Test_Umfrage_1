@@ -13,8 +13,6 @@
  * Definition of the variables used in the script.
  * - totalPages @type {number}: the number of pages in the survey.
  * - chatbotPage @type {number}: the page number where the chatbot appears.
- * - automaticScrollDelay @type {number}: The delay in milliseconds before the page 
- *   automatically scrolls to the last position of a page the user has already opened. 
  * - likertQuestions @type {string[]}: an array with the names of all likert scale questions.
  * - pages @type {NodeListOf<HTMLElement>}: DOM element.
  * - progressBar @type {HTMLElement}: DOM element.
@@ -33,9 +31,8 @@
  * - chatbotAlreadyOpened @type {boolean}: a flag indicating whether the chatbot has 
  *   already been opened in the session. 
  */
-const totalPages = 6;    // To be specified: the actual number of pages in the survey!
-const chatbotPage = 4;   // To be specified: the page number where the chatbot appears!
-const automaticScrollDelay = 0  // To be specifiec: the automatic scroll delay!
+const totalPages = 7;    // To be specified: the actual number of pages in the survey!
+const chatbotPage = 5;   // To be specified: the page number where the chatbot appears!
 const likertQuestions = [
     "gender", 
     "experience", 
@@ -163,6 +160,8 @@ function attachEventListeners() {
  * Switches to the specified page and updates the displayed content.
  * 
  * - Hides all pages and only shows the active page.
+ * - When the user navigates to the chatbot page or back from the chatbot page, executes the 
+ *   applyChatbotViewState() function to display the correct view. 
  * - Updates the progress bar.
  * - Scrolls to the saved scroll position of the active page, using animation frames to ensure the 
  *   new page has been fully rendered when the scroll action is performed (at the beginning of the 
@@ -181,31 +180,26 @@ function showPage(pageNumber) {
         document.getElementById(`page${pageNumber}`).classList.add('active');
     }
 
-    if (pageNumber === chatbotPage) {
-        let openChatbotState = sessionStorage.getItem('openChatbot');
-        if (openChatbotState === null) {
-            sessionStorage.setItem('openChatbot', '0');
-        }
-        applyChatbotViewState();
-    } else {
-        //sessionStorage.setItem('openChatbot', '0'); // If active, chatbot ui is closed automatically. 
+    if (pageNumber >= (chatbotPage - 1) && pageNumber <= (chatbotPage + 1)) {
         applyChatbotViewState();
     }
 
     updateProgressBar();
 
-    const pageElement = document.getElementById(`page${pageNumber}`);
-    scrollPos = scrollPositions[pageNumber];
-    console.log(`ScrollPosition: ${scrollPos}`); // Nur zum Testen
-    if (scrollPos !== undefined) {
-        scrollFrame1Id = requestAnimationFrame(() => {
-            const dummy = pageElement.offsetHeight;
-            scrollFrame2Id = requestAnimationFrame(() => {
-                window.scrollTo({ top: scrollPos, behavior: 'smooth' });
+    if (!(pageNumber === chatbotPage)) {
+        const pageElement = document.getElementById(`page${pageNumber}`);
+        scrollPos = scrollPositions[pageNumber];
+        console.log(`ScrollPosition: ${scrollPos}`); // Nur zum Testen
+        if (scrollPos !== undefined) {
+            scrollFrame1Id = requestAnimationFrame(() => {
+                const dummy = pageElement.offsetHeight;
+                scrollFrame2Id = requestAnimationFrame(() => {
+                    window.scrollTo({ top: scrollPos, behavior: 'smooth' });
+                });
             });
-        });
-    } else {
-        window.scrollTo(0, 0);
+        } else {
+            window.scrollTo(0, 0);
+        }
     }
 }
 
@@ -245,9 +239,9 @@ function cancelScrollDelays() {
 /**
  * Adjusts the visibility of the chatbot interface.
  * 
- * - Checks the value of the openChatbot variable in the session storage.
- * - Switches between the survey view and the chatbot interface view. 
- *   Displays the correct view based on the values of openChatbot and currentPage.
+ * - Switches between the survey view and the chatbot interface view by manipulating the 
+ *   relevant css specifications. 
+ * - Displays the correct view based on the currentPage value.
  * - When opening the chatbot interface, calls the mobileChatbotActivation() function to 
  *   ensure that the chatbot is correctly displayed on mobile devices.
  * - If the chatbot interface gets opened, triggers the event "chatbotInterfaceOpened".
@@ -255,7 +249,6 @@ function cancelScrollDelays() {
  * @returns {void}
  */
 function applyChatbotViewState() {
-    const openChatbot = sessionStorage.getItem('openChatbot') === '1';
     const documentBody = document.body;
     const scenarioDiv = document.getElementById('chatbot-scenario');
     const chatbotInterface = document.getElementById('chatbot-interface');
@@ -266,7 +259,7 @@ function applyChatbotViewState() {
 
     if (!scenarioDiv || !chatbotInterface || !navigation || !openBtnContainer || !surveyContainer) return; 
 
-    if (openChatbot && currentPage === chatbotPage) {
+    if (currentPage === chatbotPage) {
         scenarioDiv.style.display = 'none';
         chatbotInterface.classList.remove('chatbot-hidden');
         chatbotInterface.classList.add('chatbot-visible');
@@ -301,43 +294,33 @@ function applyChatbotViewState() {
 /**
  * Opens the chatbot interface.
  * 
- * - Saves the scroll position on the current page. 
  * - If the chatbot is opened for the first time: sets the chatbotAlreadyOpened value 
  *   to false, updates it in the session storage and triggers the event 
  *   "userArrivedAtChatbot".
- * - Sets the value of openChatbot in the sessionStorage to 1 and calls the 
- *   applyChatbotViewState() to switch the view to the chatbot interface. 
+ * - Applies the nextButtonLogic() function. 
  * - This function is called each time the user clicks on the "Open Chatbot" button.
  * 
  * @returns {void}
  */
 function openChatbotLogic() {
-    saveScrollPositions(currentPage);
     if (chatbotAlreadyOpened === false) {
         chatbotAlreadyOpened = true
         sessionStorage.setItem('chatbotAlreadyOpened', chatbotAlreadyOpened);
         document.dispatchEvent(new CustomEvent('userArrivedAtChatbot'));
     }
-    sessionStorage.setItem('openChatbot', '1');
-    applyChatbotViewState();
+    nextButtonLogic();
 }
 
 /**
  * Closes the chatbot interface.
  * 
- * - Sets the value of openChatbot in the sessionStorage to 0 and calls the 
- *   applyChatbotViewState() to switch the view to the survey view. 
- * - Displays the new page. 
- * - This function is called each time the user clicks on the "Close Chatbot" button
- *   or navigates back using the browser's navigation button while having the chatbot 
- *   interface opened.
+ * - Applies the backButtonLogic() function. 
+ * - This function is called each time the user clicks on the "Close Chatbot" button.
  * 
  * @returns {void}
  */
 function closeChatbotLogic() {
-    sessionStorage.setItem('openChatbot', '0');
-    applyChatbotViewState();
-    showPage(currentPage);
+    backButtonLogic()
 }
 
 /**************************************************************************
@@ -506,8 +489,7 @@ function saveNavigationState() {
  */
 function saveScrollPositions(pageNumber) {
     const scrollY = window.scrollY;
-    const currentlyOpen = (sessionStorage.getItem('openChatbot') === '1');
-    if (!currentlyOpen || !(currentPage === chatbotPage)) {
+    if (!(currentPage === chatbotPage)) {
         scrollPositions[pageNumber] = scrollY;
         sessionStorage.setItem('scrollPositions', JSON.stringify(scrollPositions));
     }
@@ -568,7 +550,6 @@ function clearState() {
     sessionStorage.removeItem('treatmentGroup');
     sessionStorage.removeItem('formData');
     sessionStorage.removeItem('conversation');
-    sessionStorage.removeItem('openChatbot');
 }
 
 /**************************************************************************
@@ -710,54 +691,34 @@ function pushPageToHistory(page) {
  *   of the browser, this function saves the current scroll position, synchronizes the currentPage 
  *   value, displays the corresponding survey page using showPage(currentPage) and saves the new state 
  *   using saveNavigationState().
- * - (b) If the chatbot interface is opened when the popstate event is fired, the webpage reacts as 
- *   follows: if the event was caused by the back button, the chatbot interface is closed and the survey 
- *   page with the "Open Chatbot" button is displayed, otherwise if the event was caused by the forward 
- *   button, the next survey page is displayed. Additionally, the browser history and the currentPage 
- *   value are synchronized. 
- * - (c) This function additionally prevents the possibility to move forward in the survey via the 
+ * - (b) This function additionally prevents the possibility to move forward in the survey via the 
  *   navigation button of the browser when the user is on page 1 and has not activated the consent 
  *   checkbox. 
- * - (d) When the participant has submitted the survey, is on the final page ("thankyou" page) and 
+ * - (c) When the participant has submitted the survey, is on the final page ("thankyou" page) and 
  *   presses the back button of the browser, the popstate event listener is destroyed so that the 
  *   currentPage value is not decremented and the webpage stil displays the "thankyou" page.
- * - (e) If the bypassPopState flag is set to true, a pre-check prevents this function to be executed.
+ * - (d) If the bypassPopState flag is set to true, a pre-check prevents this function to be executed.
  * 
  * @param {PopStateEvent} event - The event triggered by pressing the navigation button of the browser.
  * @returns {void}
  */
 function handlePopState(event) {
 
-    // (e) Prevent execution of the function if bypassPopState flag is set to true: 
+    // (d) Prevent execution of the function if bypassPopState flag is set to true: 
     if (bypassPopState) {
         bypassPopState = false;
         return;
     }
 
-    // (c) Behaviour when the user is on page one and has not activated the consent checkbox:
+    // (b) Behaviour when the user is on page one and has not activated the consent checkbox:
     const consentIsChecked = consentCheckbox.checked; 
     if (currentPage === 1 && event.state.page === 2 && !consentIsChecked) {
         bypassPopState = true;
         window.history.back();
         return;
     }
-    
-    // (b) Behaviour when the chatbot interface is opened: 
-    const currentlyOpen = (sessionStorage.getItem('openChatbot') === '1');
-    if (currentlyOpen && currentPage === chatbotPage) {
-        if (event.state.page === chatbotPage - 1) {
-            closeChatbotLogic();
-            bypassPopState = true;
-            window.history.forward();
-        } else {
-            currentPage++;
-            showPage(currentPage);
-            saveNavigationState();
-        }
-        return;
-    }
 
-    // (d) Behaviour when the user is on the final page:
+    // (c) Behaviour when the user is on the final page:
     if (currentPage === totalPages) {
         window.removeEventListener('popstate', handlePopState);
         window.history.back();
