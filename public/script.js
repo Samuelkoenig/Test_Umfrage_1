@@ -142,11 +142,7 @@ function attachEventListeners() {
         input.addEventListener('change', inputFieldLogic);
     });
 
-    document.getElementById('openChatbotBtn').addEventListener('click', () => {
-        openChatbotLogic();
-        closeChatbotLogic();
-        openChatbotLogic();
-    });
+    document.getElementById('openChatbotBtn').addEventListener('click', openChatbotLogic);
     document.getElementById('closeChatbotBtn').addEventListener('click', closeChatbotLogic);
     document.getElementById('continueSurveytBtn').addEventListener('click', continueSurveyLogic);
 
