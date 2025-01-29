@@ -208,7 +208,30 @@
         <div class="page" id="thankyou">
             <h1>Vielen Dank für Ihre Teilnahme!</h1>
             <p>Ihre Antworten wurden erfolgreich übermittelt.</p>
+        
+            <!-- Info zur E-Mail-Angabe -->
+            <div id="emailInfoSection">
+                <p>
+                Falls Sie an der Verlosung eines Gutscheins teilnehmen möchten,
+                geben Sie bitte Ihre E-Mail-Adresse im folgenden Feld an.
+                <strong>Die Angabe ist freiwillig</strong>. 
+                Wir speichern Ihre E-Mail-Adresse nur für die Durchführung des Gewinnspiels 
+                und löschen sie nach dessen Abschluss. Wir geben sie niemals an Dritte weiter.
+                </p>
+                
+                <!-- E-Mail Angabe -->
+                <div class="email-container">
+                    <input type="email" id="emailInput" placeholder="Ihre E-Mail-Adresse" />
+                    <button id="emailSubmitBtn">E-Mail absenden</button>
+                </div>
+            </div>
+
+            <!-- Erfolgsmeldung nach E-Mail-Abgabe (zunächst ausgeblendet) -->
+            <div id="emailSuccessSection" class="hidden">
+                <p>Vielen Dank! Ihre E-Mail wurde gespeichert. Sie nehmen nun am Gewinnspiel teil.</p>
+            </div>
         </div>
+        
     </div>
 
     <script src="mobile-view.js"></script>

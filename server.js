@@ -1,16 +1,50 @@
+/**
+ * @fileoverview This script contains the server-side logic for the survey webpage and the 
+ * chatbot interface. 
+ * @author Samuel König <koenigsamuel99@gmx.de>
+ * @version 1.0.0
+ */
+
+/**************************************************************************
+ * Initialization of dependencies and environment variables
+ **************************************************************************/
+
+/**
+ * Load the environment variables from the .env file (DATABASE_URL and DIRECT_LINE_SECRET).
+ */
 require('dotenv').config(); 
+
+/**
+ * Load dependencies.
+ */
 const express = require('express');
 const bodyParser = require('body-parser');
 const { Pool } = require('pg');
 const crypto = require('crypto');
-const path = require('path');
 const axios = require('axios');
 
-const app = express();
+/**************************************************************************
+ * Setup of webpage, database and chatbot api
+ **************************************************************************/
 
+/**
+ * Setup of the webpage.
+ * 
+ * - Initializes the express application.
+ * - Initialiazes a middleware for extracting json data. 
+ * - Provides the html, css and javascript files from the public directory. 
+ */
+const app = express();
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
+/**
+ * Setup of the database connection.
+ * 
+ * - Establishes a connection to the postgreSQL database, using the DATABASE_URL from the 
+ *   environment variables. 
+ * - Tests the connection to the database. 
+ */
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: { rejectUnauthorized: false }
@@ -18,13 +52,38 @@ const pool = new Pool({
 
 pool.connect((err, client, release) => {
     if (err) {
-        return console.error('Fehler beim Verbinden zur Datenbank:', err.stack);
+        return console.error('Error when connecting with the database:', err.stack);
     }
-    console.log('Erfolgreich mit der Datenbank verbunden');
+    console.log('Successfully connected with the database');
     release();
 });
 
-// Funktion zur Generierung einer eindeutigen ParticipantId
+/**
+ * Setup of the botframework api.
+ * 
+ * - Loads the DIRECT_LINE_SECRET from the environment variables, acting as key for the api. 
+ * - Creates the base url for the botframework direct line api. 
+ */
+const DIRECT_LINE_SECRET = process.env.DIRECT_LINE_SECRET;
+if (!DIRECT_LINE_SECRET) {
+    console.error("DIRECT_LINE_SECRET not set in environment variables");
+    process.exit(1);
+}
+const DIRECT_LINE_BASE = "https://europe.directline.botframework.com/v3/directline";
+
+/**************************************************************************
+ * Generation of metadata
+ **************************************************************************/
+
+/**
+ * Generates a unique participant id.
+ * 
+ * - Generates a participant id using the createParticipantId function and checks whether the
+ *   generated id already exists in the database. If this is the case, repeats this procedure
+ *   until a unique id is generated. 
+ * 
+ * @returns {string} A unique participant id. 
+ */
 async function generateUniqueParticipantId() {
     while (true) {
         const id = createParticipantId();
@@ -35,6 +94,14 @@ async function generateUniqueParticipantId() {
     }
 }
 
+/**
+ * Creates a participant id. 
+ * 
+ * - The participand id starts with "ID-", followed by a fifteen-digit, random character 
+ *   string and a timestamp. 
+ * 
+ * @returns {string} A participant id. 
+ */
 function createParticipantId() {
     const prefix = 'ID-';
     const randomBytes = crypto.randomBytes(8);
@@ -57,11 +124,30 @@ function createParticipantId() {
     return prefix + randomStr + timestamp;
 }
 
+/**
+ * Assigns a group to the client. 
+ * 
+ * - Creates the random variable treatment, which takes the value 0 or 1 with equal 
+ *   probability. 
+ * 
+ * @returns {number} A treatment group value. 
+ */
 function assignGroup() {
   const treatment = Math.random() < 0.5 ? 0 : 1;
   return treatment;
 }
 
+/**************************************************************************
+ * Survey-related endpoints
+ **************************************************************************/
+
+/**
+ * Provides the client with a participant id and a treatment group value. 
+ * 
+ * - Provides participant id and treatment group in json format. 
+ * 
+ * @returns {object} json object with participant id and treatment group. 
+ */
 app.get('/generateSurveyData', async (req, res) => {
     try {
         const participantId = await generateUniqueParticipantId();
@@ -71,15 +157,26 @@ app.get('/generateSurveyData', async (req, res) => {
           treatmentGroup: treatmentGroup
          });
     } catch (error) {
-        console.error('Fehler beim Generieren der participantId oder treatmentGroup:', error);
-        res.status(500).json({ error: 'Interner Serverfehler.' });
+        console.error('Error when generating participantId or treatmentGroup:', error);
+        res.status(500).json({ error: 'Internal server error.' });
     }
 });
 
+/**
+ * Receives the survey data submitted by the client and stores them in the database. 
+ * 
+ * - Receives the participantId, treatmentGroup, conversationLog by the client in json format. 
+ * - Receives the survey question answers by the client and join them in a json object 
+ *   responseData. 
+ * - Inserts the participantId, treatmentGrou, conversationLog and responseData into the 
+ *   database.
+ * 
+ * @param {object} req - The survey data submitted by the client. 
+ */
 app.post('/submit', async (req, res) => {
     const { participantId, treatmentGroup, conversationLog, ...responseData } = req.body;
     if (!participantId || !treatmentGroup || !conversationLog) {
-      return res.status(400).json({ error: 'Alle Felder sind erforderlich.' });
+      return res.status(400).json({ error: 'All fields are necessary.' });
     }
 
     try {
@@ -91,19 +188,54 @@ app.post('/submit', async (req, res) => {
     await pool.query(query, values);
     res.sendStatus(200);
     } catch (error) {
-        console.error('Fehler beim Einfügen der Daten:', error);
-        res.status(500).json({ error: 'Interner Serverfehler.' });
+        console.error('Error with inserting the data:', error);
+        res.status(500).json({ error: 'Internal server error.' });
     }
 });
 
-// Chatbot-spezifische Endpunkte integrieren
-const DIRECT_LINE_SECRET = process.env.DIRECT_LINE_SECRET;
-if (!DIRECT_LINE_SECRET) {
-    console.error("DIRECT_LINE_SECRET not set in environment variables");
-    process.exit(1);
-}
-const DIRECT_LINE_BASE = "https://europe.directline.botframework.com/v3/directline";
+/**
+ * Receives the email submitted by the client and stores it in the database. 
+ * 
+ * - Receives the email by the client. 
+ * - Inserts the email in a separate table. 
+ * 
+ * @param {object} req - The email submitted by the client. 
+ */
+app.post('/submit-email', async (req, res) => {
+  const { email } = req.body;
+  if (!email) {
+    return res.status(400).json({ error: 'Email is required.' });
+  }
 
+  try {
+    const query = `
+      INSERT INTO emails (email_address)
+      VALUES ($1)
+    `;
+    const values = [email];
+    //await pool.query(query, values);  //Nur zum Testen ausgeschaltet -> TODO: wieder entkommentieren. 
+
+    return res.sendStatus(200);
+  } catch (error) {
+    console.error('Error saving email:', error);
+    return res.status(500).json({ error: 'Internal server error.' });
+  }
+});
+
+/**************************************************************************
+ * Chatbot-related endpoints
+ **************************************************************************/
+
+/**
+ * Endpoint to start a new conversation with the chatbot via the botframework direct line api. 
+ * 
+ * - Starts a new conversation with the chatbot.
+ * - Sends a conversationUpdate to the chatbot to inform the chatbot that the user has joined 
+ *   the conversation and to inform the chatbot about the user's treatment group value. 
+ * 
+ * @param {object} req - An object with the client's treatment group value.
+ * @returns {object} json object with the conversation id. 
+ */
 app.post('/startconversation', async (req, res) => {
   const { treatmentGroup } = req.body; 
   try {
@@ -129,10 +261,22 @@ app.post('/startconversation', async (req, res) => {
     res.json(data);
   } catch (err) {
     console.error("Error when starting the conversation:", err);
-    res.status(500).send("Fehler beim Starten der Konversation");
+    res.status(500).send("Error when starting the conversation");
   }
 });
 
+/**
+ * Endpoint to retrieve new activities from the chatbot. 
+ * 
+ * - Receives the conversationId, watermark and treatmentGroup values from the client. 
+ * - Retrieves new activities in the conversation. The watermark value is added to the 
+ *   retrieval url to only receive new activities since the last retrieval. 
+ * - Provides the client with the new activities. 
+ * 
+ * @param {object} req - An object with the conversationId, watermark and treatment group 
+ * values. 
+ * @returns {object} json object with the new activities since the last activity retrieval. 
+ */
 app.post('/getactivities', async (req, res) => {
   const { conversationId, watermark, treatmentGroup } = req.body;
   let url = `${DIRECT_LINE_BASE}/conversations/${conversationId}/activities`;
@@ -150,10 +294,21 @@ app.post('/getactivities', async (req, res) => {
     res.json(response.data);
   } catch (err) {
     console.error("Error when retrieving the activities:", err);
-    res.status(500).send("Fehler beim Abrufen der Aktivitäten");
+    res.status(500).send("Error when retrieving the activities");
   }
 });
 
+/**
+ * Endpoint to send a user message to the chatbot. 
+ * 
+ * - Receives the conversationId, the user message and the treatmentGroup value from
+ *   the client. 
+ * - Adds the new user message to the conversation via the direct line api. 
+ * 
+ * @param {object} req - An object with the conversationId, the user message and the 
+ * treatment group value. 
+ * @returns {object} json object with the conversation id. 
+ */
 app.post('/sendmessage', async (req, res) => {
   const { conversationId, text, treatmentGroup } = req.body;
   const activity = {
@@ -172,11 +327,21 @@ app.post('/sendmessage', async (req, res) => {
     res.json(response.data);
   } catch (err) {
     console.error("Error when sending the message:", err);
-    res.status(500).send("Fehler beim Senden der Nachricht");
+    res.status(500).send("Error when sending the message");
   }
 });
 
+/**************************************************************************
+ * Start the server
+ **************************************************************************/
+
+/**
+ * Determines the port on which the server is running and starts the server. 
+ * 
+ * - When the server is running locally, the default port is 3000. Otherwise, the 
+ *   port is automatically assigned based on the environment variables. 
+ */
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Server läuft auf Port ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });

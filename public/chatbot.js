@@ -11,6 +11,7 @@
 
 /**
  * Definition of the variables used in the script.
+ * 
  * - chatbotPage @type {number}: the page number where the chatbot appears.
  * - enterMeansSent @type {boolean}: Variable to specify whether a message is sent when pressing enter. 
  * - typingAnimationDelay @type {number}: The delay in milliseconds until the typing indicator is 

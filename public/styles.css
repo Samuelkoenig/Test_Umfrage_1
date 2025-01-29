@@ -27,6 +27,10 @@ p {
     line-height: 1.6;
 }
 
+.hidden {
+    display: none;
+  }
+
 /* Container */
 #survey-container {
     max-width: 800px;
@@ -40,30 +44,6 @@ p {
     display: flex;
     flex-direction: column;*/
 }
-
-/*#survey-container.chatbot-visible {
-    max-width: 600px;
-    width: 100%; 
-    margin: 0 auto;
-    padding: 0; 
-    /*border: 1px solid #ccc;*/ /*
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    height: 750px;
-    max-height: calc(var(--vh, 1vh) * 100 - 8px);
-
-    margin-top: clamp(
-      8px,
-      calc(( (var(--vh, 1vh) * 100 - 8px) - 750px ) / 2),
-      9999px
-    );
-    margin-bottom: clamp(
-        0px,
-        calc(( (var(--vh, 1vh) * 100 - 8px) - 750px ) / 2),
-        9999px
-    );
-}*/
 
 #survey-container.chatbot-visible-locked {
     overflow: hidden;
@@ -332,19 +312,86 @@ p {
     padding: 0;
     transition: background-color 0.3s, transform 0.3s;
     z-index: 1000;
-  }
+}
 
-  .open-chatbot-btn:hover {
+.open-chatbot-btn:hover {
     background: #c0392b;
     transform: scale(1.05);
-  }
+}
 
-  .open-chatbot-btn img {
+.open-chatbot-btn img {
     width: 30px; 
     height: 30px;
     object-fit: contain; 
     filter: invert(100%); 
-  }
+}
+
+.email-container {
+    max-width: 300px; 
+    width: 80%; 
+    margin: 0 auto; 
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    box-sizing: border-box;
+}
+
+.email-container input,
+.email-container button {
+    width: 100%; 
+    box-sizing: border-box;
+    border-radius: 20px;
+    font-size: 16px; 
+    font-family: 'Roboto', sans-serif;
+    margin-bottom: 10px; 
+}
+
+/* Input-Feld für die E-Mail. */
+#emailInput {
+    margin: 10px auto;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    outline: none; 
+    box-shadow: none;
+    background: transparent;
+}
+
+#emailInput:focus {
+    border-color: #3498db;
+    transition: border-color 0.2s;
+}
+
+#emailInput::placeholder {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    line-height: 1.4375;
+    color: #999;
+    opacity: 1;
+}
+  
+/* Button zum Absenden der E-Mail. */
+#emailSubmitBtn {
+    padding: 10px;
+    cursor: pointer;
+    color: #fff;
+    background-color: #3498db;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+#emailSubmitBtn:hover {
+    background-color: #2980b9;
+}
+
+/* Der Bereich mit der Info zur E-Mail und dem Eingabefeld. */
+#emailInfoSection {
+    margin-top: 40px;
+}
+
+/* Der Bereich mit der Erfolgsmeldung nach dem Absenden. */
+#emailSuccessSection {
+    margin-top: 40px;
+}
 
 /* Responsive */
 @media (max-width: 600px) {

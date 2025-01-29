@@ -11,8 +11,11 @@
 
 /**
  * Definition of the variables used in the script.
+ * 
  * - totalPages @type {number}: the number of pages in the survey.
  * - chatbotPage @type {number}: the page number where the chatbot appears.
+ * - emailCollection @type {boolean}: Whether users have the possibility to submit an email 
+ *   at the end of the survey. 
  * - likertQuestions @type {string[]}: an array with the names of all likert scale questions.
  * - pages @type {NodeListOf<HTMLElement>}: DOM element.
  * - progressBar @type {HTMLElement}: DOM element.
@@ -27,12 +30,15 @@
  *   automated scrolling process until a new page has been fully rendered. 
  * - scrollFrame2Id @type {number}: The id of the second animation frame used to queue the 
  *   automated scrolling process until a new page has been fully rendered. 
- * - bypassPopState @type {boolean}: a flag for controlling navigation events.
+ * - bypassPopState @type {boolean}: a flag for controlling navigation events. 
  * - chatbotAlreadyOpened @type {boolean}: a flag indicating whether the chatbot has 
  *   already been opened in the session. 
+ * - emailSent @type {boolean}: a flag indicating whether the client has submitted an email
+ *   on the final page. 
  */
 const totalPages = 7;    // To be specified: the actual number of pages in the survey!
 const chatbotPage = 5;   // To be specified: the page number where the chatbot appears!
+const emailCollection = true  //To be specified: Whether users can submit an email!
 const likertQuestions = [
     "gender", 
     "experience", 
@@ -51,6 +57,7 @@ let scrollFrame1Id = null;
 let scrollFrame2Id = null;
 let bypassPopState = false;
 let chatbotAlreadyOpened = sessionStorage.getItem('chatbotAlreadyOpened') === 'true';
+let emailSent = sessionStorage.getItem('emailSent') === 'true';
 
 /**************************************************************************
  * Initialization of page elements and event listeners
@@ -118,6 +125,7 @@ function referenceElements() {
  *   survey button to navigate with regards to the chatbot interface.
  * - Logic for clicking on the submit button to send all data to the server and move on 
  *   to the final thankyou page. 
+ * - Logic for clicking on the email submit button to send an email to the server. 
  * - Logic for saving the page scroll position when the user reloads the page. 
  * - Logic for the popstate event caused by the browser when the user uses the navigation 
  *   buttons of the browser. 
@@ -144,6 +152,7 @@ function attachEventListeners() {
     document.getElementById('continueSurveytBtn').addEventListener('click', continueSurveyLogic);
 
     document.getElementById('submit').addEventListener('click', submitButtonLogic);
+    document.getElementById('emailSubmitBtn').addEventListener('click', emailSubmitLogic);
 
     window.addEventListener('beforeunload', () => {
         saveScrollPositions(currentPage)
@@ -194,7 +203,9 @@ function showPage(pageNumber) {
             scrollFrame1Id = requestAnimationFrame(() => {
                 const dummy = pageElement.offsetHeight;
                 scrollFrame2Id = requestAnimationFrame(() => {
-                    window.scrollTo({ top: scrollPos, behavior: 'smooth' });
+                    setTimeout(() => {
+                        window.scrollTo({ top: scrollPos, behavior: 'smooth' });
+                    }, 50)
                 });
             });
         } else {
@@ -239,8 +250,8 @@ function cancelScrollDelays() {
 /**
  * Adjusts the visibility of the chatbot interface.
  * 
- * - Switches between the survey view and the chatbot interface view by manipulating the 
- *   relevant css specifications. 
+ * - Switches between (a) the survey view and (b) the chatbot interface view by 
+ *   manipulating the relevant css specifications. 
  * - Displays the correct view based on the currentPage value.
  * - When opening the chatbot interface, calls the mobileChatbotActivation() function to 
  *   ensure that the chatbot is correctly displayed on mobile devices.
@@ -259,6 +270,7 @@ function applyChatbotViewState() {
 
     if (!scenarioDiv || !chatbotInterface || !navigation || !openBtnContainer || !surveyContainer) return; 
 
+    // (b) Chatbot interface view:
     if (currentPage === chatbotPage) {
         scenarioDiv.style.display = 'none';
         chatbotInterface.classList.remove('chatbot-hidden');
@@ -276,7 +288,8 @@ function applyChatbotViewState() {
         }, 50);
 
         document.dispatchEvent(new Event('chatbotInterfaceOpened'));
-
+    
+    // (a) Survey view:
     } else {
         documentBody.classList.remove('chatbot-visible');
         scenarioDiv.style.display = 'block';
@@ -372,7 +385,7 @@ function saveData() {
  */
 async function submitButtonLogic() {
     const data = collectData();
-    await submitData(data);
+    //await submitData(data);  //Nur zum Testen ausgeschaltet -> TODO: wieder entkommentieren. 
     nextButtonLogic();
     clearState();
 }
@@ -420,6 +433,45 @@ async function submitData(data) {
     } catch (error) {
         console.error('Netzwerkfehler:', error);
         alert('Netzwerkfehler. Bitte überprüfe deine Verbindung und versuche es erneut.');
+    }
+}
+
+/**
+ * Sends the email to the server and switches the final page view.
+ * 
+ * - This function is called when the participant submits an email.
+ * - If the participant clicked on the submit email button without having specified an email,
+ *   nothing happens.
+ * - Otherwise, the emailSent value is set to true and the setThankyouPageState() function
+ *   is called to switch the view of the final page. 
+ * 
+ * @async
+ * @returns {void}
+ */
+async function emailSubmitLogic() {
+    const emailInput = document.getElementById('emailInput');
+    const email = emailInput.value.trim();
+    if (!email) return;
+
+    try {
+        const response = await fetch('/submit-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+        });
+
+        if (response.ok) {
+            emailSent = true
+            sessionStorage.setItem('emailSent', emailSent);
+            setThankyouPageState()
+        } else {
+            const errorData = await response.json();
+            console.error('Fehler beim Speichern der E-Mail:', errorData);
+            alert('Fehler beim Speichern der E-Mail. Bitte versuchen Sie es später erneut.');
+        }
+    } catch (error) {
+        console.error('Netzwerkfehler:', error);
+        alert('Netzwerkfehler. Bitte überprüfen Sie Ihre Verbindung und versuchen Sie es erneut.');
     }
 }
 
@@ -496,6 +548,34 @@ function saveScrollPositions(pageNumber) {
 }
 
 /**
+ * Sets the view of the final page.
+ * 
+ * - Switches the view on the final page between the view where the user is asked to provide 
+ *   an email and the subsequent view where the user has provided an email. 
+ * - The view to display is determined based on the value of the emailSent variable. 
+ * - If the variable emailCollection is set to false, the possibility to submit an email 
+ *   is not shown at all. 
+ * 
+ * @returns {void}
+ */
+function setThankyouPageState() {
+    const emailInfoSection = document.getElementById('emailInfoSection');
+    const emailSuccessSection = document.getElementById('emailSuccessSection');
+    if (!emailCollection) {
+        emailSuccessSection.classList.add('hidden');
+        emailInfoSection.classList.add('hidden');
+        return;
+    }
+    if (!emailSent) {
+        emailSuccessSection.classList.add('hidden');
+        emailInfoSection.classList.remove('hidden');
+    } else {
+        emailInfoSection.classList.add('hidden');
+        emailSuccessSection.classList.remove('hidden');
+    }
+}
+
+/**
  * Restores the saved state from the session storage.
  * 
  * - The purpose of this function is to retain the progress of the survey if the page 
@@ -503,6 +583,7 @@ function saveScrollPositions(pageNumber) {
  * - This function is called as soon as the DOM is fully loaded. 
  * - Retrieves the currentPage value, the historyStates value, the scrollPositions value, 
  *   the consentCheckbox value and all input field data in the session storage.
+ * - Restores the state of the final page by calling the setThankyouPageState() function.
  * 
  * @returns {void}
  */
@@ -536,6 +617,8 @@ function restoreState() {
             }
         });
     }
+
+    setThankyouPageState()
 }
 
 /**
