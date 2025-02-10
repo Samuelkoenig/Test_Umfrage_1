@@ -213,7 +213,7 @@ app.post('/submit-email', async (req, res) => {
       VALUES ($1)
     `;
     const values = [email];
-    //await pool.query(query, values);  //Nur zum Testen ausgeschaltet -> TODO: wieder entkommentieren. 
+    await pool.query(query, values);  //TODO: Zum Testen ohne Daten abschicken auskommentieren
 
     return res.sendStatus(200);
   } catch (error) {

@@ -285,7 +285,7 @@ function applyChatbotViewState() {
             surveyContainer.classList.add('chatbot-visible-locked');
             pageContainers[chatbotPage - 1].classList.add('chatbot-visible-locked');
             documentBody.classList.add('chatbot-visible');
-        }, 50);
+        }, 100);
 
         document.dispatchEvent(new Event('chatbotInterfaceOpened'));
     
@@ -385,7 +385,7 @@ function saveData() {
  */
 async function submitButtonLogic() {
     const data = collectData();
-    //await submitData(data);  //Nur zum Testen ausgeschaltet -> TODO: wieder entkommentieren. 
+    await submitData(data);  //TODO: Zum Testen ohne Daten abschicken auskommentieren
     nextButtonLogic();
     clearState();
 }
