@@ -247,7 +247,7 @@ function alignChatbotUi() {
     }
 
     // (b) Fallback: Set an artificial margin: 
-    if ((page === chatbotPage) && currentlyOpenCopy) {
+    if (page >= (chatbotPage - 1) && page <= (chatbotPage + 1)) {
       window.requestAnimationFrame(() => {
         setTimeout(() => {
           const offset = window.visualViewport.offsetTop;
