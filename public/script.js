@@ -37,7 +37,7 @@
  *   on the final page. 
  */
 const totalPages = 7;    // To be specified: the actual number of pages in the survey!
-const chatbotPage = 5;   // To be specified: the page number where the chatbot appears!
+const chatbotPage = 4;   // To be specified: the page number where the chatbot appears!
 const emailCollection = true  //To be specified: Whether users can submit an email!
 const likertQuestions = [
     "gender", 

@@ -14,9 +14,10 @@
     </div>
 
     <div id="survey-container">
+
         <!-- Seite 1 -->
         <div class="page" id="page1">
-            <h1>Willkommen zur Umfrage</h1>
+            <h1>Willkommen zur Studie</h1>
             <p>[Allgemeine Einleitung zur Studie]</p>
             <label class="checkbox-container">
                 <input type="checkbox" id="consent">
@@ -30,6 +31,143 @@
 
         <!-- Seite 2 -->
         <div class="page" id="page2">
+            <h1>Informationen zur Studie</h1>
+            <p>Diese Studie befasst sich mit dem Thema Chatbots im Kundenservice.<br><br>
+                Sie besteht aus zwei Teilen:<br>
+                Im ersten Teil der Studie wird Ihnen ein fiktives Szenario aus dem Online-Handel vorgestellt. 
+                Sie haben die Aufgabe, eine Konversation mit einem Chatbot zu führen, um ein bestimmtes Problem zu lösen.<br>
+                Der zweite Teil der Studie ist eine Umfrage, in der Sie Ihre Erfahrung mit dem Chatbot bewerten.</p>
+            <div class="navigation">
+                <button id="back2" class="back-btn">Zurück</button>
+                <button id="next2" class="next-btn">Weiter</button>
+            </div>
+        </div>
+
+        <!-- Seite 3 -->
+        <div class="page" id="page3">
+            <div id="chatbot-scenario">
+                <h1>Beschreibung des Szenarios</h1>
+                <p>Stellen Sie sich nun bitte folgende Situation vor:<br><br>
+                    <i>Sie haben vor einer Woche im Online-Shop Salando ein Paar Sneakers und eine Armbanduhr bestellt. 
+                    Gestern haben sie die Lieferung erhalten. Beim Auspacken des Pakets ist Ihnen aufgefallen, 
+                    dass nur die Sneakers geliefert wurden, die Armbanduhr jedoch fehlt.<br>
+                    Sie sind verärgert darüber, da sie die Armbanduhr eigentlich einem guten Freund schenken wollten, 
+                    der in einer Woche seinen Geburtstag feiert.
+                    Um das Problem zu lösen, suchen Sie die Website des Online-Shops auf, bei dem Sie bestellt haben. 
+                    Hier springt Ihnen unten auf der Seite ein Chatbot-Icon entgegen. Sie entschließen sich, unächst 
+                    über den Chatbot zu versuchen, das Problem zu lösen. Am liebsten wäre es Ihnen, wenn Sie die 
+                    Armbanduhr schnellstmöglich nachgelifert bekommen könnten. Für das Gespräch mit dem Chatbot halten 
+                    Sie ihren Lieferschein bereit, auf dem folgende Daten zur Bestellung abgebildet sind: 
+                    <ul>
+                    <li>Bestellnummer: 444555</li>
+                    <li>Liefernummer: 24689</li>
+                    </ul>
+                    </i>
+                    <br><br>
+                    Versetzen sie sich nun bitte in diese Situation hinein, und führen Sie bitte eine Konversation 
+                    mit dem fiktiven Chatbot, um das Problem zu lösen. Beachten Sie hierbei bitte folgendes: 
+                    <ul>
+                    <li>Bitte kommunizieren Sie in ihrem üblichen Schreib-Stil mit dem Chatbot, so als hätte sich die
+                    Situation tatsächlich so ereignet.</li>
+                    <li>Falls der Chatbot Sie nach Bestellnummer oder Liefernummer fragt, können Sie jederzeit wieder 
+                    zurücknavigieren zur Szenario-Beschreibung, ohne dass Ihr Fortschritt verloren geht.</li>
+                    <li>Wenn Sie auf "Weiter" oder das Chatbot-Icon klicken, öffnet sich das Chatbot-Fenster.</li>
+                    </ul>
+                </p>
+            </div>
+
+            <div id="open-chatbot-button-container">
+                <button id="openChatbotBtn" class="open-chatbot-btn" title="Chatbot öffnen">
+                    <img src="img/chatbot-icon.svg" alt="Chatbot Icon" />
+                </button>
+            </div>
+
+            <div class="navigation" id="chatbot-navigation">
+                <button id="back3" class="back-btn">Zurück</button>
+                <button id="next3" class="next-btn">Weiter</button>
+            </div>
+        </div>
+
+        <!-- Seite 4 -->
+        <div class="page" id="page4">
+
+            <!-- Chatbot-Interface-Container -->
+            <div id="chatbot-interface" class="chatbot-hidden">
+                <div class="chatbot-header">
+                    <button id="closeChatbotBtn" class="close-chatbot-btn">Chatbot schließen</button>
+                    <button id="continueSurveytBtn" class="continue-survey-btn" disabled>Weiter</button>
+                </div>
+
+                <div class="chatbot-content">
+                    <div class="chatbot-messages-container">
+                        <div class="messages" id="messages"></div>
+                    </div>
+
+                    <div class="input-container">
+                        <div class="textarea-wrapper">
+                            <textarea id="userInput" placeholder="Nachricht" rows="1"></textarea>
+                        </div>
+                        <button id="sendBtn" class="send-btn" title="Nachricht senden">
+                            <img src="img/send-icon.svg" alt="Send Icon" />
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Seite 5 -->
+        <div class="page" id="page5">
+            <h1>Ihre Erfahrung</h1>
+            <div class="question">
+                <p>1. Wie zufrieden sind Sie mit dem Chatbot? (1 = sehr unzufrieden; 7 = sehr zufrieden)</p>
+                <div class="likert likert-7">
+                    <label class="radio-container">
+                        <input type="radio" name="satisfaction" value="1">
+                        <span class="radio-checkmark"></span>
+                        1
+                    </label>
+                    <label class="radio-container">
+                        <input type="radio" name="satisfaction" value="2">
+                        <span class="radio-checkmark"></span>
+                        2
+                    </label>
+                    <label class="radio-container">
+                        <input type="radio" name="satisfaction" value="3">
+                        <span class="radio-checkmark"></span>
+                        3
+                    </label>
+                    <label class="radio-container">
+                        <input type="radio" name="satisfaction" value="4">
+                        <span class="radio-checkmark"></span>
+                        4
+                    </label>
+                    <label class="radio-container">
+                        <input type="radio" name="satisfaction" value="5">
+                        <span class="radio-checkmark"></span>
+                        5
+                    </label>
+                    <label class="radio-container">
+                        <input type="radio" name="satisfaction" value="6">
+                        <span class="radio-checkmark"></span>
+                        6
+                    </label>
+                    <label class="radio-container">
+                        <input type="radio" name="satisfaction" value="7">
+                        <span class="radio-checkmark"></span>
+                        7
+                    </label>
+                </div>
+            </div>
+            <div class="navigation" id="chatbot-navigation">
+                <button id="back5" class="back-btn">Zurück</button>
+                <button id="next5" class="next-btn">Weiter</button>
+            </div>
+        </div>
+
+        <!-- Seite 6 -->
+        <div class="page" id="page6">
             <h1>Demographische Daten</h1>
             <div class="question">
                 <p>1. Was ist Ihr Geschlecht?</p>
@@ -81,123 +219,6 @@
                 </div>
             </div>
 
-            <div class="navigation">
-                <button id="back2" class="back-btn">Zurück</button>
-                <button id="next2" class="next-btn">Weiter</button>
-            </div>
-        </div>
-
-        <!-- Seite 3 -->
-        <div class="page" id="page3">
-            <h1>Informationen zum Szenario</h1>
-            <p>[Fiktives Szenario]</p>
-            <div class="navigation">
-                <button id="back3" class="back-btn">Zurück</button>
-                <button id="next3" class="next-btn">Weiter</button>
-            </div>
-        </div>
-
-        <!-- Seite 4 -->
-        <div class="page" id="page4">
-            <div id="chatbot-scenario">
-                <h1>Chatbot Interaktion</h1>
-                <p>Hier folgt die textliche Erklärung eines hypothetischen Szenarios für die Interaktion mit dem Chatbot.<br><br>
-                    Hier folgt die textliche Erklärung eines hypothetischen Szenarios für die Interaktion mit dem Chatbot.<br><br>
-                    Hier folgt die textliche Erklärung eines hypothetischen Szenarios für die Interaktion mit dem Chatbot.<br><br>
-                    Hier folgt die textliche Erklärung eines hypothetischen Szenarios für die Interaktion mit dem Chatbot.<br><br>
-                    Hier folgt die textliche Erklärung eines hypothetischen Szenarios für die Interaktion mit dem Chatbot.<br><br>
-                    Hier folgt die textliche Erklärung eines hypothetischen Szenarios für die Interaktion mit dem Chatbot.<br><br>
-                    Hier folgt die textliche Erklärung eines hypothetischen Szenarios für die Interaktion mit dem Chatbot.<br><br>
-                    Hier folgt die textliche Erklärung eines hypothetischen Szenarios für die Interaktion mit dem Chatbot.<br><br>
-                    Hier folgt die textliche Erklärung eines hypothetischen Szenarios für die Interaktion mit dem Chatbot.<br><br>
-                    Hier folgt die textliche Erklärung eines hypothetischen Szenarios für die Interaktion mit dem Chatbot.<br>
-                </p>
-            </div>
-
-            <div id="open-chatbot-button-container">
-                <button id="openChatbotBtn" class="open-chatbot-btn" title="Chatbot öffnen">
-                    <img src="img/chatbot-icon.svg" alt="Chatbot Icon" />
-                </button>
-            </div>
-
-            <div class="navigation" id="chatbot-navigation">
-                <button id="back4" class="back-btn">Zurück</button>
-                <button id="next4" class="next-btn">Weiter</button>
-            </div>
-        </div>
-
-        <!-- Seite 5 -->
-        <div class="page" id="page5">
-
-            <!-- Chatbot-Interface-Container -->
-            <div id="chatbot-interface" class="chatbot-hidden">
-                <div class="chatbot-header">
-                    <button id="closeChatbotBtn" class="close-chatbot-btn">Chatbot schließen</button>
-                    <button id="continueSurveytBtn" class="continue-survey-btn" disabled>Weiter</button>
-                </div>
-
-                <div class="chatbot-content">
-                    <div class="chatbot-messages-container">
-                        <div class="messages" id="messages"></div>
-                    </div>
-
-                    <div class="input-container">
-                        <div class="textarea-wrapper">
-                            <textarea id="userInput" placeholder="Nachricht" rows="1"></textarea>
-                        </div>
-                        <button id="sendBtn" class="send-btn" title="Nachricht senden">
-                            <img src="img/send-icon.svg" alt="Send Icon" />
-                        </button>
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-
-        <!-- Seite 6 -->
-        <div class="page" id="page6">
-            <h1>Ihre Erfahrung</h1>
-            <div class="question">
-                <p>1. Wie zufrieden sind Sie mit dem Chatbot?</p>
-                <div class="likert likert-7">
-                    <label class="radio-container">
-                        <input type="radio" name="satisfaction" value="1">
-                        <span class="radio-checkmark"></span>
-                        1
-                    </label>
-                    <label class="radio-container">
-                        <input type="radio" name="satisfaction" value="2">
-                        <span class="radio-checkmark"></span>
-                        2
-                    </label>
-                    <label class="radio-container">
-                        <input type="radio" name="satisfaction" value="3">
-                        <span class="radio-checkmark"></span>
-                        3
-                    </label>
-                    <label class="radio-container">
-                        <input type="radio" name="satisfaction" value="4">
-                        <span class="radio-checkmark"></span>
-                        4
-                    </label>
-                    <label class="radio-container">
-                        <input type="radio" name="satisfaction" value="5">
-                        <span class="radio-checkmark"></span>
-                        5
-                    </label>
-                    <label class="radio-container">
-                        <input type="radio" name="satisfaction" value="6">
-                        <span class="radio-checkmark"></span>
-                        6
-                    </label>
-                    <label class="radio-container">
-                        <input type="radio" name="satisfaction" value="7">
-                        <span class="radio-checkmark"></span>
-                        7
-                    </label>
-                </div>
-            </div>
             <div class="navigation">
                 <button id="back6" class="back-btn">Zurück</button>
                 <button id="submit" class="submit-btn special-submit">Absenden</button>
