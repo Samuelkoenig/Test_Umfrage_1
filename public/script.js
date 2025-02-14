@@ -17,6 +17,8 @@
  * - emailCollection @type {boolean}: Whether users have the possibility to submit an email 
  *   at the end of the survey. 
  * - likertQuestions @type {string[]}: an array with the names of all likert scale questions.
+ * - randomQuestionSetClasses @type {string[]}: The names of the html classes which contain the 
+ *   questions to be randomized. 
  * - pages @type {NodeListOf<HTMLElement>}: DOM element.
  * - progressBar @type {HTMLElement}: DOM element.
  * - consentCheckbox @type {HTMLInputElement}: DOM element.
@@ -36,7 +38,7 @@
  * - emailSent @type {boolean}: a flag indicating whether the client has submitted an email
  *   on the final page. 
  */
-const totalPages = 7;    // To be specified: the actual number of pages in the survey!
+const totalPages = 8;    // To be specified: the actual number of pages in the survey!
 const chatbotPage = 4;   // To be specified: the page number where the chatbot appears!
 const emailCollection = true  //To be specified: Whether users can submit an email!
 const likertQuestions = [
@@ -44,6 +46,9 @@ const likertQuestions = [
     "experience", 
     "satisfaction"
 ];                      // To be specified: the likert question names used in the survey!
+const questionSetClasses = [
+    ".random-order-div-1"
+]                       // To be specified: the class names of the randomized question sets! 
 
 let pages;
 let progressBar;
@@ -75,6 +80,7 @@ document.addEventListener('DOMContentLoaded', initializePage);
  * 
  * - References important DOM elements.
  * - Initializes metadata (participantId and treatmentGroup).
+ * - Randomizes the order of the specified sets of questions. 
  * - Restores previously saved data.
  * - Adds an initial state to the browser history.
  * - Displays the current page.
@@ -88,6 +94,7 @@ async function initializePage() {
     referenceElements();
     await getMetadata();
 
+    randomizeQuestionSets(questionSetClasses);
     restoreState();
     initializeHistory(currentPage);
 
@@ -819,4 +826,97 @@ function handlePopState(event) {
     
     showPage(currentPage);
     saveNavigationState();
+}
+
+/**************************************************************************
+ * Question order randomization
+ **************************************************************************/
+
+/**
+ * Shuffles an array using the Fisher-Yates shuffle algorithm.
+ * 
+ * - This function is used to create a random order of the elements in an array, representing the 
+ *   randomized question order of all questions within the same random-order-div html class. 
+ * 
+ * @param {string[]} array - An array whose length corresponds to the number of questions whose 
+ * order is to be randomized. 
+ * @returns {array} The shuffled array. 
+ */
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+/**
+ * Rearranges the order of all questions in a set of questions that should be randomized. 
+ * 
+ * - This function is called at the beginning when the page is loaded or reloaded.
+ * - If the page is initially loaded, it creates a random array representing the new order of
+ *   the questions and saves it in the session storage. If the page is reloaded, it retrieves 
+ *   this random array from the session storage. 
+ * - Rearranges all questions within the respective html class according to the new random 
+ *   order from the generated array. 
+ * 
+ * @param {string} htmlClassName - The name of the html class which contains the questions whose
+ * order should be randomized.
+ * @returns {void} 
+ */
+function randomizeQuestionOrder(htmlClassName) {
+    // Selects all random-order-div classes and the questions contained therein: 
+    const containers = document.querySelectorAll(htmlClassName);
+    const allRandomizedQuestions = [];
+    const containerSizes = [];
+    containers.forEach(container => {
+      const questions = Array.from(container.querySelectorAll(".question"));
+      containerSizes.push(questions.length);
+      allRandomizedQuestions.push(...questions);
+    });
+    const NumberQuestions = allRandomizedQuestions.length;
+
+    // Load the random question order from the session storage, or if not existing, 
+    // generate a random question order and save it in the session storage:
+    let storedOrder = sessionStorage.getItem("randomOrder" + htmlClassName);
+    let randomOrder;
+    if (storedOrder) {
+      randomOrder = JSON.parse(storedOrder);
+    } else {
+      randomOrder = [...Array(NumberQuestions).keys()];
+      shuffleArray(randomOrder);
+      sessionStorage.setItem("randomOrder" + htmlClassName, JSON.stringify(randomOrder));
+    }
+
+    // Rearrange the questions according to the generated random order:
+    const newOrder = randomOrder.map(index => allRandomizedQuestions[index]);
+    containers.forEach(container => {
+      while (container.firstChild) {
+        container.removeChild(container.firstChild);
+      }
+    });
+    let pointer = 0;
+    containers.forEach((container, containerIndex) => {
+      const size = containerSizes[containerIndex];
+      for (let i = 0; i < size; i++) {
+        container.appendChild(newOrder[pointer]);
+        pointer++;
+      }
+    });
+  }
+
+  /**
+ * Executes the randomizeQuestionOrder for a range of html classes. 
+ * 
+ * - This function is called to execute the randomizeQuestionOrder for any number of 
+ *   question sets. 
+ * 
+ * @param {string[]} questionSetClasses - The list with the names of the html class which 
+ * contains the questions whose order should be randomized.
+ * @returns {void} 
+ */
+function randomizeQuestionSets(questionSetClasses) {
+    questionSetClasses.forEach(selector => {
+        randomizeQuestionOrder(selector);
+    });
 }
