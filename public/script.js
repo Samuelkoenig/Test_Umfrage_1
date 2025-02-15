@@ -154,7 +154,7 @@ function attachEventListeners() {
         input.addEventListener('change', inputFieldLogic);
     });
 
-    document.getElementById('openChatbotBtn').addEventListener('click', openChatbotLogic);
+    document.getElementById('openChatbotBtn').addEventListener('click', nextButtonLogic);
     document.getElementById('closeChatbotBtn').addEventListener('click', closeChatbotLogic);
     document.getElementById('continueSurveytBtn').addEventListener('click', continueSurveyLogic);
 
@@ -178,6 +178,8 @@ function attachEventListeners() {
  * - Hides all pages and only shows the active page.
  * - When the user navigates to the chatbot page or back from the chatbot page, executes the 
  *   applyChatbotViewState() function to display the correct view. 
+ * - When the user navigates to the chatbot page, calls the trackChatbotArrival() function to check 
+ *   whether the user arrives there for the first time. 
  * - Updates the progress bar.
  * - Scrolls to the saved scroll position of the active page, using animation frames to ensure the 
  *   new page has been fully rendered when the scroll action is performed (at the beginning of the 
@@ -198,6 +200,9 @@ function showPage(pageNumber) {
 
     if (pageNumber >= (chatbotPage - 1) && pageNumber <= (chatbotPage + 1)) {
         applyChatbotViewState();
+    }
+    if (pageNumber === chatbotPage) {
+        trackChatbotArrival();
     }
 
     updateProgressBar();
@@ -312,23 +317,20 @@ function applyChatbotViewState() {
 }
 
 /**
- * Opens the chatbot interface.
+ * Fires an event when the user arrives at the chatbot for the first time.
  * 
  * - If the chatbot is opened for the first time: sets the chatbotAlreadyOpened value 
  *   to false, updates it in the session storage and triggers the event 
- *   "userArrivedAtChatbot".
- * - Applies the nextButtonLogic() function. 
- * - This function is called each time the user clicks on the "Open Chatbot" button.
+ *   "userArrivedAtChatbot" to initialte the loading of the welcome message.
  * 
  * @returns {void}
  */
-function openChatbotLogic() {
+function trackChatbotArrival() {
     if (chatbotAlreadyOpened === false) {
         chatbotAlreadyOpened = true
         sessionStorage.setItem('chatbotAlreadyOpened', chatbotAlreadyOpened);
         document.dispatchEvent(new CustomEvent('userArrivedAtChatbot'));
     }
-    nextButtonLogic();
 }
 
 /**
@@ -340,7 +342,7 @@ function openChatbotLogic() {
  * @returns {void}
  */
 function closeChatbotLogic() {
-    backButtonLogic()
+    backButtonLogic();
 }
 
 /**************************************************************************
