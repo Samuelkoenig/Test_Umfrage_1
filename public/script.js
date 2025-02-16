@@ -44,7 +44,10 @@ const emailCollection = true  //To be specified: Whether users can submit an ema
 const likertQuestions = [
     "gender", 
     "experience", 
-    "satisfaction"
+    "satisfaction",
+    "perceived-empathy",
+    "perceived-service-quality-1",
+    "perceived-service-quality-2"
 ];                      // To be specified: the likert question names used in the survey!
 const questionSetClasses = [
     ".random-order-div-1"
