@@ -171,22 +171,22 @@
   margin-right: 8px; /* leichter horizontaler Abstand */
   
   /* WICHTIG: Bouncing-Animation */
-  animation: typingBounce 0.8s infinite ease-in-out;
+  animation: typingBounce 1.4s infinite ease-in-out;
 }
 
 /* Verzögerung pro Punkt, damit sie nacheinander hüpfen */
 .typing-indicator .dot:nth-child(2) {
-  animation-delay: 0.2s;
+  animation-delay: 0.3s;
 }
 .typing-indicator .dot:nth-child(3) {
-  animation-delay: 0.4s;
+  animation-delay: 0.6s;
 }
 
 @keyframes typingBounce {
-  0%, 80%, 100% {
+  0%, 50%, 100% {
     transform: translateY(0);
   }
-  40% {
+  25% {
     transform: translateY(-6px); /* Bewegungsradius nach oben */
   }
 }
@@ -200,6 +200,10 @@
   border-top: 1px solid #ddd;
   background: #f9f9f9;
   overflow: hidden;
+}
+
+#input-container.hidden {
+  display: none;
 }
 
 .textarea-wrapper {
@@ -287,6 +291,37 @@
   object-fit: contain; 
   filter: invert(100%); 
   padding-top: 2px;
+}
+
+/* Finished dialogue button */
+#finished-dialogue-container {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  box-sizing: border-box;
+  border-top: 1px solid #ddd;
+  background: #f9f9f9;
+  overflow: hidden;
+  justify-content: center; 
+  height: 60px;
+}
+
+#finished-dialogue-container.hidden {
+  display: none;
+}
+
+.finished-dialogue-btn {
+  padding: 12px 30px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #2ecc71;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.finished-dialogue-btn:hover {
+  background-color: #27ae60;
 }
 
 /* Anpassungen für die mobile Ansicht */

@@ -16,6 +16,9 @@
  * - chatbotPage @type {number}: the page number where the chatbot appears.
  * - emailCollection @type {boolean}: Whether users have the possibility to submit an email 
  *   at the end of the survey. 
+ * - textareaReplacement @type {boolean}: Whether the user message input field should be 
+ *   replaced by a button to move to the next page when the final dialogue state has been 
+ *   reached. 
  * - likertQuestions @type {string[]}: an array with the names of all likert scale questions.
  * - randomQuestionSetClasses @type {string[]}: The names of the html classes which contain the 
  *   questions to be randomized. 
@@ -36,11 +39,14 @@
  * - chatbotAlreadyOpened @type {boolean}: a flag indicating whether the chatbot has 
  *   already been opened in the session. 
  * - emailSent @type {boolean}: a flag indicating whether the client has submitted an email
+ * - dialogueFinished @type {boolean}: a flag indicating whether the final dialgoue state 
+ *   has been reached.
  *   on the final page. 
  */
 const totalPages = 8;    // To be specified: the actual number of pages in the survey!
 const chatbotPage = 4;   // To be specified: the page number where the chatbot appears!
 const emailCollection = true  //To be specified: Whether users can submit an email!
+const textareaReplacement = true  //To be specified: Whether the textarea should be replaced!
 const likertQuestions = [
     "gender", 
     "experience", 
@@ -66,6 +72,7 @@ let scrollFrame2Id = null;
 let bypassPopState = false;
 let chatbotAlreadyOpened = sessionStorage.getItem('chatbotAlreadyOpened') === 'true';
 let emailSent = sessionStorage.getItem('emailSent') === 'true';
+let dialogueFinished = sessionStorage.getItem('dialogueFinished') === 'true';
 
 /**************************************************************************
  * Initialization of page elements and event listeners
@@ -133,6 +140,10 @@ function referenceElements() {
  * - Logic for automatically saving changes in the user input fields. 
  * - Logic for clicking on the open chatbot button, close chatbot button and continue 
  *   survey button to navigate with regards to the chatbot interface.
+ * - Logic for processing the "dialogueFininshedEvent" (which replaces the input 
+ *   message field and the send button by the dialogueFinishedButton and is triggered 
+ *   by the achievement of the final dialogue state).
+ * - Logic for the finishedDialogueButton, moving to the next page. 
  * - Logic for clicking on the submit button to send all data to the server and move on 
  *   to the final thankyou page. 
  * - Logic for clicking on the email submit button to send an email to the server. 
@@ -160,6 +171,9 @@ function attachEventListeners() {
     document.getElementById('openChatbotBtn').addEventListener('click', nextButtonLogic);
     document.getElementById('closeChatbotBtn').addEventListener('click', closeChatbotLogic);
     document.getElementById('continueSurveytBtn').addEventListener('click', continueSurveyLogic);
+    
+    document.addEventListener('dialogueFinishedEvent', handleFinishedDialogue);
+    document.getElementById('finishedDialogueBtn').addEventListener('click', continueSurveyLogic);
 
     document.getElementById('submit').addEventListener('click', submitButtonLogic);
     document.getElementById('emailSubmitBtn').addEventListener('click', emailSubmitLogic);
@@ -346,6 +360,24 @@ function trackChatbotArrival() {
  */
 function closeChatbotLogic() {
     backButtonLogic();
+}
+
+/**
+ * Processes the dialogueFinishedEvent.
+ * 
+ * - This function is applied when the client receives the finalState = true value from
+ *   the chatbot api metadata, meaning the the chatbot has reached the final dialogue 
+ *   state. 
+ * - Sets the dialogueFinished value to true, stores it in the session storage and calls
+ *   the setFinishedDialogueState function to replace the input message text area and 
+ *   the send button by the finishedDialogueBtn. 
+ * 
+ * @returns {void}
+ */
+function handleFinishedDialogue(){ 
+    dialogueFinished = true;
+    sessionStorage.setItem('dialogueFinished', dialogueFinished);
+    setFinishedDialogueState();
 }
 
 /**************************************************************************
@@ -588,6 +620,37 @@ function setThankyouPageState() {
 }
 
 /**
+ * Sets the view of the bottom in the chatbot interface.
+ * 
+ * - Switches the view on the bottom area of the chatbot interface between the view 
+ *   showing the input message text area and the send button and the view showing the 
+ *   finishedDialogueBtn. 
+ * - The view to display is determined based on the value of the dialogueFInished variable. 
+ * - If the variable textareaReplacement is set to false, the user message input field is not
+ *   replaced by the finishedDialogueButton even when the final dialogue state has been 
+ *   reached. 
+ * 
+ * @returns {void}
+ */
+function setFinishedDialogueState() { 
+    const inputContainer = document.getElementById('input-container');
+    const finishedDialogueButton = document.getElementById('finished-dialogue-container');
+    if (!textareaReplacement) {
+        finishedDialogueButton.classList.add('hidden');
+        inputContainer.classList.remove('hidden');
+        return;
+    }
+    if (!dialogueFinished) {
+        finishedDialogueButton.classList.add('hidden');
+        inputContainer.classList.remove('hidden');
+    }
+    else {
+        inputContainer.classList.add('hidden');
+        finishedDialogueButton.classList.remove('hidden');
+    }
+}
+
+/**
  * Restores the saved state from the session storage.
  * 
  * - The purpose of this function is to retain the progress of the survey if the page 
@@ -595,6 +658,8 @@ function setThankyouPageState() {
  * - This function is called as soon as the DOM is fully loaded. 
  * - Retrieves the currentPage value, the historyStates value, the scrollPositions value, 
  *   the consentCheckbox value and all input field data in the session storage.
+ * - Restores the view of the bottom area in the chatbot interface by calling the 
+ *   setFinishedDialogueState() function. 
  * - Restores the state of the final page by calling the setThankyouPageState() function.
  * 
  * @returns {void}
@@ -630,6 +695,7 @@ function restoreState() {
         });
     }
 
+    setFinishedDialogueState()
     setThankyouPageState()
 }
 

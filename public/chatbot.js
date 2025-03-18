@@ -24,6 +24,7 @@
  * - watermark @type {number}: The watermark per chatbot activity retrieval.
  * - typingIndicatorTimeout @type {number|null}: The timer id for the typing animation delay. 
  * - continueBtnEnabled @type {boolean}: Variable to specify whether the continueSurveytBtn ist enabled.
+ * - finalStateReached @type {boolean}: Flag to specify whether the final dialogue state has been reached.
  */
 const enterMeansSend = true;             // To be specified: whether a message is sent when pressing enter!
 const typingAnimationDelay = 500         // To be specified: delay of the typing animation!
@@ -34,6 +35,7 @@ let conversationId = null;
 let watermark = null;
 let typingIndicatorTimeout = null;
 let continueBtnEnabled = sessionStorage.getItem('continueBtnEnabled') === 'true';
+let finalStateReached = sessionStorage.getItem('finalStateReached') === 'true'; 
 
 /**
  * Event Listener for initializing the chatbot interface.
@@ -182,6 +184,9 @@ async function getActivities() {
  * - Hides the chatbot typing animation.
  * - Iterates through all chatbot activities, adds all new messages and their corresponding 
  *   activityIds to the conversation state, and displays all new messages.
+ * - Retrieves the finalState value metadata. If this value is true, sets the variable 
+ *   finalStateReached to true, stores it in the session storage and triggers the 
+ *   'dialogueFinishedEvent'.
  * - Adds the conversationId value to the conversation state when the chatbot activities are 
  *   retrieved for the first time.
  * - Updates the watermark value. The watermark value indicates which activities have been 
@@ -208,6 +213,11 @@ function processActivities(data) {
       addMessage(act.text, from);
       newMessages.push({ text: act.text, from, activityId: act.id });
       state.processedActivities.push(act.id);
+      if (act.channelData && act.channelData.finalState) {
+        finalStateReached = true
+        sessionStorage.setItem('finalStateReached', finalStateReached);
+        document.dispatchEvent(new CustomEvent('dialogueFinishedEvent'));
+      }
     }
   });
 
@@ -404,15 +414,17 @@ function continueBtnStateMgmt() {
 /**
  * Logic to check whether the continueSurveytBtn should be enabled.
  * 
- * - Implemented logic: The continueSurveytBtn should be enabled when the user has typed in at 
- *   least two messages. 
+ * - Implemented logic: The continueSurveytBtn should be enabled when the final 
+ *   dialogue state has been reached or when the user has sent at least four 
+ *   messages.
  * 
  * @returns {boolean} Whether the continueSurveytBtn should be enabled. 
  */
 function continueButtonActivationTest() {
   let testResult = false;
+  testResult = finalStateReached;
   let state = loadConversationState();
-  if (state.messages.filter(message => message.from === 'user').length >= 2) {
+  if (state.messages.filter(message => message.from === 'user').length >= 4) {
     testResult = true;
   }
   return testResult;

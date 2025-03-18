@@ -264,8 +264,7 @@ p {
 }
 
 .next-btn:hover:not(:disabled),
-.back-btn:hover,
-.submit-btn:hover:not(:disabled) {
+.back-btn:hover {
     background-color: #2980b9;
 }
 
@@ -388,9 +387,17 @@ p {
     margin-top: 40px;
 }
 
+#emailInfoSection.hidden {
+    display: none;
+}
+
 /* Der Bereich mit der Erfolgsmeldung nach dem Absenden. */
 #emailSuccessSection {
     margin-top: 40px;
+}
+
+#emailSuccessSection.hidden {
+    display: none;
 }
 
 /* Responsive */

@@ -94,7 +94,7 @@
             <!-- Chatbot-Interface-Container -->
             <div id="chatbot-interface" class="chatbot-hidden">
                 <div class="chatbot-header">
-                    <button id="closeChatbotBtn" class="close-chatbot-btn">Chatbot schließen</button>
+                    <button id="closeChatbotBtn" class="close-chatbot-btn">Zurück</button>
                     <button id="continueSurveytBtn" class="continue-survey-btn" disabled>Weiter</button>
                 </div>
 
@@ -103,13 +103,17 @@
                         <div class="messages" id="messages"></div>
                     </div>
 
-                    <div class="input-container">
+                    <div id="input-container" class="input-container">
                         <div class="textarea-wrapper">
                             <textarea id="userInput" placeholder="Nachricht" rows="1"></textarea>
                         </div>
                         <button id="sendBtn" class="send-btn" title="Nachricht senden">
                             <img src="img/send-icon.svg" alt="Send Icon" />
                         </button>
+                    </div>
+
+                    <div id="finished-dialogue-container" class="hidden">
+                        <button id="finishedDialogueBtn" class="finished-dialogue-btn">Weiter zum Fragebogen</button>
                     </div>
 
                 </div>
@@ -388,7 +392,8 @@
 
             <!-- Erfolgsmeldung nach E-Mail-Abgabe (zunächst ausgeblendet) -->
             <div id="emailSuccessSection" class="hidden">
-                <p>Vielen Dank! Ihre E-Mail wurde gespeichert. Sie nehmen nun am Gewinnspiel teil.</p>
+                <p>Vielen Dank! Ihre E-Mail wurde gespeichert. Sie nehmen nun am Gewinnspiel teil.<br><br>
+                Sie können das Fenster nun jetzt schließen.</p>
             </div>
         </div>
         
