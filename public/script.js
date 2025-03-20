@@ -270,7 +270,23 @@ function cancelScrollDelays() {
       cancelAnimationFrame(scrollFrame2Id);
       scrollFrame2Id = null;
     }
-  }
+}
+
+/**
+ * Shows or hides text elements.
+ * 
+ * - This function shows and element (if action = "sho") of hides it (if action = 'hide).
+ * 
+ * @param {str} action - Whether to show or hide an element.
+ * @param {str} elementId - The id of the html element.
+ * @returns {void}
+ */
+function toggleNotification(action, elementId) {
+    const notification = document.getElementById(elementId);
+    if (notification) {
+        notification.style.display = action === 'show' ? 'block' : 'none';
+    }
+}
 
 /**************************************************************************
  * Chatbot page
@@ -419,19 +435,34 @@ function saveData() {
 /**
  * Implements the logic of the submit button. 
  * 
- * - Collects all required data when the user clicks on the submit button and sends 
- *   it to the server.
- * - Moves forward to the final survey page (the "thankyou" page) and deletes the 
- *   participant data. 
+ * - Shows the notification the the data is transmitted. 
+ * - Collects all required data when the user clicks on the submit button and 
+ *   tries to send it to the server.
+ * - Calls the submitData function to try to send the data to the server. If the 
+ *   response of the server is successfull, moves forward to the final page (the
+ *   "thankyou" page) and deletes the participant data. If the response of the 
+ *   server is not successfull (meaning the submitData function returns an error),
+ *   shows a notification that there was a network error. 
  * 
  * @async
  * @returns {void}
  */
 async function submitButtonLogic() {
+    toggleNotification('hide', 'submit-error-message');
+    toggleNotification('show', 'submit-data-notification');
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
     const data = collectData();
-    await submitData(data);  //TODO: Zum Testen ohne Daten abschicken auskommentieren
-    nextButtonLogic();
-    clearState();
+    try {
+        await submitData(data, 4);
+        toggleNotification('hide', 'submit-data-notification');
+        moveToFinalPage();
+        clearState();
+    } catch (error) {
+        console.error('Netzwerkfehler:', error);
+        toggleNotification('hide', 'submit-data-notification');
+        toggleNotification('show', 'submit-error-message');
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
 }
 
 /**
@@ -459,35 +490,85 @@ function collectData() {
  * Sends the participant data to the server. 
  * 
  * - This function is called when the participant submits the survey.
+ * - If the server responded successfully, returns the response.
+ * - If the server did not respond successfully, retries sending the data
+ *   to the server for up to the number of retries times. If the server 
+ *   response ie still unsuccessfull after 4 tries, throws an error. 
  * 
  * @async
- * @param {Array<{parameter: value}>} data - The data array to be sent to the server. 
+ * @param {Array<{parameter: value}>} data - The data array to be sent to the server.
+ * @param {int} retries - The number of retries when the server did not respond successfull.  
  * @returns {void}
  */
-async function submitData(data) {
-    try {
-        const response = await fetch('/submit', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        });
-        if (!response.ok) {
-            console.error('Fehler beim Senden der Daten');
+async function submitData(data, retries = 4) {
+    let lastError = null;
+    for (let i = 0; i < retries; i++) {
+        try {
+            const response = await fetch('/submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            if (!response.ok) {
+                throw new Error(`Server returned ${response.status}`);
+            }
+            return response
+        } catch (error) {
+            console.error(`Fehler beim Senden der Daten.`, error);
+            await new Promise(r => setTimeout(r, 500)); 
+            lastError = error;
         }
-    } catch (error) {
-        console.error('Netzwerkfehler:', error);
-        alert('Netzwerkfehler. Bitte überprüfe deine Verbindung und versuche es erneut.');
     }
+    throw lastError;
 }
 
 /**
- * Sends the email to the server and switches the final page view.
+ * Sends the email to the server. 
  * 
- * - This function is called when the participant submits an email.
+ * - This function is called when the participant submits the email.
+ * - If the server responded successfully, returns the response.
+ * - If the server did not respond successfully, retries sending the email
+ *   to the server for up to the number of retries times. If the server 
+ *   response ie still unsuccessfull after 4 tries, throws an error. 
+ * 
+ * @async
+ * @param {str} email - The email string to be sent to the server.
+ * @param {int} retries - The number of retries when the server did not respond successfull.  
+ * @returns {void}
+ */
+async function submitEmail(email, retries = 4) {
+    let lastError = null;
+    for (let i = 0; i < retries; i++) {
+        try {
+            const response = await fetch('/submit-email', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email })
+            });
+            if (!response.ok) {
+                throw new Error(`Server returned ${response.status}`);
+            }
+            return response
+        } catch (error) {
+            console.error(`Fehler beim Senden der E-Mail.`, error);
+            await new Promise(r => setTimeout(r, 500)); 
+            lastError = error;
+        }
+    }
+    throw lastError;
+}
+
+/**
+ * Implements the logic of the email submit button. 
+ * - Collects the email string from the email input textarea and clears this textarea. 
+ * - Shows the notification the the email is transmitted. 
+ * - Calls the submitEmail function to try to send the data to the server. If the 
+ *   response of the server is successfull, sets the emailSent variable to true and 
+ *   calls the setThankyouPageState function to move forward to the final state of the 
+ *   final thankyou page. If the response of the server is not successfull (meaning the 
+ *   submitEmail function returns an error), shows a notification that there was a network error. 
  * - If the participant clicked on the submit email button without having specified an email,
  *   nothing happens.
- * - Otherwise, the emailSent value is set to true and the setThankyouPageState() function
- *   is called to switch the view of the final page. 
  * 
  * @async
  * @returns {void}
@@ -496,26 +577,20 @@ async function emailSubmitLogic() {
     const emailInput = document.getElementById('emailInput');
     const email = emailInput.value.trim();
     if (!email) return;
-
+    toggleNotification('hide', 'submit-emmail-error-message');
+    toggleNotification('show', 'submit-email-notification');
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
     try {
-        const response = await fetch('/submit-email', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email })
-        });
-
-        if (response.ok) {
-            emailSent = true
-            sessionStorage.setItem('emailSent', emailSent);
-            setThankyouPageState()
-        } else {
-            const errorData = await response.json();
-            console.error('Fehler beim Speichern der E-Mail:', errorData);
-            alert('Fehler beim Speichern der E-Mail. Bitte versuchen Sie es später erneut.');
-        }
+        await submitEmail(email, 4);
+        toggleNotification('hide', 'submit-email-notification');
+        emailSent = true;
+        sessionStorage.setItem('emailSent', emailSent);
+        setThankyouPageState();
     } catch (error) {
         console.error('Netzwerkfehler:', error);
-        alert('Netzwerkfehler. Bitte überprüfen Sie Ihre Verbindung und versuchen Sie es erneut.');
+        toggleNotification('hide', 'submit-email-notification');
+        toggleNotification('show', 'submit-emmail-error-message');
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
     }
 }
 
@@ -799,6 +874,38 @@ function backButtonLogic() {
  */
 function continueSurveyLogic() {
     nextButtonLogic();
+}
+
+/**
+ * Moves to the final page. 
+ * 
+ * - This function is called when the user pressed the submit button and the data was
+ *   successfully sent to the server. 
+ * - Saves the scroll position on the current page. 
+ * - Sets the currentPage value to the final page number, displays the new page and 
+ *   saves the new state of the survey webpage. 
+ * - If the user accessses a new survey page for the first time, this new page is added
+ *   to the history; otherwise the browser history is manually set one step forward so 
+ *   that the browser history is still synchronized with the currentPage value (in this 
+ *   case the bypassPopState flag is set to true to prevent the automatically fired 
+ *   handlePopState(event) function call to be executed). 
+ * 
+ * @returns {void}
+ */
+function moveToFinalPage() {
+    if (currentPage < totalPages) {
+        saveScrollPositions(currentPage);
+        currentPage = totalPages;
+        showPage(currentPage);
+        saveNavigationState();
+    }
+
+    if (!historyStates.some(obj => obj.page === currentPage)) {
+        pushPageToHistory(currentPage);
+    } else {
+        bypassPopState = true;
+        window.history.forward();
+    }
 }
 
 /**

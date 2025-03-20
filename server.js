@@ -261,7 +261,7 @@ app.post('/startconversation', async (req, res) => {
     res.json(data);
   } catch (err) {
     console.error("Error when starting the conversation:", err);
-    res.status(500).send("Error when starting the conversation");
+    res.status(500).json({ error: "Error when starting the conversation", details: err.toString() });
   }
 });
 
@@ -291,10 +291,10 @@ app.post('/getactivities', async (req, res) => {
     });
     const data = response.data;
     data.treatmentGroup = treatmentGroup;
-    res.json(response.data);
+    res.json(data);
   } catch (err) {
     console.error("Error when retrieving the activities:", err);
-    res.status(500).send("Error when retrieving the activities");
+    res.status(500).json({ error: "Error when retrieving the activities", details: err.toString() });
   }
 });
 
@@ -327,7 +327,7 @@ app.post('/sendmessage', async (req, res) => {
     res.json(response.data);
   } catch (err) {
     console.error("Error when sending the message:", err);
-    res.status(500).send("Error when sending the message");
+    res.status(500).json({ error: "Error when sending the message", details: err.toString() });
   }
 });
 
