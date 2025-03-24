@@ -20,8 +20,11 @@
  *   replaced by a button to move to the next page when the final dialogue state has been 
  *   reached. 
  * - likertQuestions @type {string[]}: an array with the names of all likert scale questions.
- * - randomQuestionSetClasses @type {string[]}: The names of the html classes which contain the 
- *   questions to be randomized. 
+ * - questionSetClasses @type {Array<[string, string]>}: An array with html class names of
+ *   elements to be arranged in a randomized order. Each entry is a list with two class names: 
+ *   The first is the class name of the parent class container, which holds the elements that
+ *   should be shuffled, and the second is the class name of the elements within that 
+ *   container to be shuffled. 
  * - pages @type {NodeListOf<HTMLElement>}: DOM element.
  * - progressBar @type {HTMLElement}: DOM element.
  * - consentCheckbox @type {HTMLInputElement}: DOM element.
@@ -50,13 +53,27 @@ const textareaReplacement = true  //To be specified: Whether the textarea should
 const likertQuestions = [
     "gender", 
     "experience", 
-    "satisfaction",
-    "perceived-empathy",
-    "perceived-service-quality-1",
-    "perceived-service-quality-2"
+    "service-quality-1", 
+    "service-quality-2", 
+    "service-quality-3", 
+    "service-quality-4", 
+    "service-quality-5", 
+    "satisfaction-1", 
+    "satisfaction-2", 
+    "satisfaction-3", 
+    "satisfaction-4", 
+    "satisfaction-5", 
+    "empathy-1", 
+    "empathy-2", 
+    "empathy-3", 
+    "empathy-4", 
+    "empathy-5"
 ];                      // To be specified: the likert question names used in the survey!
 const questionSetClasses = [
-    ".random-order-div-1"
+    [".random-order-constructs", ".construct"],
+    [".construct-service-quality", ".question"],
+    [".construct-satisfaction", ".question"],
+    [".construct-empathy", ".question"]
 ]                       // To be specified: the class names of the randomized question sets! 
 
 let pages;
@@ -1029,45 +1046,47 @@ function shuffleArray(array) {
 }
 
 /**
- * Rearranges the order of all questions in a set of questions that should be randomized. 
+ * Rearranges the order of all elements in a set of questions that should be randomized. 
  * 
  * - This function is called at the beginning when the page is loaded or reloaded.
  * - If the page is initially loaded, it creates a random array representing the new order of
  *   the questions and saves it in the session storage. If the page is reloaded, it retrieves 
  *   this random array from the session storage. 
- * - Rearranges all questions within the respective html class according to the new random 
+ * - Rearranges all elements within the respective html class according to the new random 
  *   order from the generated array. 
  * 
- * @param {string} htmlClassName - The name of the html class which contains the questions whose
+ * @param {string} htmlParentClassName - The name of the css class which contains the questions whose
+ * order should be randomized.
+ * @param {string} htmlElementClassName - The name of the css class of the individual elements whose
  * order should be randomized.
  * @returns {void} 
  */
-function randomizeQuestionOrder(htmlClassName) {
+function randomizeQuestionOrder(htmlParentClassName, htmlElementsClassName) {
     // Selects all random-order-div classes and the questions contained therein: 
-    const containers = document.querySelectorAll(htmlClassName);
-    const allRandomizedQuestions = [];
+    const containers = document.querySelectorAll(htmlParentClassName);
+    const allRandomizedElements = [];
     const containerSizes = [];
     containers.forEach(container => {
-      const questions = Array.from(container.querySelectorAll(".question"));
-      containerSizes.push(questions.length);
-      allRandomizedQuestions.push(...questions);
+      const elements = Array.from(container.querySelectorAll(htmlElementsClassName));
+      containerSizes.push(elements.length);
+      allRandomizedElements.push(...elements);
     });
-    const NumberQuestions = allRandomizedQuestions.length;
+    const NumberElements = allRandomizedElements.length;
 
     // Load the random question order from the session storage, or if not existing, 
     // generate a random question order and save it in the session storage:
-    let storedOrder = sessionStorage.getItem("randomOrder" + htmlClassName);
+    let storedOrder = sessionStorage.getItem("randomOrder" + htmlParentClassName + htmlElementsClassName);
     let randomOrder;
     if (storedOrder) {
       randomOrder = JSON.parse(storedOrder);
     } else {
-      randomOrder = [...Array(NumberQuestions).keys()];
+      randomOrder = [...Array(NumberElements).keys()];
       shuffleArray(randomOrder);
-      sessionStorage.setItem("randomOrder" + htmlClassName, JSON.stringify(randomOrder));
+      sessionStorage.setItem("randomOrder" + htmlParentClassName + htmlElementsClassName, JSON.stringify(randomOrder));
     }
 
     // Rearrange the questions according to the generated random order:
-    const newOrder = randomOrder.map(index => allRandomizedQuestions[index]);
+    const newOrder = randomOrder.map(index => allRandomizedElements[index]);
     containers.forEach(container => {
       while (container.firstChild) {
         container.removeChild(container.firstChild);
@@ -1083,18 +1102,20 @@ function randomizeQuestionOrder(htmlClassName) {
     });
   }
 
-  /**
+/**
  * Executes the randomizeQuestionOrder for a range of html classes. 
  * 
  * - This function is called to execute the randomizeQuestionOrder for any number of 
  *   question sets. 
  * 
- * @param {string[]} questionSetClasses - The list with the names of the html class which 
- * contains the questions whose order should be randomized.
+ * @param {Array<[string, string]>} questionSetClasses - A list of class name pairs, where
+ * each pair consists of 
+ * - The first string being the parent container class.
+ * - The second string being the class of the elements whose order should be randomized.
  * @returns {void} 
  */
 function randomizeQuestionSets(questionSetClasses) {
-    questionSetClasses.forEach(selector => {
-        randomizeQuestionOrder(selector);
+    questionSetClasses.forEach(([htmlParentClassName, htmlElementsClassName]) => {
+        randomizeQuestionOrder(htmlParentClassName, htmlElementsClassName);
     });
 }
