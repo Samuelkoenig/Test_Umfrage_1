@@ -617,7 +617,7 @@ function continueButtonActivationTest() {
   let testResult = false;
   testResult = finalStateReached;
   let state = loadConversationState();
-  if (state.messages.filter(message => message.from === 'user').length >= 0) {
+  if (state.messages.filter(message => message.from === 'user').length >= 4) {
     testResult = true;
   }
   return testResult;

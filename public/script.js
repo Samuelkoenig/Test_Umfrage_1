@@ -52,7 +52,7 @@ const emailCollection = true  //To be specified: Whether users can submit an ema
 const textareaReplacement = true  //To be specified: Whether the textarea should be replaced!
 const likertQuestions = [
     "gender", 
-    "experience", 
+    "age", 
     "service-quality-1", 
     "service-quality-2", 
     "service-quality-3", 
