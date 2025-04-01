@@ -615,6 +615,8 @@ async function emailSubmitLogic() {
  * - This function is called as soon as the DOM is fully loaded.
  * - Requests the metadata from the server when the page is loaded for the 
  *   first time, otherwise the metadata is retrieved from the session storage. 
+ * - If the client cannot receive a treatmentGroup value from the server, it
+ *   creates a random treatmentGroup value itself. 
  * 
  * @async
  * @returns {void}
@@ -624,7 +626,12 @@ async function getMetadata() {
         surveyData = await fetchMetadataFromServer();
     }
     const participantId = sessionStorage.getItem('participantId') || surveyData.participantId;
-    const treatmentGroup = sessionStorage.getItem('treatmentGroup') || surveyData.treatmentGroup;
+    let treatmentGroup = Number(sessionStorage.getItem('treatmentGroup')) || surveyData.treatmentGroup;
+
+    if (!((treatmentGroup === 0) || (treatmentGroup === 1))) {
+        treatmentGroup = Math.random() < 0.5 ? 0 : 1;
+    }
+    
     sessionStorage.setItem('participantId', participantId);
     sessionStorage.setItem('treatmentGroup', treatmentGroup);
 }
