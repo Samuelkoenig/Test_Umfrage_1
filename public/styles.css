@@ -585,6 +585,11 @@ p, ul, li {
     .checkbox-container {
         justify-content: flex-start;
     }
+
+    .navigation-start-page {
+        display: flex;
+        justify-content: center;
+    }
 }
 
 @media (min-width: 600.1px) {
