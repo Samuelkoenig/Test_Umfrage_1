@@ -70,10 +70,8 @@ const likertQuestions = [
     "empathy-5"
 ];                      // To be specified: the likert question names used in the survey!
 const questionSetClasses = [
-    [".random-order-constructs", ".construct"],
     [".construct-service-quality", ".question"],
-    [".construct-satisfaction", ".question"],
-    [".construct-empathy", ".question"]
+    [".constructs-empathy-satisfaction", ".question"]
 ]                       // To be specified: the class names of the randomized question sets! 
 
 let pages;
@@ -1100,7 +1098,7 @@ function randomizeQuestionOrder(htmlParentClassName, htmlElementsClassName) {
         pointer++;
       }
     });
-  }
+}
 
 /**
  * Executes the randomizeQuestionOrder for a range of html classes. 

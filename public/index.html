@@ -33,8 +33,8 @@
             </p>
             <label class="checkbox-container">
                 <input type="checkbox" id="consent">
-                <span class="checkmark"></span>
-                <b>Ich habe mir die Informationen zur Studie durchgelesen und möchte an der Studie teilnehmen.</b>
+                <span class="checkmark" ></span>
+                <b style="line-height: 1.6;">Ich habe mir die Informationen zur Studie durchgelesen und möchte an der Studie teilnehmen.</b>
             </label>
             <div class="navigation">
                 <button id="next1" class="next-btn" disabled>Starten</button>
@@ -139,330 +139,287 @@
 
         <!-- Seite 5 -->
         <div class="page" id="page5">
-            <h1>Ihre Erfahrung (1)</h1>
+            <h1>Ihre Erfahrung</h1>
 
-            <p style="font-size: 18px;"><b>Bitte geben Sie Ihren Grad der Zustimmung zu den folgenden Aussagen an:</b><br></p>
+            <p style="font-size: 16px;"><b>Bitte bewerten Sie den Service des Chatbots anhand der folgenden Aspekte 
+                auf je einer fünfstufigen Skala.</b><br></p>
 
-            <div class="random-order-constructs">
+            <div class="construct construct-service-quality">
 
-                <div class="construct construct-service-quality">
-
-                    <div class="question">
-                        <p>Der Chatbot erfüllt das Service-Versprechen.</p>
-                        <div class="likert likert-5">
-                            <label class="radio-container">
-                                <input type="radio" name="service-quality-1" value="1">
-                                <span class="radio-checkmark"></span>
-                                Stimme überhaupt nicht zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="service-quality-1" value="2">
-                                <span class="radio-checkmark"></span>
-                                Stimme eher nicht zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="service-quality-1" value="3">
-                                <span class="radio-checkmark"></span>
-                                Stimme weder zu noch lehne ab
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="service-quality-1" value="4">
-                                <span class="radio-checkmark"></span>
-                                Stimme eher zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="service-quality-1" value="5">
-                                <span class="radio-checkmark"></span>
-                                Stimme voll und ganz zu
-                            </label>
+                <div class="question">
+                    <div class="sd-container">
+                        <div class="sd-desktop-label sd-desktop-label-left">
+                            Sehr<br>schlecht
+                        </div>
+                        <div class="sd-scale sd-5">
+                            <div class="sd-point sd-point-left">
+                                <label class="radio-container">
+                                    <input type="radio" name="service-quality-1" value="1">
+                                    <span class="radio-checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="sd-point">
+                                <label class="radio-container">
+                                    <input type="radio" name="service-quality-1" value="2">
+                                    <span class="radio-checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="sd-point">
+                                <label class="radio-container">
+                                    <input type="radio" name="service-quality-1" value="3">
+                                    <span class="radio-checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="sd-point">
+                                <label class="radio-container">
+                                    <input type="radio" name="service-quality-1" value="4">
+                                    <span class="radio-checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="sd-point sd-point-right">
+                                <label class="radio-container">
+                                    <input type="radio" name="service-quality-1" value="5">
+                                    <span class="radio-checkmark"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="sd-desktop-label sd-desktop-label-right">
+                            Sehr<br>gut
                         </div>
                     </div>
-
-                    <div class="question">
-                        <p>Der Chatbot stellt den Service zügig bereit.</p>
-                        <div class="likert likert-5">
-                            <label class="radio-container">
-                                <input type="radio" name="service-quality-2" value="1">
-                                <span class="radio-checkmark"></span>
-                                Stimme überhaupt nicht zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="service-quality-2" value="2">
-                                <span class="radio-checkmark"></span>
-                                Stimme eher nicht zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="service-quality-2" value="3">
-                                <span class="radio-checkmark"></span>
-                                Stimme weder zu noch lehne ab
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="service-quality-2" value="4">
-                                <span class="radio-checkmark"></span>
-                                Stimme eher zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="service-quality-2" value="5">
-                                <span class="radio-checkmark"></span>
-                                Stimme voll und ganz zu
-                            </label>
+                    <div class="sd-label-mobile-container">
+                        <div class="sd-label-mobile sd-label-mobile-left">
+                            Sehr<br>schlecht
+                        </div>
+                        <div class="sd-label-mobile sd-label-mobile-right">
+                            Sehr<br>gut
                         </div>
                     </div>
-
-                    <div class="question">
-                        <p>Der Chatbot ist hilfsbereit.</p>
-                        <div class="likert likert-5">
-                            <label class="radio-container">
-                                <input type="radio" name="service-quality-3" value="1">
-                                <span class="radio-checkmark"></span>
-                                Stimme überhaupt nicht zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="service-quality-3" value="2">
-                                <span class="radio-checkmark"></span>
-                                Stimme eher nicht zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="service-quality-3" value="3">
-                                <span class="radio-checkmark"></span>
-                                Stimme weder zu noch lehne ab
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="service-quality-3" value="4">
-                                <span class="radio-checkmark"></span>
-                                Stimme eher zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="service-quality-3" value="5">
-                                <span class="radio-checkmark"></span>
-                                Stimme voll und ganz zu
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="question">
-                        <p>Der Chatbot ist vertrauenswürdig und unterstützend.</p>
-                        <div class="likert likert-5">
-                            <label class="radio-container">
-                                <input type="radio" name="service-quality-4" value="1">
-                                <span class="radio-checkmark"></span>
-                                Stimme überhaupt nicht zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="service-quality-4" value="2">
-                                <span class="radio-checkmark"></span>
-                                Stimme eher nicht zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="service-quality-4" value="3">
-                                <span class="radio-checkmark"></span>
-                                Stimme weder zu noch lehne ab
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="service-quality-4" value="4">
-                                <span class="radio-checkmark"></span>
-                                Stimme eher zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="service-quality-4" value="5">
-                                <span class="radio-checkmark"></span>
-                                Stimme voll und ganz zu
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="question">
-                        <p>Der Chatbot verfügt über die Fähigkeit, den gewünschten Service bereitzustellen.</p>
-                        <div class="likert likert-5">
-                            <label class="radio-container">
-                                <input type="radio" name="service-quality-5" value="1">
-                                <span class="radio-checkmark"></span>
-                                Stimme überhaupt nicht zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="service-quality-5" value="2">
-                                <span class="radio-checkmark"></span>
-                                Stimme eher nicht zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="service-quality-5" value="3">
-                                <span class="radio-checkmark"></span>
-                                Stimme weder zu noch lehne ab
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="service-quality-5" value="4">
-                                <span class="radio-checkmark"></span>
-                                Stimme eher zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="service-quality-5" value="5">
-                                <span class="radio-checkmark"></span>
-                                Stimme voll und ganz zu
-                            </label>
-                        </div>
-                    </div>
-
                 </div>
+            </div>
 
-                <div class="construct construct-satisfaction">
+            <div class="divider-line divider-line-sd"></div>
 
-                    <div class="question">
-                        <p>Ich bin mit dem Chatbot zufrieden.</p>
-                        <div class="likert likert-5">
-                            <label class="radio-container">
-                                <input type="radio" name="satisfaction-1" value="1">
-                                <span class="radio-checkmark"></span>
-                                Stimme überhaupt nicht zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="satisfaction-1" value="2">
-                                <span class="radio-checkmark"></span>
-                                Stimme eher nicht zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="satisfaction-1" value="3">
-                                <span class="radio-checkmark"></span>
-                                Stimme weder zu noch lehne ab
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="satisfaction-1" value="4">
-                                <span class="radio-checkmark"></span>
-                                Stimme eher zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="satisfaction-1" value="5">
-                                <span class="radio-checkmark"></span>
-                                Stimme voll und ganz zu
-                            </label>
+            <div class="construct construct-service-quality">
+                
+                <div class="question">
+                    <div class="sd-container">
+                        <div class="sd-desktop-label sd-desktop-label-left">
+                            Minderwertig
+                        </div>
+                        <div class="sd-scale sd-5">
+                            <div class="sd-point sd-point-left">
+                                <label class="radio-container">
+                                    <input type="radio" name="service-quality-2" value="1">
+                                    <span class="radio-checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="sd-point">
+                                <label class="radio-container">
+                                    <input type="radio" name="service-quality-2" value="2">
+                                    <span class="radio-checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="sd-point">
+                                <label class="radio-container">
+                                    <input type="radio" name="service-quality-2" value="3">
+                                    <span class="radio-checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="sd-point">
+                                <label class="radio-container">
+                                    <input type="radio" name="service-quality-2" value="4">
+                                    <span class="radio-checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="sd-point sd-point-right">
+                                <label class="radio-container">
+                                    <input type="radio" name="service-quality-2" value="5">
+                                    <span class="radio-checkmark"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="sd-desktop-label sd-desktop-label-right">
+                            Hochwertig
                         </div>
                     </div>
-
-                    <div class="question">
-                        <p>Ich fühle mich von dem Chatbot gut beraten.</p>
-                        <div class="likert likert-5">
-                            <label class="radio-container">
-                                <input type="radio" name="satisfaction-2" value="1">
-                                <span class="radio-checkmark"></span>
-                                Stimme überhaupt nicht zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="satisfaction-2" value="2">
-                                <span class="radio-checkmark"></span>
-                                Stimme eher nicht zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="satisfaction-2" value="3">
-                                <span class="radio-checkmark"></span>
-                                Stimme weder zu noch lehne ab
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="satisfaction-2" value="4">
-                                <span class="radio-checkmark"></span>
-                                Stimme eher zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="satisfaction-2" value="5">
-                                <span class="radio-checkmark"></span>
-                                Stimme voll und ganz zu
-                            </label>
+                    <div class="sd-label-mobile-container">
+                        <div class="sd-label-mobile sd-label-mobile-left">
+                            Minder-<br>wertig
+                        </div>
+                        <div class="sd-label-mobile sd-label-mobile-right">
+                            Hoch-<br>wertig
                         </div>
                     </div>
-
-                    <div class="question">
-                        <p>Der Chatbot hat gute Arbeit geleistet.</p>
-                        <div class="likert likert-5">
-                            <label class="radio-container">
-                                <input type="radio" name="satisfaction-3" value="1">
-                                <span class="radio-checkmark"></span>
-                                Stimme überhaupt nicht zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="satisfaction-3" value="2">
-                                <span class="radio-checkmark"></span>
-                                Stimme eher nicht zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="satisfaction-3" value="3">
-                                <span class="radio-checkmark"></span>
-                                Stimme weder zu noch lehne ab
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="satisfaction-3" value="4">
-                                <span class="radio-checkmark"></span>
-                                Stimme eher zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="satisfaction-3" value="5">
-                                <span class="radio-checkmark"></span>
-                                Stimme voll und ganz zu
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="question">
-                        <p>Der Chatbot hat meine Erwartungen erfüllt.</p>
-                        <div class="likert likert-5">
-                            <label class="radio-container">
-                                <input type="radio" name="satisfaction-4" value="1">
-                                <span class="radio-checkmark"></span>
-                                Stimme überhaupt nicht zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="satisfaction-4" value="2">
-                                <span class="radio-checkmark"></span>
-                                Stimme eher nicht zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="satisfaction-4" value="3">
-                                <span class="radio-checkmark"></span>
-                                Stimme weder zu noch lehne ab
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="satisfaction-4" value="4">
-                                <span class="radio-checkmark"></span>
-                                Stimme eher zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="satisfaction-4" value="5">
-                                <span class="radio-checkmark"></span>
-                                Stimme voll und ganz zu
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="question">
-                        <p>Ich war zufrieden mit der Erfahrung, mit dem Chatbot zu schreiben.</p>
-                        <div class="likert likert-5">
-                            <label class="radio-container">
-                                <input type="radio" name="satisfaction-5" value="1">
-                                <span class="radio-checkmark"></span>
-                                Stimme überhaupt nicht zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="satisfaction-5" value="2">
-                                <span class="radio-checkmark"></span>
-                                Stimme eher nicht zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="satisfaction-5" value="3">
-                                <span class="radio-checkmark"></span>
-                                Stimme weder zu noch lehne ab
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="satisfaction-5" value="4">
-                                <span class="radio-checkmark"></span>
-                                Stimme eher zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="satisfaction-5" value="5">
-                                <span class="radio-checkmark"></span>
-                                Stimme voll und ganz zu
-                            </label>
-                        </div>
-                    </div>
-
                 </div>
+            </div>
 
+            <div class="divider-line divider-line-sd"></div>
+
+            <div class="construct construct-service-quality">
+
+                <div class="question">
+                    <div class="sd-container">
+                        <div class="sd-desktop-label sd-desktop-label-left">
+                            Niedriges<br>Niveau
+                        </div>
+                        <div class="sd-scale sd-5">
+                            <div class="sd-point sd-point-left">
+                                <label class="radio-container">
+                                    <input type="radio" name="service-quality-3" value="1">
+                                    <span class="radio-checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="sd-point">
+                                <label class="radio-container">
+                                    <input type="radio" name="service-quality-3" value="2">
+                                    <span class="radio-checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="sd-point">
+                                <label class="radio-container">
+                                    <input type="radio" name="service-quality-3" value="3">
+                                    <span class="radio-checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="sd-point">
+                                <label class="radio-container">
+                                    <input type="radio" name="service-quality-3" value="4">
+                                    <span class="radio-checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="sd-point sd-point-right">
+                                <label class="radio-container">
+                                    <input type="radio" name="service-quality-3" value="5">
+                                    <span class="radio-checkmark"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="sd-desktop-label sd-desktop-label-right">
+                            Hohes<br>Niveau
+                        </div>
+                    </div>
+                    <div class="sd-label-mobile-container">
+                        <div class="sd-label-mobile sd-label-mobile-left">
+                            Niedriges<br>Niveau
+                        </div>
+                        <div class="sd-label-mobile sd-label-mobile-right">
+                            Hohes<br>Niveau
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider-line divider-line-sd"></div>
+
+            <div class="construct construct-service-quality">
+
+                <div class="question">
+                    <div class="sd-container">
+                        <div class="sd-desktop-label sd-desktop-label-left">
+                            Kein<br>Mehrwert
+                        </div>
+                        <div class="sd-scale sd-5">
+                            <div class="sd-point sd-point-left">
+                                <label class="radio-container">
+                                    <input type="radio" name="service-quality-4" value="1">
+                                    <span class="radio-checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="sd-point">
+                                <label class="radio-container">
+                                    <input type="radio" name="service-quality-4" value="2">
+                                    <span class="radio-checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="sd-point">
+                                <label class="radio-container">
+                                    <input type="radio" name="service-quality-4" value="3">
+                                    <span class="radio-checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="sd-point">
+                                <label class="radio-container">
+                                    <input type="radio" name="service-quality-4" value="4">
+                                    <span class="radio-checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="sd-point sd-point-right">
+                                <label class="radio-container">
+                                    <input type="radio" name="service-quality-4" value="5">
+                                    <span class="radio-checkmark"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="sd-desktop-label sd-desktop-label-right">
+                            Großer<br>Mehrwert
+                        </div>
+                    </div>
+                    <div class="sd-label-mobile-container">
+                        <div class="sd-label-mobile sd-label-mobile-left">
+                            Kein<br>Mehrwert
+                        </div>
+                        <div class="sd-label-mobile sd-label-mobile-right">
+                            Großer<br>Mehrwert
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider-line divider-line-sd"></div>
+
+            <div class="construct construct-service-quality">
+
+                <div class="question">
+                    <div class="sd-container">
+                        <div class="sd-desktop-label sd-desktop-label-left">
+                            Niedrige<br>Qualität
+                        </div>
+                        <div class="sd-scale sd-5">
+                            <div class="sd-point sd-point-left">
+                                <label class="radio-container">
+                                    <input type="radio" name="service-quality-5" value="1">
+                                    <span class="radio-checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="sd-point">
+                                <label class="radio-container">
+                                    <input type="radio" name="service-quality-5" value="2">
+                                    <span class="radio-checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="sd-point">
+                                <label class="radio-container">
+                                    <input type="radio" name="service-quality-5" value="3">
+                                    <span class="radio-checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="sd-point">
+                                <label class="radio-container">
+                                    <input type="radio" name="service-quality-5" value="4">
+                                    <span class="radio-checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="sd-point sd-point-right">
+                                <label class="radio-container">
+                                    <input type="radio" name="service-quality-5" value="5">
+                                    <span class="radio-checkmark"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="sd-desktop-label sd-desktop-label-right">
+                            Hohe<br>Qualität
+                        </div>
+                    </div>
+                    <div class="sd-label-mobile-container">
+                        <div class="sd-label-mobile sd-label-mobile-left">
+                            Niedrige<br>Qualität
+                        </div>
+                        <div class="sd-label-mobile sd-label-mobile-right">
+                            Hohe<br>Qualität
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="navigation" id="chatbot-navigation">
@@ -473,171 +430,366 @@
 
         <!-- Seite 6 -->
         <div class="page" id="page6">
-            <h1>Ihre Erfahrung (2)</h1>
+            <h1>Ihre Erfahrung</h1>
 
-            <p style="font-size: 18px;"><b>Bitte geben Sie Ihren Grad der Zustimmung zu den folgenden Aussagen an:</b><br></p>
-            
-            <div class="random-order-constructs">
+            <p style="font-size: 18px;"><b>Bitte geben Sie an, inwieweit Sie den folgenden Aussagen zustimmen.</b><br></p>
 
-                <div class="construct construct-empathy">
+            <div class="construct constructs-empathy-satisfaction">
 
-                    <div class="question">
-                        <p>Der Chatbot schenkt mir persönliche Aufmerksamkeit.</p>
-                        <div class="likert likert-5">
-                            <label class="radio-container">
-                                <input type="radio" name="empathy-1" value="1">
-                                <span class="radio-checkmark"></span>
-                                Stimme überhaupt nicht zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="empathy-1" value="2">
-                                <span class="radio-checkmark"></span>
-                                Stimme eher nicht zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="empathy-1" value="3">
-                                <span class="radio-checkmark"></span>
-                                Stimme weder zu noch lehne ab
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="empathy-1" value="4">
-                                <span class="radio-checkmark"></span>
-                                Stimme eher zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="empathy-1" value="5">
-                                <span class="radio-checkmark"></span>
-                                Stimme voll und ganz zu
-                            </label>
-                        </div>
+                <div class="question">
+                    <p>Die Erfahrung mit dem Chatbot hat bei mir ein zufriedenes Gefühl hinterlassen.</p>
+                    <div class="likert likert-5">
+                        <label class="radio-container">
+                            <input type="radio" name="satisfaction-1" value="1">
+                            <span class="radio-checkmark"></span>
+                            Stimme überhaupt nicht zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="satisfaction-1" value="2">
+                            <span class="radio-checkmark"></span>
+                            Stimme eher nicht zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="satisfaction-1" value="3">
+                            <span class="radio-checkmark"></span>
+                            Weder noch
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="satisfaction-1" value="4">
+                            <span class="radio-checkmark"></span>
+                            Stimme eher zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="satisfaction-1" value="5">
+                            <span class="radio-checkmark"></span>
+                            Stimme voll und ganz zu
+                        </label>
                     </div>
-
-                    <div class="question">
-                        <p>Ich habe das Gefühl, dass der Chatbot meine Interessen in den Vordergrund stellt.</p>
-                        <div class="likert likert-5">
-                            <label class="radio-container">
-                                <input type="radio" name="empathy-2" value="1">
-                                <span class="radio-checkmark"></span>
-                                Stimme überhaupt nicht zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="empathy-2" value="2">
-                                <span class="radio-checkmark"></span>
-                                Stimme eher nicht zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="empathy-2" value="3">
-                                <span class="radio-checkmark"></span>
-                                Stimme weder zu noch lehne ab
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="empathy-2" value="4">
-                                <span class="radio-checkmark"></span>
-                                Stimme eher zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="empathy-2" value="5">
-                                <span class="radio-checkmark"></span>
-                                Stimme voll und ganz zu
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="question">
-                        <p>Ich empfinde den Chatbot als aufmerksam in seiner Interaktion mit mir.</p>
-                        <div class="likert likert-5">
-                            <label class="radio-container">
-                                <input type="radio" name="empathy-3" value="1">
-                                <span class="radio-checkmark"></span>
-                                Stimme überhaupt nicht zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="empathy-3" value="2">
-                                <span class="radio-checkmark"></span>
-                                Stimme eher nicht zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="empathy-3" value="3">
-                                <span class="radio-checkmark"></span>
-                                Stimme weder zu noch lehne ab
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="empathy-3" value="4">
-                                <span class="radio-checkmark"></span>
-                                Stimme eher zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="empathy-3" value="5">
-                                <span class="radio-checkmark"></span>
-                                Stimme voll und ganz zu
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="question">
-                        <p>Der Chatbot vermittelt mir das Gefühl, dass er sich um mich kümmert.</p>
-                        <div class="likert likert-5">
-                            <label class="radio-container">
-                                <input type="radio" name="empathy-4" value="1">
-                                <span class="radio-checkmark"></span>
-                                Stimme überhaupt nicht zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="empathy-4" value="2">
-                                <span class="radio-checkmark"></span>
-                                Stimme eher nicht zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="empathy-4" value="3">
-                                <span class="radio-checkmark"></span>
-                                Stimme weder zu noch lehne ab
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="empathy-4" value="4">
-                                <span class="radio-checkmark"></span>
-                                Stimme eher zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="empathy-4" value="5">
-                                <span class="radio-checkmark"></span>
-                                Stimme voll und ganz zu
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="question">
-                        <p>Der Chatbot lässt mich spüren, dass ihm mein Anliegen wichtig ist.</p>
-                        <div class="likert likert-5">
-                            <label class="radio-container">
-                                <input type="radio" name="empathy-5" value="1">
-                                <span class="radio-checkmark"></span>
-                                Stimme überhaupt nicht zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="empathy-5" value="2">
-                                <span class="radio-checkmark"></span>
-                                Stimme eher nicht zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="empathy-5" value="3">
-                                <span class="radio-checkmark"></span>
-                                Stimme weder zu noch lehne ab
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="empathy-5" value="4">
-                                <span class="radio-checkmark"></span>
-                                Stimme eher zu
-                            </label>
-                            <label class="radio-container">
-                                <input type="radio" name="empathy-5" value="5">
-                                <span class="radio-checkmark"></span>
-                                Stimme voll und ganz zu
-                            </label>
-                        </div>
-                    </div>
-
                 </div>
+            </div>
 
+            <div class="divider-line divider-line-likert"></div>
+
+            <div class="construct constructs-empathy-satisfaction">
+
+                <div class="question">
+                    <p>Der Service des Chatbots hat meine Bedürfnisse erfüllt.</p>
+                    <div class="likert likert-5">
+                        <label class="radio-container">
+                            <input type="radio" name="satisfaction-2" value="1">
+                            <span class="radio-checkmark"></span>
+                            Stimme überhaupt nicht zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="satisfaction-2" value="2">
+                            <span class="radio-checkmark"></span>
+                            Stimme eher nicht zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="satisfaction-2" value="3">
+                            <span class="radio-checkmark"></span>
+                            Weder noch
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="satisfaction-2" value="4">
+                            <span class="radio-checkmark"></span>
+                            Stimme eher zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="satisfaction-2" value="5">
+                            <span class="radio-checkmark"></span>
+                            Stimme voll und ganz zu
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider-line divider-line-likert"></div>
+
+            <div class="construct constructs-empathy-satisfaction">
+
+                <div class="question">
+                    <p>Ich bin insgesamt zufrieden mit der Interaktion mit dem Chatbot.</p>
+                    <div class="likert likert-5">
+                        <label class="radio-container">
+                            <input type="radio" name="satisfaction-3" value="1">
+                            <span class="radio-checkmark"></span>
+                            Stimme überhaupt nicht zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="satisfaction-3" value="2">
+                            <span class="radio-checkmark"></span>
+                            Stimme eher nicht zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="satisfaction-3" value="3">
+                            <span class="radio-checkmark"></span>
+                            Weder noch
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="satisfaction-3" value="4">
+                            <span class="radio-checkmark"></span>
+                            Stimme eher zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="satisfaction-3" value="5">
+                            <span class="radio-checkmark"></span>
+                            Stimme voll und ganz zu
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider-line divider-line-likert"></div>
+
+            <div class="construct constructs-empathy-satisfaction">
+
+                <div class="question">
+                    <p>Ich bin mit dem Service des Chatbots zufrieden.</p>
+                    <div class="likert likert-5">
+                        <label class="radio-container">
+                            <input type="radio" name="satisfaction-4" value="1">
+                            <span class="radio-checkmark"></span>
+                            Stimme überhaupt nicht zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="satisfaction-4" value="2">
+                            <span class="radio-checkmark"></span>
+                            Stimme eher nicht zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="satisfaction-4" value="3">
+                            <span class="radio-checkmark"></span>
+                            Weder noch
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="satisfaction-4" value="4">
+                            <span class="radio-checkmark"></span>
+                            Stimme eher zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="satisfaction-4" value="5">
+                            <span class="radio-checkmark"></span>
+                            Stimme voll und ganz zu
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider-line divider-line-likert"></div>
+
+            <div class="construct constructs-empathy-satisfaction">
+
+                <div class="question">
+                    <p>Der Chatbot hat das getan, was ich von ihm erwartet habe.</p>
+                    <div class="likert likert-5">
+                        <label class="radio-container">
+                            <input type="radio" name="satisfaction-5" value="1">
+                            <span class="radio-checkmark"></span>
+                            Stimme überhaupt nicht zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="satisfaction-5" value="2">
+                            <span class="radio-checkmark"></span>
+                            Stimme eher nicht zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="satisfaction-5" value="3">
+                            <span class="radio-checkmark"></span>
+                            Weder noch
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="satisfaction-5" value="4">
+                            <span class="radio-checkmark"></span>
+                            Stimme eher zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="satisfaction-5" value="5">
+                            <span class="radio-checkmark"></span>
+                            Stimme voll und ganz zu
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider-line divider-line-likert"></div>
+
+            <div class="construct constructs-empathy-satisfaction">
+
+                <div class="question">
+                    <p>Der Chatbot hat mir persönliche Aufmerksamkeit geschenkt.</p>
+                    <div class="likert likert-5">
+                        <label class="radio-container">
+                            <input type="radio" name="empathy-1" value="1">
+                            <span class="radio-checkmark"></span>
+                            Stimme überhaupt nicht zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="empathy-1" value="2">
+                            <span class="radio-checkmark"></span>
+                            Stimme eher nicht zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="empathy-1" value="3">
+                            <span class="radio-checkmark"></span>
+                            Weder noch
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="empathy-1" value="4">
+                            <span class="radio-checkmark"></span>
+                            Stimme eher zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="empathy-1" value="5">
+                            <span class="radio-checkmark"></span>
+                            Stimme voll und ganz zu
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider-line divider-line-likert"></div>
+
+            <div class="construct constructs-empathy-satisfaction">
+
+                <div class="question">
+                    <p>Ich hatte das Gefühl, dass der Chatbot meine Interessen in den Vordergrund stellt.</p>
+                    <div class="likert likert-5">
+                        <label class="radio-container">
+                            <input type="radio" name="empathy-2" value="1">
+                            <span class="radio-checkmark"></span>
+                            Stimme überhaupt nicht zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="empathy-2" value="2">
+                            <span class="radio-checkmark"></span>
+                            Stimme eher nicht zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="empathy-2" value="3">
+                            <span class="radio-checkmark"></span>
+                            Weder noch
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="empathy-2" value="4">
+                            <span class="radio-checkmark"></span>
+                            Stimme eher zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="empathy-2" value="5">
+                            <span class="radio-checkmark"></span>
+                            Stimme voll und ganz zu
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider-line divider-line-likert"></div>
+
+            <div class="construct constructs-empathy-satisfaction">
+
+                <div class="question">
+                    <p>Ich habe den Chatbot als aufmerksam in seiner Interaktion mit mir empfunden.</p>
+                    <div class="likert likert-5">
+                        <label class="radio-container">
+                            <input type="radio" name="empathy-3" value="1">
+                            <span class="radio-checkmark"></span>
+                            Stimme überhaupt nicht zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="empathy-3" value="2">
+                            <span class="radio-checkmark"></span>
+                            Stimme eher nicht zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="empathy-3" value="3">
+                            <span class="radio-checkmark"></span>
+                            Weder noch
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="empathy-3" value="4">
+                            <span class="radio-checkmark"></span>
+                            Stimme eher zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="empathy-3" value="5">
+                            <span class="radio-checkmark"></span>
+                            Stimme voll und ganz zu
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider-line divider-line-likert"></div>
+
+            <div class="construct constructs-empathy-satisfaction">
+
+                <div class="question">
+                    <p>Der Chatbot hat mir das Gefühl vermittelt, dass er sich um mich kümmert.</p>
+                    <div class="likert likert-5">
+                        <label class="radio-container">
+                            <input type="radio" name="empathy-4" value="1">
+                            <span class="radio-checkmark"></span>
+                            Stimme überhaupt nicht zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="empathy-4" value="2">
+                            <span class="radio-checkmark"></span>
+                            Stimme eher nicht zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="empathy-4" value="3">
+                            <span class="radio-checkmark"></span>
+                            Weder noch
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="empathy-4" value="4">
+                            <span class="radio-checkmark"></span>
+                            Stimme eher zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="empathy-4" value="5">
+                            <span class="radio-checkmark"></span>
+                            Stimme voll und ganz zu
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider-line divider-line-likert"></div>
+
+            <div class="construct constructs-empathy-satisfaction">
+
+                <div class="question">
+                    <p>Der Chatbot hat mich spüren lassen, dass ihm mein Anliegen wichtig ist.</p>
+                    <div class="likert likert-5">
+                        <label class="radio-container">
+                            <input type="radio" name="empathy-5" value="1">
+                            <span class="radio-checkmark"></span>
+                            Stimme überhaupt nicht zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="empathy-5" value="2">
+                            <span class="radio-checkmark"></span>
+                            Stimme eher nicht zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="empathy-5" value="3">
+                            <span class="radio-checkmark"></span>
+                            Weder noch
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="empathy-5" value="4">
+                            <span class="radio-checkmark"></span>
+                            Stimme eher zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="empathy-5" value="5">
+                            <span class="radio-checkmark"></span>
+                            Stimme voll und ganz zu
+                        </label>
+                    </div>
+                </div>
             </div>
 
             <div class="navigation" id="chatbot-navigation">
@@ -668,6 +820,8 @@
                 </label>
             </div>
 
+            <div class="divider-line divider-line-likert"></div>
+
             <div class="question">
                 <p>Wie alt sind Sie?</p>
                 <label class="radio-container">
@@ -681,7 +835,7 @@
                     20 - 29
                 </label>
                 <label class="radio-container">
-                    <input type="radio" name="age" value="30-30">
+                    <input type="radio" name="age" value="30-39">
                     <span class="radio-checkmark"></span>
                     30 - 39
                 </label>
@@ -751,7 +905,7 @@
 
             <!-- Erfolgsmeldung nach E-Mail-Abgabe (zunächst ausgeblendet) -->
             <div id="emailSuccessSection" class="hidden">
-                <p>Vielen Dank! Ihre E-Mail wurde gespeichert. Sie nehmen an der Verlosung teil.</p>
+                <p>Ihre E-Mail wurde übermittelt. Sie nehmen an der Verlosung teil.</p>
             </div>
         </div>
         

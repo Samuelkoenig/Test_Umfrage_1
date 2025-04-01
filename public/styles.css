@@ -92,12 +92,30 @@ p, ul, li {
 
 /* Fragen */
 .question {
-    margin-bottom: 30px; 
+    margin-top: 20px; 
+    margin-bottom: 20px; 
 }
 
 .question p {
     font-weight: bold; 
     margin-bottom: 15px; 
+}
+
+.divider-line {
+    height: 2px;
+    background-color: #d8dcdf;
+    display: none;
+}
+
+.divider-line-sd {
+    margin: 0px 0;
+    display: none;
+}
+
+.divider-line-likert {
+    margin-top: 23px;
+    margin-bottom: 0px;
+    display: block;
 }
 
 /* Checkbox und Radio Container */
@@ -174,7 +192,7 @@ p, ul, li {
 .radio-checkmark, .checkmark {
     width: 22px;
     height: 22px;
-    background-color: #eee;
+    background-color: #d8dcdf;
     border-radius: 50%;
     position: relative;
     flex-shrink: 0;
@@ -185,11 +203,13 @@ p, ul, li {
 }
 
 .checkbox-container .checkmark {
-    background-color: #ccc;
+    background-color: #d8dcdf;
+    font-size: 16px;
+    line-height: 1.6;
 }
 
 .checkbox-container:hover .checkmark {
-    background-color: #bbb; 
+    background-color: #c5c8cb; 
 }
 
 .checkbox-container input[type="checkbox"]:checked ~ .checkmark {
@@ -204,7 +224,7 @@ p, ul, li {
 }
 
 .radio-container:hover .radio-checkmark {
-    background-color: #ccc;
+    background-color: #c5c8cb;
 }
 
 .radio-container input[type="radio"]:checked ~ .radio-checkmark {
@@ -225,6 +245,55 @@ p, ul, li {
     height: 10px;
     border-radius: 50%;
     background: white;
+}
+
+/* Semantic differential scales */
+.sd-container {
+    max-width: 800px; 
+    margin: 0 auto; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    height: 40px;
+}
+
+.sd-desktop-label {
+    display: flex;
+    word-wrap: break-word;
+    white-space: normal; 
+    width: 205px; 
+}
+
+.sd-desktop-label-left {
+    text-align: right;
+    justify-content: flex-end;
+}
+
+.sd-desktop-label-right {
+    text-align: left;
+    justify-content: flex-start;
+}
+
+.sd-scale {
+    display: flex;
+    flex: 0 1 auto; 
+    align-items: center; 
+    justify-content: space-between;
+    flex-wrap: nowrap; 
+    width: 100%; 
+    max-width: 800px; 
+}
+
+.sd-point {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    text-align: center;
+}
+
+.sd-label-mobile {
+    display: none;
 }
 
 /* Checkbox Haken */
@@ -276,7 +345,7 @@ p, ul, li {
 
 .next-btn:disabled,
 .submit-btn:disabled {
-    background-color: #ccc;
+    background-color: #c5c8cb;
     cursor: not-allowed;
 }
 
@@ -446,6 +515,10 @@ p, ul, li {
         padding: 20px 10px;
     }
 
+    .divider-line {
+        display: block;
+    }
+
     .likert, .likert-7 {
         flex-direction: column;
         align-items: flex-start;
@@ -468,6 +541,45 @@ p, ul, li {
     .likert-7 label {
         justify-content: flex-start; 
         margin-right: 0; 
+    }
+
+    .sd-desktop-label {
+        display: none;
+    }
+
+    .sd-container {
+        height: auto;
+    }
+
+    .sd-scale {
+        width: 100%;      
+        max-width: 100%; 
+        justify-content: space-between;
+        flex-wrap: nowrap; 
+        align-items: flex-start;
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+
+    .sd-label-mobile-container {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .sd-label-mobile {
+        display: flex;
+        margin-top: 4px;
+        width: 70px; 
+        justify-content: center;
+        align-items: center; 
+        text-align: center;
+        word-wrap: break-word; 
+        white-space: normal; 
+    }
+
+    .sd-point {
+        display: block;
     }
 
     .checkbox-container {

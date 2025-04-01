@@ -608,7 +608,7 @@ function continueBtnStateMgmt() {
  * Logic to check whether the continueSurveytBtn should be enabled.
  * 
  * - Implemented logic: The continueSurveytBtn should be enabled when the final 
- *   dialogue state has been reached or when the user has sent at least four 
+ *   dialogue state has been reached or when the user has sent at least three 
  *   messages.
  * 
  * @returns {boolean} Whether the continueSurveytBtn should be enabled. 
@@ -617,7 +617,7 @@ function continueButtonActivationTest() {
   let testResult = false;
   testResult = finalStateReached;
   let state = loadConversationState();
-  if (state.messages.filter(message => message.from === 'user').length >= 4) {
+  if (state.messages.filter(message => message.from === 'user').length >= 3) {
     testResult = true;
   }
   return testResult;
