@@ -171,7 +171,7 @@
   margin-right: 8px; /* leichter horizontaler Abstand */
   
   /* WICHTIG: Bouncing-Animation */
-  animation: typingBounce 1.4s infinite ease-in-out;
+  animation: typingBounce 1.7s infinite ease-in-out;
 }
 
 /* Verzögerung pro Punkt, damit sie nacheinander hüpfen */
@@ -183,10 +183,10 @@
 }
 
 @keyframes typingBounce {
-  0%, 50%, 100% {
+  0%, 40%, 100% {
     transform: translateY(0);
   }
-  25% {
+  20% {
     transform: translateY(-6px); /* Bewegungsradius nach oben */
   }
 }
