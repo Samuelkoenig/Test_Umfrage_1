@@ -50,6 +50,21 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 
 /**
+ * Set up an in-memory storage for processed messages to avoid duplicates.
+ * Automatically clear the stored message ids after one hour.
+ */
+const processedMessages = new Map();
+setInterval(() => {
+  const now = Date.now();
+  const oneHour = 60 * 60 * 1000;
+  for (const [key, value] of processedMessages) {
+    if (now - value.timestamp > oneHour) {
+      processedMessages.delete(key);
+    }
+  }
+}, 3600000);
+
+/**
  * Setup of the database connection.
  * 
  * - Establishes a connection to the postgreSQL database, using the DATABASE_URL from the 
@@ -319,13 +334,21 @@ app.post('/getactivities', async (req, res) => {
  * - Receives the conversationId, the user message and the treatmentGroup value from
  *   the client. 
  * - Adds the new user message to the conversation via the direct line api. 
+ * - Generates a messageKey and saves it in the in-memory storage. Before adding a 
+ * new message to the conversation, checks whether this message is not already 
+ * existing in the in-memory storage (if this is the case, returns an empty json).
  * 
  * @param {object} req - An object with the conversationId, the user message and the 
  * treatment group value. 
  * @returns {object} json object with the conversation id. 
  */
 app.post('/sendmessage', async (req, res) => {
-  const { conversationId, text, treatmentGroup } = req.body;
+  const { conversationId, text, treatmentGroup, clientSideMsgId } = req.body;
+  const messageKey = `${conversationId}::${clientSideMsgId}`;
+  if (processedMessages.has(messageKey)) {
+    const storedEntry = processedMessages.get(messageKey);
+    return res.json({ status: "duplicate", id: storedEntry.id });
+  }
   const activity = {
     type: "message",
     from: { id: "user1" },
@@ -339,6 +362,7 @@ app.post('/sendmessage', async (req, res) => {
         'Content-Type': 'application/json'
       }
     });
+    processedMessages.set(messageKey, { timestamp: Date.now(), id: response.data.id });
     res.json(response.data);
   } catch (err) {
     console.error("Error when sending the message:", err);

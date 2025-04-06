@@ -417,7 +417,7 @@ async function sendUserMessage(text, clientSideMsgId) {
       const res = await fetch('/sendmessage', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ conversationId, text, treatmentGroup })
+        body: JSON.stringify({ conversationId, text, treatmentGroup, clientSideMsgId })
       });
       if (!res.ok) {
         throw new Error(`sendUserMessage() - HTTP error! status: ${res.status}`);
@@ -427,10 +427,6 @@ async function sendUserMessage(text, clientSideMsgId) {
       linkUserMessageWithActivityId(activityId, clientSideMsgId);
       break;
     } catch (error) {
-      if (error instanceof TypeError && error.message.includes("NetworkError")) {
-        console.error('Error sending user message. Retrying.', error);
-        break;
-      }
       console.error('Error sending user message. Retrying.', error);
       await new Promise(r => setTimeout(r, 2000)); 
     }
