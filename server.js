@@ -355,6 +355,7 @@ app.post('/sendmessage', async (req, res) => {
     text,
     channelData: { treatmentGroup: treatmentGroup }
   };
+  processedMessages.set(messageKey, { timestamp: Date.now(), id: response.data.id });
   try {
     const response = await axios.post(`${DIRECT_LINE_BASE}/conversations/${conversationId}/activities`, activity, {
       headers: {
@@ -362,7 +363,6 @@ app.post('/sendmessage', async (req, res) => {
         'Content-Type': 'application/json'
       }
     });
-    processedMessages.set(messageKey, { timestamp: Date.now(), id: response.data.id });
     res.json(response.data);
   } catch (err) {
     console.error("Error when sending the message:", err);
