@@ -31,9 +31,17 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
   padding: 10px;
   background: #f5f7fa;
   border-bottom: 1px solid #ddd;
+}
+
+.chatbot-name {
+  font-weight: bold;
+  color: #3498db;
+  flex: 1;
+  text-align: center;
 }
 
 .close-chatbot-btn, 

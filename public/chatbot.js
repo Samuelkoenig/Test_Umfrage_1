@@ -317,7 +317,11 @@ function processActivities(data) {
  * @returns {void}
  */
 function processInitialActivities(data) {
+  pollInProgress = false;
+  sessionStorage.setItem('pollInProgress', pollInProgress);
   document.addEventListener('userArrivedAtChatbot', function() {
+    pollInProgress = true;
+    sessionStorage.setItem('pollInProgress', pollInProgress);
     toggleTypingIndicator('show', initialTypingAnimationDelay);
     setTimeout(() => {processActivities(data)}, initialBotMessageDelay);
   })
@@ -424,6 +428,7 @@ async function sendUserMessage(text, clientSideMsgId) {
       break;
     } catch (error) {
       if (error instanceof TypeError && error.message.includes("NetworkError")) {
+        console.error('Error sending user message. Retrying.', error);
         break;
       }
       console.error('Error sending user message. Retrying.', error);

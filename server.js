@@ -10,6 +10,17 @@
  **************************************************************************/
 
 /**
+ * Definition of variables used in the script.
+ * 
+ * - randomTreatment @type {boolean}: if true, the treatment group value is assigned randomly.
+ * If false, the treatment group value takes the value of treatmentFallback.
+ * - treatmentFallback @type {number}: the static treatment group value if randomTreatment
+ * is set to false.
+ */
+const randomTreatment = true;   // To be specified: whether the treatment group is assigned randomly!
+const treatmentFallback = 1;     // To be specified: the treatment fallback value!
+
+/**
  * Load the environment variables from the .env file (DATABASE_URL and DIRECT_LINE_SECRET).
  */
 require('dotenv').config(); 
@@ -127,14 +138,18 @@ function createParticipantId() {
 /**
  * Assigns a group to the client. 
  * 
- * - Creates the random variable treatment, which takes the value 0 or 1 with equal 
- *   probability. 
+ * - Creates the random variable treatment.
+ * - If randomTreatment is true, assigns 0 or 1 randomly to this variable.
+ * - Otherwise, assigns the treatmentFallback value to this variable. 
  * 
  * @returns {number} A treatment group value. 
  */
 function assignGroup() {
-  const treatment = Math.random() < 0.5 ? 0 : 1;
-  return treatment;
+  if (randomTreatment) {
+    return Math.random() < 0.5 ? 0 : 1;
+  } else {
+    return treatmentFallback;
+  }
 }
 
 /**************************************************************************
