@@ -32,7 +32,7 @@
  * - continueBtnEnabled @type {boolean}: Variable to specify whether the continueSurveytBtn ist enabled.
  * - finalStateReached @type {boolean}: Flag to specify whether the final dialogue state has been reached.
  */
-const enterMeansSend = true;             // To be specified: whether a message is sent when pressing enter!
+const enterMeansSend = false;             // To be specified: whether a message is sent when pressing enter!
 const typingAnimationDelay = 750        // To be specified: delay of the typing animation!
 const initialTypingAnimationDelay = 250  // To be specified: typing animation delay of initial bot message!
 const initialBotMessageDelay = 800       // To be specified: delay of the initial bot message!
