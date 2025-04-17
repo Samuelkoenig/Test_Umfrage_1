@@ -484,7 +484,6 @@ function saveData() {
     });
 
     extraTextFields.forEach(question => {
-        console.log('test:\n',document.querySelector(`input[name="${question}"]`)?.value || '');
         formData[question] = document.querySelector(`input[name="${question}"]`)?.value || '';
       });
 
@@ -543,10 +542,8 @@ function collectData() {
         data[question] = document.querySelector(`input[name="${question}"]:checked`)?.value || '';
     });
     extraTextFields.forEach(question => {
-        console.log('test:\n',document.querySelector(`input[name="${question}"]`)?.value || '');
         data[question] = document.querySelector(`input[name="${question}"]`)?.value || '';
     });
-    console.log('data:\n',data);
     return data;
 }
 
