@@ -20,6 +20,7 @@
  *   replaced by a button to move to the next page when the final dialogue state has been 
  *   reached. 
  * - likertQuestions @type {string[]}: an array with the names of all likert scale questions.
+ * - extraTextFields @type {string[]}: an array with the names of all free textarea questions.
  * - questionSetClasses @type {Array<[string, string]>}: An array with html class names of
  *   elements to be arranged in a randomized order. Each entry is a list with two class names: 
  *   The first is the class name of the parent class container, which holds the elements that
@@ -435,6 +436,8 @@ function handleFinishedDialogue(){
 /**
  * Saves new information provided by the participant in the input fields. 
  * 
+ * - Toggles extra textarea input fields, depending on whether the respective 
+ *   radio buttons are selected or not. 
  * - Updates the session storage using saveData().
  * - This function is called each time a change in the input fields is detected.
  *
@@ -445,6 +448,16 @@ function inputFieldLogic() {
     saveData();
 }
 
+/**
+ * Toggles extra textarea input fields.
+ * 
+ * - First hides all extra textarea input fields and then only shows those 
+ *   textarea input fields which are connected with a radiobutton that is
+ *   currently selected. 
+ * - This function is called each time a change in the input fields is detected.
+ *
+ * @returns {void}
+ */
 function toggleExtraInputs() {
     document.querySelectorAll('.extra-input').forEach(div => div.classList.add('hidden'));
     document.querySelectorAll('input[data-extra-target]:checked').forEach(radio => {
