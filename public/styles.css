@@ -247,6 +247,39 @@ p, ul, li {
     background: white;
 }
 
+/* Extra text areas for specific Likert scale answer options */
+.extra-input { 
+    margin: 0.8rem 0 1rem 0; 
+}
+
+.extra-input input {
+    width: 100%; 
+    box-sizing: border-box;
+    border-radius: 20px;
+    font-size: 16px; 
+    font-family: 'Roboto', sans-serif;
+    margin-bottom: 10px; 
+    margin: 10px auto;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    outline: none; 
+    box-shadow: none;
+    background: transparent;
+}
+
+.extra-input input:focus {
+    border-color: #3498db;
+    transition: border-color 0.2s;
+}
+
+.extra-input input::placeholder {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    line-height: 1.4375;
+    color: #999;
+    opacity: 1;
+}
+
 /* Semantic differential scales */
 .sd-container {
     max-width: 800px; 

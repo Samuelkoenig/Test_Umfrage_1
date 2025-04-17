@@ -75,14 +75,16 @@
                     Sie sind verärgert, da Ihnen die gesamte Bestellung inklusive des Pullovers in Rechnung gestellt 
                     wurde. Sie <b>möchten den Pullover nun schnellstmöglich noch geliefert bekommen.</b> 
                     Um das Problem zu lösen, suchen Sie die Website des Online-Shops auf. 
-                    Dort sehen Sie unten rechts ein rotes Chat-Symbol. Sie entschließen sich, zunächst 
+                    Dort sehen Sie unten rechts ein rotes Chat-Symbol. Verärgert entschließen Sie sich, zunächst 
                     <b>über diesen Chatbot zu versuchen, das Problem zu lösen.</b>
                     </i></p>
-                    <p>Versetzen sie sich nun bitte in diese fiktive Situation hinein und <b>wenden Sie sich an den 
-                    Chatbot, um das Problem zu klären.</b> Beachten Sie dabei bitte folgendes: 
+                    <p>Versetzen sie sich nun bitte in diese fiktive Situation und ihren <b>verärgerten Zustand</b> hinein 
+                    und <b>wenden Sie sich an den Chatbot, um das Problem zu klären.</b> 
+                    Beachten Sie dabei bitte folgendes: 
                     <ul>
                     <li>Bitte <b>kommunizieren Sie in ihrem üblichen Schreib-Stil</b> mit dem Chatbot, als hätte 
                     sich die Situation tatsächlich so ereignet.</li>
+                    <li>Bitte verfassen Sie Ihre Nachrichten in <b>ganzen Sätzen.</b></li>
                     <li>Falls der Chatbot Sie nach Details zur Bestellung fragt, <b>können Sie jederzeit wieder 
                     zurücknavigieren</b>, um diese nachzuschauen.</li>
                     <li>Bitte merken Sie sich die <b>Bestellnummer: 2246</b></li>
@@ -123,7 +125,7 @@
 
                     <div id="input-container" class="input-container">
                         <div class="textarea-wrapper">
-                            <textarea id="userInput" placeholder="Nachricht" rows="1"></textarea>
+                            <textarea id="userInput" placeholder="Nachricht als ganzer Satz" rows="1"></textarea>
                         </div>
                         <button id="sendBtn" class="send-btn" title="Nachricht senden">
                             <img src="img/send-icon.svg" alt="Send Icon" />
@@ -263,18 +265,18 @@
                 <div class="question">
                     <div class="sd-container">
                         <div class="sd-desktop-label sd-desktop-label-left">
-                            Hohes<br>Niveau
+                            Niedriges<br>Niveau
                         </div>
                         <div class="sd-scale sd-5">
                             <div class="sd-point sd-point-left">
                                 <label class="radio-container">
-                                    <input type="radio" name="service-quality-3" value="5">
+                                    <input type="radio" name="service-quality-3" value="1">
                                     <span class="radio-checkmark"></span>
                                 </label>
                             </div>
                             <div class="sd-point">
                                 <label class="radio-container">
-                                    <input type="radio" name="service-quality-3" value="4">
+                                    <input type="radio" name="service-quality-3" value="2">
                                     <span class="radio-checkmark"></span>
                                 </label>
                             </div>
@@ -286,27 +288,27 @@
                             </div>
                             <div class="sd-point">
                                 <label class="radio-container">
-                                    <input type="radio" name="service-quality-3" value="2">
+                                    <input type="radio" name="service-quality-3" value="4">
                                     <span class="radio-checkmark"></span>
                                 </label>
                             </div>
                             <div class="sd-point sd-point-right">
                                 <label class="radio-container">
-                                    <input type="radio" name="service-quality-3" value="1">
+                                    <input type="radio" name="service-quality-3" value="5">
                                     <span class="radio-checkmark"></span>
                                 </label>
                             </div>
                         </div>
                         <div class="sd-desktop-label sd-desktop-label-right">
-                            Niedriges<br>Niveau
+                            Hohes<br>Niveau
                         </div>
                     </div>
                     <div class="sd-label-mobile-container">
                         <div class="sd-label-mobile sd-label-mobile-left">
-                            Hohes<br>Niveau
+                            Niedriges<br>Niveau
                         </div>
                         <div class="sd-label-mobile sd-label-mobile-right">
-                            Niedriges<br>Niveau
+                            Hohes<br>Niveau
                         </div>
                     </div>
                 </div>
@@ -802,6 +804,196 @@
 
         <!-- Seite 7 -->
         <div class="page" id="page7">
+            <h1>Allgemeines KI-Verständnis</h1>
+
+            <p style="font-size: 18px;"><b>Bitte geben Sie an, inwieweit die folgenden Aussagen auf Sie zutreffen.</b><br></p>
+
+            <div class="construct construct-ai-literacy">
+
+                <div class="question">
+                    <p>Mir ist bewusst, dass generative KI wie ChatGPT bei der Bewältgung von komplexen Aufgaben an ihre Grenzen stoßen kann.</p>
+                    <div class="likert likert-5">
+                        <label class="radio-container">
+                            <input type="radio" name="ai-literacy-1" value="1">
+                            <span class="radio-checkmark"></span>
+                            Stimme überhaupt nicht zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="ai-literacy-1" value="2">
+                            <span class="radio-checkmark"></span>
+                            Stimme eher nicht zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="ai-literacy-1" value="3">
+                            <span class="radio-checkmark"></span>
+                            Weder noch
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="ai-literacy-1" value="4">
+                            <span class="radio-checkmark"></span>
+                            Stimme eher zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="ai-literacy-1" value="5">
+                            <span class="radio-checkmark"></span>
+                            Stimme voll und ganz zu
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider-line divider-line-likert"></div>
+
+            <div class="construct construct-ai-literacy">
+
+                <div class="question">
+                    <p>Mir ist bewusst, dass generative KI wie ChatGPT Inhalte erzeugen kann, die sachlich ungenau sind.</p>
+                    <div class="likert likert-5">
+                        <label class="radio-container">
+                            <input type="radio" name="ai-literacy-2" value="1">
+                            <span class="radio-checkmark"></span>
+                            Stimme überhaupt nicht zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="ai-literacy-2" value="2">
+                            <span class="radio-checkmark"></span>
+                            Stimme eher nicht zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="ai-literacy-2" value="3">
+                            <span class="radio-checkmark"></span>
+                            Weder noch
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="ai-literacy-2" value="4">
+                            <span class="radio-checkmark"></span>
+                            Stimme eher zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="ai-literacy-2" value="5">
+                            <span class="radio-checkmark"></span>
+                            Stimme voll und ganz zu
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider-line divider-line-likert"></div>
+
+            <div class="construct construct-ai-literacy">
+
+                <div class="question">
+                    <p>Mir ist bewusst, dass generative KI wie ChatGPT Inhalte erzeugen kann, die aus dem Zusammenhang gerissen oder unpassend sind.</p>
+                    <div class="likert likert-5">
+                        <label class="radio-container">
+                            <input type="radio" name="ai-literacy-3" value="1">
+                            <span class="radio-checkmark"></span>
+                            Stimme überhaupt nicht zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="ai-literacy-3" value="2">
+                            <span class="radio-checkmark"></span>
+                            Stimme eher nicht zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="ai-literacy-3" value="3">
+                            <span class="radio-checkmark"></span>
+                            Weder noch
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="ai-literacy-3" value="4">
+                            <span class="radio-checkmark"></span>
+                            Stimme eher zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="ai-literacy-3" value="5">
+                            <span class="radio-checkmark"></span>
+                            Stimme voll und ganz zu
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider-line divider-line-likert"></div>
+
+            <div class="construct construct-ai-literacy">
+
+                <div class="question">
+                    <p>Mir ist bewusst, dass die Ausgaben von generativer KI wie ChatGPT voreingenommen oder unfair sein können.</p>
+                    <div class="likert likert-5">
+                        <label class="radio-container">
+                            <input type="radio" name="ai-literacy-4" value="1">
+                            <span class="radio-checkmark"></span>
+                            Stimme überhaupt nicht zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="ai-literacy-4" value="2">
+                            <span class="radio-checkmark"></span>
+                            Stimme eher nicht zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="ai-literacy-4" value="3">
+                            <span class="radio-checkmark"></span>
+                            Weder noch
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="ai-literacy-4" value="4">
+                            <span class="radio-checkmark"></span>
+                            Stimme eher zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="ai-literacy-4" value="5">
+                            <span class="radio-checkmark"></span>
+                            Stimme voll und ganz zu
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider-line divider-line-likert"></div>
+
+            <div class="construct construct-ai-literacy">
+
+                <div class="question">
+                    <p>Mir ist bewusst, dass generative KI wie ChatGPT nur über eine eingeschränkte emotionale Intelligenz und Empathie verfügt und daher unsensible oder ungeeignete Antworten geben kann.</p>
+                    <div class="likert likert-5">
+                        <label class="radio-container">
+                            <input type="radio" name="ai-literacy-4" value="1">
+                            <span class="radio-checkmark"></span>
+                            Stimme überhaupt nicht zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="ai-literacy-4" value="2">
+                            <span class="radio-checkmark"></span>
+                            Stimme eher nicht zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="ai-literacy-4" value="3">
+                            <span class="radio-checkmark"></span>
+                            Weder noch
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="ai-literacy-4" value="4">
+                            <span class="radio-checkmark"></span>
+                            Stimme eher zu
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="ai-literacy-4" value="5">
+                            <span class="radio-checkmark"></span>
+                            Stimme voll und ganz zu
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navigation" id="chatbot-navigation">
+                <button id="back7" class="back-btn">Zurück</button>
+                <button id="next7" class="next-btn">Weiter</button>
+            </div>
+        </div>
+
+        <!-- Seite 8 -->
+        <div class="page" id="page8">
             <h1>Demographische Daten</h1>
             <div class="question">
                 <p>Was ist Ihr Geschlecht?</p>
@@ -858,6 +1050,146 @@
                 </label>
             </div>
 
+            <div class="divider-line divider-line-likert"></div>
+
+            <div class="question">
+                <p>Wie häufig nutzen Sie Chatbots im Durchschnitt? (z.B. Chatbots auf Websites, ChatGPT oder Sprachassistenten wie Alexa/Siri)</p>
+                <label class="radio-container">
+                    <input type="radio" name="chatbot-experience" value="nie">
+                    <span class="radio-checkmark"></span>
+                    Nie
+                </label>
+                <label class="radio-container">
+                    <input type="radio" name="chatbot-experience" value="1-2-mal-pro-jahr">
+                    <span class="radio-checkmark"></span>
+                    1-2 Mal pro Jahr
+                </label>
+                <label class="radio-container">
+                    <input type="radio" name="chatbot-experience" value="1-2-mal-pro-monat">
+                    <span class="radio-checkmark"></span>
+                    1-2 Mal pro Monat
+                </label>
+                <label class="radio-container">
+                    <input type="radio" name="chatbot-experience" value="wöchentlich">
+                    <span class="radio-checkmark"></span>
+                    Wöchentlich
+                </label>
+                <label class="radio-container">
+                    <input type="radio" name="chatbot-experience" value="täglich">
+                    <span class="radio-checkmark"></span>
+                    Täglich
+                </label>
+            </div>
+
+            <div class="divider-line divider-line-likert"></div>
+
+            <div class="question">
+                <p>Welchen höchsten Bildungsabschluss haben Sie bisher erlangt?</p>
+                <label class="radio-container">
+                    <input type="radio" name="education" value="keinen-schulabschluss">
+                    <span class="radio-checkmark"></span>
+                    Keinen Schulabschluss
+                </label>
+                <label class="radio-container">
+                    <input type="radio" name="education" value="hauptschulabschluss">
+                    <span class="radio-checkmark"></span>
+                    Hauptschulabschluss
+                </label>
+                <label class="radio-container">
+                    <input type="radio" name="education" value="realschulabschluss-mittlere-reife">
+                    <span class="radio-checkmark"></span>
+                    Realschulabschluss / Mittlere Reife
+                </label>
+                <label class="radio-container">
+                    <input type="radio" name="education" value="abitur-fachabitur">
+                    <span class="radio-checkmark"></span>
+                    Abitur / Fachabitur
+                </label>
+                <label class="radio-container">
+                    <input type="radio" name="education" value="abgeschlossene-berufsausbildung">
+                    <span class="radio-checkmark"></span>
+                    Abgeschlossene Berufsausbildung
+                </label>
+                <label class="radio-container">
+                    <input type="radio" name="education" value="bachelorabschluss-oder-vergleichbarer-abschluss">
+                    <span class="radio-checkmark"></span>
+                    Bachelorabschluss oder vergleichbarer Abschluss
+                </label>
+                <label class="radio-container">
+                    <input type="radio" name="education" value="masterabschluss-oder-vergleichbarer-abschluss">
+                    <span class="radio-checkmark"></span>
+                    Masterabschluss oder vergleichbarer Abschluss
+                </label>
+                <label class="radio-container">
+                    <input type="radio" name="education" value="promotion">
+                    <span class="radio-checkmark"></span>
+                    Promotion
+                </label>
+                <label class="radio-container">
+                    <input type="radio" name="education" value="anderer-abschluss">
+                    <span class="radio-checkmark"></span>
+                    Anderer Abschluss
+                </label>
+            </div>
+
+            <div class="divider-line divider-line-likert"></div>
+
+            <div class="question">
+                <p>Was beschreibt Ihre aktuelle berufliche oder akademische Tätigkeit am besten?</p>
+                <label class="radio-container">
+                    <input type="radio" name="occupation" value="schüler">
+                    <span class="radio-checkmark"></span>
+                    Schüler*in
+                </label>
+                <label class="radio-container">
+                    <input type="radio" name="occupation" value="auszubildender">
+                    <span class="radio-checkmark"></span>
+                    Auszubildende*r
+                </label>
+                <label class="radio-container">
+                    <input type="radio" name="occupation" value="student" 
+                    data-extra-target="occupation-student">
+                    <span class="radio-checkmark"></span>
+                    Student*in
+                </label>
+                <div id="occupation-student" class="extra-input hidden">
+                    <strong>Bitte geben Sie Ihre Studienrichtung an:</strong>
+                    <input type="text" name="occupation-student"
+                        placeholder="Ihre Studienrichtung">
+                </div>
+                <label class="radio-container">
+                    <input type="radio" name="occupation" value="angestellt">
+                    <span class="radio-checkmark"></span>
+                    Angestellt
+                </label>
+                <label class="radio-container">
+                    <input type="radio" name="occupation" value="selbstständig-freiberuflich">
+                    <span class="radio-checkmark"></span>
+                    Selbstständig / Freiberuflich
+                </label>
+                <label class="radio-container">
+                    <input type="radio" name="occupation" value="arbeitslos-arbeitssuchend">
+                    <span class="radio-checkmark"></span>
+                    Arbeitslos / Arbeitssuchend
+                </label>
+                <label class="radio-container">
+                    <input type="radio" name="occupation" value="rentner-pensionär">
+                    <span class="radio-checkmark"></span>
+                    Rentner*in / Pensionär*in
+                </label>
+                <label class="radio-container">
+                    <input type="radio" name="occupation" value="sonstiges" 
+                    data-extra-target="occupation-other">
+                    <span class="radio-checkmark"></span>
+                    Sonstiges
+                </label>
+                <div id="occupation-other" class="extra-input hidden">
+                    <strong>Bitte beschreiben Sie Ihre aktuelle Tätigkeit:</strong>
+                    <input type="text" name="occupation-other"
+                        placeholder="Ihre Tätigkeit">
+                </div>
+            </div>
+
             <div id="submit-data-notification" style="display: none;">
                 <p><b><i>Ihre Angaben werden übermittelt ...</i></b></p>
             </div>
@@ -868,12 +1200,12 @@
             </div>
             
             <div class="navigation">
-                <button id="back7" class="back-btn">Zurück</button>
+                <button id="back8" class="back-btn">Zurück</button>
                 <button id="submit" class="submit-btn special-submit">Absenden</button>
             </div>
         </div>
 
-        <!-- Seite 8: Danke-Seite -->
+        <!-- Seite 9: Danke-Seite -->
         <div class="page" id="thankyou">
             <h1>Vielen Dank für Ihre Teilnahme!</h1>
             <p>Ihre Antworten wurden erfolgreich übermittelt.<br>
