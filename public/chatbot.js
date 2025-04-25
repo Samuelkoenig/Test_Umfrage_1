@@ -252,7 +252,7 @@ async function getActivities() {
  * - Saves the updated conversation state object in the session storage.
  * - Sets the state of the continueSurveytBtn (disabled vs. enabled).
  * 
- * @param {Array<{parameter: value}>} data - The data object containing the chatbot activities. 
+ * @param {Array<{parameter: value}>} data - The data object containing the chatbot activities.
  * @returns {void}
  */
 function processActivities(data) {
