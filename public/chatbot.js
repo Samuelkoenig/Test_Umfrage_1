@@ -271,6 +271,9 @@ function processActivities(data) {
         addMessage(act.text, from);
         newMessages.push({ text: act.text, from, activityId: act.id, clientSideMsgId: null });
         state.processedActivities.push(act.id);
+        if (act.channelData && act.channelData.dialogueState) {
+          state.dialogueStates.push([act.id, act.channelData.dialogueState])
+        }
       } else {
         clientSideMsgId = sessionStorage.getItem('clientSideMsgId');
         saveConversationState(state);
@@ -581,7 +584,7 @@ function continueChatbotApiRequests() {
  */
 function loadConversationState() {
   const stored = sessionStorage.getItem('conversation');
-  return stored ? JSON.parse(stored) : { conversationId, watermark, messages: [], processedActivities: [] };
+  return stored ? JSON.parse(stored) : { conversationId, watermark, messages: [], processedActivities: [], dialogueStates: []};
 }
 
 /**
