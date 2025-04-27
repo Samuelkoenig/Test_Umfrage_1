@@ -182,7 +182,8 @@ function assignGroup() {
  */
 app.get('/generateSurveyData', async (req, res) => {
     try {
-        const participantId = await generateUniqueParticipantId();
+        //const participantId = await generateUniqueParticipantId();
+        const participantId = createParticipantId();
         const treatmentGroup = assignGroup();
         res.json({ 
           participantId: participantId, 
