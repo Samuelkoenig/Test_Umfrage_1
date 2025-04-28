@@ -163,7 +163,8 @@ function createParticipantId() {
  */
 function assignGroup() {
   if (randomTreatment) {
-    return Math.random() < 0.5 ? 0 : 1;
+    //return Math.random() < 0.5 ? 0 : 1;
+    return crypto.randomInt(2);
   } else {
     return treatmentFallback;
   }
