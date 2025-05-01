@@ -55,8 +55,6 @@ function attachMobileChatbotEventListeners() {
   attachNoBounceListeners();
 
   updateVh();
-
-  attachKeyboardFallbackListeners();
 }
 
 /**
@@ -286,31 +284,4 @@ function mobileChatbotActivation() {
     behavior: 'smooth' 
   });
   updateVh();
-}
-
-
-
-
-
-
-
-function attachKeyboardFallbackListeners() {
-  const input = document.getElementById('userInput');
-
-  function onFocus() {
-    // warte, bis die Tastatur sichtbar ist
-    setTimeout(() => {
-      // Textarea ins Zentrum des Viewports bringen
-      input.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      // Und natürlich weiterhin Nachrichten ans Ende scrollen
-      scrollMessagesToBottom();
-    }, 300);
-  }
-
-  function onBlur() {
-    // optional: beim Verlassen nichts weiter tun
-  }
-
-  input.addEventListener('focus', onFocus);
-  input.addEventListener('blur',  onBlur);
 }
