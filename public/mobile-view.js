@@ -17,6 +17,10 @@
 let startY = 0;
 let activeContainer = null;
 
+let BASE_VIEWPORT_HEIGHT = window.innerHeight;
+let KEYBOARD_OPEN = false;
+let fallbackActive = false;
+
 /**
  * Adds event listeners to all mobile display-related events.
  * 
@@ -34,6 +38,8 @@ let activeContainer = null;
  * @returns {void}
  */
 function attachMobileChatbotEventListeners() {
+
+  BASE_VIEWPORT_HEIGHT = window.innerHeight;
 
   window.addEventListener('resize', () => {
     updateVh();
@@ -55,6 +61,23 @@ function attachMobileChatbotEventListeners() {
   attachNoBounceListeners();
 
   updateVh();
+
+  attachKeyboardAwareListeners();
+  needsKeyboardFallback((fallbackNeeded) => {
+    if (fallbackNeeded) {
+      fallbackActive = true;                        // ❹ Flag anschalten
+
+      /* Falls User schon jetzt mit offener Tastatur dasteht → sofort nachjustieren */
+      setTimeout(() => {
+        const kb = getKeyboardHeight();
+        if (document.activeElement === document.getElementById('userInput') && kb > 100) {
+          KEYBOARD_OPEN = true;
+          shiftChatbotBy(kb);
+        }
+      }, 0);
+    }
+  });
+
 }
 
 /**
@@ -285,3 +308,63 @@ function mobileChatbotActivation() {
   });
   updateVh();
 }
+
+/**************************************************************************
+ * Chatbot display adjustements for web views
+ **************************************************************************/
+
+function needsKeyboardFallback(callback) {
+  const inAppUA = /(Instagram|FBAN|FBAV|FBIOS|FB_IAB|wv|Line|Twitter)/i
+                    .test(navigator.userAgent);
+
+  if (!window.visualViewport) { callback(true); return; }
+
+  const baseline = window.visualViewport.height;
+  let responsive = false;
+  const handler  = () => { responsive = window.visualViewport.height !== baseline; };
+
+  window.visualViewport.addEventListener('resize', handler, { once:true });
+
+  setTimeout(() => {
+    window.visualViewport.removeEventListener('resize', handler);
+    callback(inAppUA || !responsive);
+  }, 150);
+}
+
+function getKeyboardHeight() {
+  const hNow = Math.min(window.innerHeight, document.documentElement.clientHeight);
+  return Math.max(0, BASE_VIEWPORT_HEIGHT - hNow);
+}
+
+function shiftChatbotBy(px) {
+  const chatbot = document.getElementById('chatbot-interface');
+  const bar = document.getElementById('progress-bar');
+  chatbot.style.transform = `translateY(-${px}px)`;
+  bar.style.transform     = `translateY(-${px}px)`;
+  scrollMessagesToBottom();
+}
+
+function attachKeyboardAwareListeners() {
+  const input = document.getElementById('userInput');
+
+  input.addEventListener('focusin', () => {
+    if (!fallbackActive) return;           // ❷ Flag check
+    setTimeout(() => {
+      const kb = getKeyboardHeight();
+      if (kb > 100) {
+        KEYBOARD_OPEN = true;
+        shiftChatbotBy(kb);
+      }
+    }, 50);
+  });
+
+  input.addEventListener('focusout', () => {
+    if (!fallbackActive) return;           // ❸ Flag check
+    if (KEYBOARD_OPEN) {
+      KEYBOARD_OPEN = false;
+      shiftChatbotBy(0);
+    }
+  });
+}
+
+
