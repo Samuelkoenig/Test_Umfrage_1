@@ -233,6 +233,8 @@ function updateVh() {
  * @returns {void}
  */
 function alignChatbotUi() {
+  if (keyboardActive) return; // nicht ins Transform eingreifen
+  if (!window.visualViewport) return;
   if (window.visualViewport) {
     const page = parseInt(sessionStorage.getItem('currentPage'), 10);
     const chatbotInterface = document.getElementById('chatbot-interface');
@@ -294,22 +296,24 @@ function mobileChatbotActivation() {
 
 
 
+let initialInnerHeight = window.innerHeight;
+let keyboardActive     = false;
+
+
+
 function attachKeyboardFallbackListeners() {
-  const input           = document.getElementById('userInput');
+  const input            = document.getElementById('userInput');
   const chatbotInterface = document.getElementById('chatbot-interface');
-  const progressBar     = document.getElementById('progress-bar'); // falls vorhanden
+  const progressBar      = document.getElementById('progress-bar');
+  const extraMargin      = 10; // Abstand zum Keyboard
 
   function onFocus() {
-    // kurz warten bis Keyboard da ist
+    keyboardActive = true;
+    // nach 300ms ist Tastatur meistens da
     setTimeout(() => {
-      // aktuelle Viewport-Höhe
-      const vh = window.innerHeight;
-      // Input-Position im Viewport
-      const rect = input.getBoundingClientRect();
-      // falls input unterhalb der sichtbaren Fläche, negativen Offset berechnen
-      const extraMargin = 10; // Abstand zum Keyboard
-      let offset = Math.min(0, vh - rect.bottom - extraMargin);
-
+      const keyboardHeight = initialInnerHeight - window.innerHeight;
+      if (keyboardHeight <= 0) return;  // nichts geändert
+      const offset = -(keyboardHeight - extraMargin);
       chatbotInterface.style.transform = `translateY(${offset}px)`;
       if (progressBar) progressBar.style.transform = `translateY(${offset}px)`;
       scrollMessagesToBottom();
@@ -317,11 +321,11 @@ function attachKeyboardFallbackListeners() {
   }
 
   function onBlur() {
-    // wieder zurücksetzen
+    keyboardActive = false;
     chatbotInterface.style.transform = '';
     if (progressBar) progressBar.style.transform = '';
   }
 
   input.addEventListener('focus', onFocus);
-  input.addEventListener('blur', onBlur);
+  input.addEventListener('blur',  onBlur);
 }
