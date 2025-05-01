@@ -233,8 +233,6 @@ function updateVh() {
  * @returns {void}
  */
 function alignChatbotUi() {
-  if (keyboardActive) return; // nicht ins Transform eingreifen
-  if (!window.visualViewport) return;
   if (window.visualViewport) {
     const page = parseInt(sessionStorage.getItem('currentPage'), 10);
     const chatbotInterface = document.getElementById('chatbot-interface');
@@ -296,34 +294,21 @@ function mobileChatbotActivation() {
 
 
 
-let initialInnerHeight = window.innerHeight;
-let keyboardActive     = false;
-
-
-
 function attachKeyboardFallbackListeners() {
-  const input            = document.getElementById('userInput');
-  const chatbotInterface = document.getElementById('chatbot-interface');
-  const progressBar      = document.getElementById('progress-bar');
-  const extraMargin      = 10; // Abstand zum Keyboard
+  const input = document.getElementById('userInput');
 
   function onFocus() {
-    keyboardActive = true;
-    // nach 300ms ist Tastatur meistens da
+    // warte, bis die Tastatur sichtbar ist
     setTimeout(() => {
-      const keyboardHeight = initialInnerHeight - window.innerHeight;
-      if (keyboardHeight <= 0) return;  // nichts geändert
-      const offset = -(keyboardHeight - extraMargin);
-      chatbotInterface.style.transform = `translateY(${offset}px)`;
-      if (progressBar) progressBar.style.transform = `translateY(${offset}px)`;
+      // Textarea ins Zentrum des Viewports bringen
+      input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      // Und natürlich weiterhin Nachrichten ans Ende scrollen
       scrollMessagesToBottom();
     }, 300);
   }
 
   function onBlur() {
-    keyboardActive = false;
-    chatbotInterface.style.transform = '';
-    if (progressBar) progressBar.style.transform = '';
+    // optional: beim Verlassen nichts weiter tun
   }
 
   input.addEventListener('focus', onFocus);
