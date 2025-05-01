@@ -19,11 +19,6 @@
 
 /* Chatbot sichtbar, füllt je nach Darstellung (mobil/Browsersicht) den Raum aus */
 #chatbot-interface.chatbot-visible {
-  position: fixed;
-  top: 0; left: 0;
-  height: 100dvh;
-  height: 100svh;
-  height: 100vh; /* Fallback */
   display: flex;
   flex-direction: column;
   overscroll-behavior: none;
@@ -207,7 +202,6 @@
 /* Eingabebereich */
 .input-container {
   display: flex;
-  position: sticky;
   align-items: flex-end; /* Ermöglicht das Wachsen des Textarea nach oben */
   padding: 10px;
   box-sizing: border-box;
