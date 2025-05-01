@@ -296,36 +296,62 @@ function mobileChatbotActivation() {
 
 
 /**
- * Prüft, ob wir im Instagram-InApp-Browser sind.
- */
-function isInstagramInApp() {
-  return /Instagram/.test(navigator.userAgent);
-}
-
-/**
- * Blendet ganz oben im <body> einen Hinweis ein,
- * den Link im externen Browser zu öffnen.
+ * Blendet einen Fullscreen-Overlay-Banner ein,
+ * der im Zentrum einen "Im Browser öffnen"-Button enthält.
  */
 function showOpenInBrowserBanner() {
-  const banner = document.createElement('div');
-  banner.style.cssText = `
+  // 1) Overlay-Element
+  const overlay = document.createElement('div');
+  overlay.id = 'open-in-browser-overlay';
+  overlay.style.cssText = `
     position: fixed;
-    top: 0; left: 0; right: 0;
-    background: #FFF8E1;
-    color: #333;
-    padding: 0.5rem;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+  `;
+
+  // 2) Content-Container
+  const box = document.createElement('div');
+  box.style.cssText = `
+    background: #fff;
+    padding: 2rem;
+    border-radius: 0.5rem;
     text-align: center;
-    z-index: 9999;
-    font-size: 0.9rem;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    max-width: 90%;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   `;
-  banner.innerHTML = `
-    Für die beste Darstellung bitte 
-    <a href="${location.href}" target="_blank" rel="noopener noreferrer">
-      im Browser öffnen
-    </a>.
+
+  // 3) Nachricht
+  const message = document.createElement('p');
+  message.textContent = 'Für die beste Darstellung öffne die Umfrage bitte in deinem Browser:';
+  message.style.marginBottom = '1.5rem';
+
+  // 4) Button zum externen Öffnen
+  const button = document.createElement('button');
+  button.textContent = 'Im Browser öffnen';
+  button.style.cssText = `
+    background: #007aff;
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 0.375rem;
+    cursor: pointer;
   `;
-  document.body.appendChild(banner);
+  button.addEventListener('click', () => {
+    // Öffnet die aktuelle URL im externen Standard-Browser
+    window.open(window.location.href, '_blank', 'noopener');
+  });
+
+  // 5) Zusammenbauen
+  box.appendChild(message);
+  box.appendChild(button);
+  overlay.appendChild(box);
+  document.body.appendChild(overlay);
 }
 
 
