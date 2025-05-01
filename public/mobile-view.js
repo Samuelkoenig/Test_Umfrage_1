@@ -362,7 +362,7 @@ function attachKeyboardAwareListeners() {
       if (kb < 100) { 
         kb = getOverlapWithViewport(input); 
       }
-      if (kb > 100) {
+      if (kb > 0) {
         KEYBOARD_OPEN = true;
         shiftChatbotBy(kb);
       }
