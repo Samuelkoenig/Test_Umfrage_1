@@ -300,58 +300,54 @@ function isInstagramInApp() {
 }
 
 /**
- * Blendet einen Fullscreen-Overlay-Banner ein,
- * der im Zentrum einen "Im Browser öffnen"-Button enthält.
+ * Blendet einen Fullscreen-Overlay in Weiß ein,
+ * und zeigt einen Button "URL kopieren", der beim Klicken
+ * die aktuelle URL in die Zwischenablage kopiert.
  */
 function showOpenInBrowserBanner() {
-  // 1) Overlay-Element
+  // 1) Ganzflächiges weißes Overlay
   const overlay = document.createElement('div');
   overlay.id = 'open-in-browser-overlay';
   overlay.style.cssText = `
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.75);
+    background: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 10000;
   `;
 
-  // 2) Content-Container
+  // 2) Container für Text + Button
   const box = document.createElement('div');
   box.style.cssText = `
-    background: #fff;
-    padding: 2rem;
-    border-radius: 0.5rem;
     text-align: center;
-    max-width: 90%;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    padding: 2rem;
   `;
 
-  // 3) Nachricht
+  // 3) Hinweistext
   const message = document.createElement('p');
-  message.textContent = 'Für die beste Darstellung öffne die Umfrage bitte in deinem Browser:';
+  message.textContent = 'Für die beste Darstellung kopiere die URL und öffne sie in deinem Browser:';
   message.style.marginBottom = '1.5rem';
 
-  // 4) Button zum externen Öffnen
+  // 4) Button im Stil eurer .next-btn Klasse
   const button = document.createElement('button');
-  button.textContent = 'Im Browser öffnen';
-  button.style.cssText = `
-    background: #007aff;
-    color: #fff;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    border-radius: 0.375rem;
-    cursor: pointer;
-  `;
+  button.className = 'next-btn';
+  button.textContent = 'URL kopieren';
   button.addEventListener('click', () => {
-    // Öffnet die aktuelle URL im externen Standard-Browser
-    window.open(window.location.href, '_blank', 'noopener');
+    navigator.clipboard.writeText(window.location.href)
+      .then(() => {
+        button.textContent = 'Kopiert!';
+        // optional nach 2 Sek. wieder zurücksetzen:
+        setTimeout(() => { button.textContent = 'URL kopieren'; }, 2000);
+      })
+      .catch(() => {
+        button.textContent = 'Fehler beim Kopieren';
+      });
   });
 
-  // 5) Zusammenbauen
+  // 5) Zusammensetzen und ins DOM
   box.appendChild(message);
   box.appendChild(button);
   overlay.appendChild(box);
