@@ -17,10 +17,6 @@
 let startY = 0;
 let activeContainer = null;
 
-let BASE_VIEWPORT_HEIGHT = window.innerHeight;
-let KEYBOARD_OPEN = false;
-let fallbackActive = false;
-
 /**
  * Adds event listeners to all mobile display-related events.
  * 
@@ -38,8 +34,6 @@ let fallbackActive = false;
  * @returns {void}
  */
 function attachMobileChatbotEventListeners() {
-
-  BASE_VIEWPORT_HEIGHT = window.innerHeight;
 
   window.addEventListener('resize', () => {
     updateVh();
@@ -62,22 +56,7 @@ function attachMobileChatbotEventListeners() {
 
   updateVh();
 
-  attachKeyboardAwareListeners();
-  needsKeyboardFallback((fallbackNeeded) => {
-    if (fallbackNeeded) {
-      fallbackActive = true;                        // ❹ Flag anschalten
-
-      /* Falls User schon jetzt mit offener Tastatur dasteht → sofort nachjustieren */
-      setTimeout(() => {
-        const kb = getKeyboardHeight();
-        if (document.activeElement === document.getElementById('userInput') && kb > 100) {
-          KEYBOARD_OPEN = true;
-          shiftChatbotBy(kb);
-        }
-      }, 0);
-    }
-  });
-
+  attachKeyboardFallbackListeners();
 }
 
 /**
@@ -309,73 +288,40 @@ function mobileChatbotActivation() {
   updateVh();
 }
 
-/**************************************************************************
- * Chatbot display adjustements for web views
- **************************************************************************/
 
-function needsKeyboardFallback(callback) {
-  const inAppUA = /(Instagram|FBAN|FBAV|FBIOS|FB_IAB|wv|Line|Twitter)/i
-                    .test(navigator.userAgent);
 
-  if (!window.visualViewport) { callback(true); return; }
 
-  const baseline = window.visualViewport.height;
-  let responsive = false;
-  const handler  = () => { responsive = window.visualViewport.height !== baseline; };
 
-  window.visualViewport.addEventListener('resize', handler, { once:true });
 
-  setTimeout(() => {
-    window.visualViewport.removeEventListener('resize', handler);
-    callback(inAppUA || !responsive);
-  }, 150);
-}
 
-function getKeyboardHeight() {
-  if (window.visualViewport && window.visualViewport.offsetTop > 0) {
-    return window.visualViewport.offsetTop;
-  }
-  const hNow = Math.min(window.innerHeight, document.documentElement.clientHeight);
-  return Math.max(0, BASE_VIEWPORT_HEIGHT - hNow);
-} 
+function attachKeyboardFallbackListeners() {
+  const input           = document.getElementById('userInput');
+  const chatbotInterface = document.getElementById('chatbot-interface');
+  const progressBar     = document.getElementById('progress-bar'); // falls vorhanden
 
-function shiftChatbotBy(px) {
-  const chatbot = document.getElementById('chatbot-interface');
-  const bar = document.getElementById('progress-bar');
-  chatbot.style.transform = `translateY(${px}px)`;
-  bar.style.transform     = `translateY(${px}px)`;
-  scrollMessagesToBottom();
-}
-
-function attachKeyboardAwareListeners() {
-  const input = document.getElementById('userInput');
-
-  function getOverlapWithViewport(el) {
-    const rect = el.getBoundingClientRect();
-    return Math.max(0, rect.bottom - window.innerHeight);
-  }
-
-  input.addEventListener('focusin', () => {
-    if (!fallbackActive) return;           // ❷ Flag check
+  function onFocus() {
+    // kurz warten bis Keyboard da ist
     setTimeout(() => {
-      const kb = getKeyboardHeight();
-      if (kb < 100) { 
-        kb = getOverlapWithViewport(input); 
-      }
-      if (kb > 0) {
-        KEYBOARD_OPEN = true;
-        shiftChatbotBy(kb);
-      }
-    }, 50);
-  });
+      // aktuelle Viewport-Höhe
+      const vh = window.innerHeight;
+      // Input-Position im Viewport
+      const rect = input.getBoundingClientRect();
+      // falls input unterhalb der sichtbaren Fläche, negativen Offset berechnen
+      const extraMargin = 10; // Abstand zum Keyboard
+      let offset = Math.min(0, vh - rect.bottom - extraMargin);
 
-  input.addEventListener('focusout', () => {
-    if (!fallbackActive) return;           // ❸ Flag check
-    if (KEYBOARD_OPEN) {
-      KEYBOARD_OPEN = false;
-      shiftChatbotBy(0);
-    }
-  });
+      chatbotInterface.style.transform = `translateY(${offset}px)`;
+      if (progressBar) progressBar.style.transform = `translateY(${offset}px)`;
+      scrollMessagesToBottom();
+    }, 300);
+  }
+
+  function onBlur() {
+    // wieder zurücksetzen
+    chatbotInterface.style.transform = '';
+    if (progressBar) progressBar.style.transform = '';
+  }
+
+  input.addEventListener('focus', onFocus);
+  input.addEventListener('blur', onBlur);
 }
-
-
