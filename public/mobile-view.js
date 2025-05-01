@@ -332,9 +332,12 @@ function needsKeyboardFallback(callback) {
 }
 
 function getKeyboardHeight() {
+  if (window.visualViewport && window.visualViewport.offsetTop > 0) {
+    return window.visualViewport.offsetTop;
+  }
   const hNow = Math.min(window.innerHeight, document.documentElement.clientHeight);
   return Math.max(0, BASE_VIEWPORT_HEIGHT - hNow);
-}
+} 
 
 function shiftChatbotBy(px) {
   const chatbot = document.getElementById('chatbot-interface');
@@ -347,10 +350,18 @@ function shiftChatbotBy(px) {
 function attachKeyboardAwareListeners() {
   const input = document.getElementById('userInput');
 
+  function getOverlapWithViewport(el) {
+    const rect = el.getBoundingClientRect();
+    return Math.max(0, rect.bottom - window.innerHeight);
+  }
+
   input.addEventListener('focusin', () => {
     if (!fallbackActive) return;           // ❷ Flag check
     setTimeout(() => {
       const kb = getKeyboardHeight();
+      if (kb < 100) { 
+        kb = getOverlapWithViewport(input); 
+      }
       if (kb > 100) {
         KEYBOARD_OPEN = true;
         shiftChatbotBy(kb);
