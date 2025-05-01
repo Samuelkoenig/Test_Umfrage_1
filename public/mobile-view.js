@@ -342,8 +342,8 @@ function getKeyboardHeight() {
 function shiftChatbotBy(px) {
   const chatbot = document.getElementById('chatbot-interface');
   const bar = document.getElementById('progress-bar');
-  chatbot.style.transform = `translateY(-${px}px)`;
-  bar.style.transform     = `translateY(-${px}px)`;
+  chatbot.style.transform = `translateY(${px}px)`;
+  bar.style.transform     = `translateY(${px}px)`;
   scrollMessagesToBottom();
 }
 
