@@ -295,6 +295,10 @@ function mobileChatbotActivation() {
 
 
 
+function isInstagramInApp() {
+  return /Instagram/.test(navigator.userAgent);
+}
+
 /**
  * Blendet einen Fullscreen-Overlay-Banner ein,
  * der im Zentrum einen "Im Browser öffnen"-Button enthält.
