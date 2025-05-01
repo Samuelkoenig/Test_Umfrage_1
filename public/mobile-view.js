@@ -300,46 +300,54 @@ function isInstagramInApp() {
 }
 
 /**
- * Blendet einen Fullscreen-Overlay in Weiß ein,
- * und zeigt einen Button "URL kopieren", der beim Klicken
- * die aktuelle URL in die Zwischenablage kopiert.
+ * Fullscreen-Overlay mit:
+ *  - oben: <h1>Willkommen</h1>
+ *  - darunter: Info-Text und Button im .next-btn-Stil
  */
 function showOpenInBrowserBanner() {
   // 1) Ganzflächiges weißes Overlay
   const overlay = document.createElement('div');
   overlay.id = 'open-in-browser-overlay';
-  overlay.style.cssText = `
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10000;
-  `;
+  Object.assign(overlay.style, {
+    position: 'fixed',
+    top: '0', left: '0',
+    width: '100%', height: '100%',
+    background: '#ffffff',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: '2rem 1rem',
+    boxSizing: 'border-box',
+    zIndex: '10000'
+  });
 
-  // 2) Container für Text + Button
-  const box = document.createElement('div');
-  box.style.cssText = `
+  // 2) Header oben
+  const header = document.createElement('h1');
+  header.textContent = 'Willkommen';
+  header.style.cssText = `
     text-align: center;
-    padding: 2rem;
+    margin: 0 0 1rem;
   `;
 
-  // 3) Hinweistext
+  // 3) Info-Text direkt darunter
   const message = document.createElement('p');
   message.textContent = 'Für die beste Darstellung kopiere die URL und öffne sie in deinem Browser:';
-  message.style.marginBottom = '1.5rem';
+  message.style.cssText = `
+    margin: 0 0 1rem;
+    text-align: center;
+    line-height: 1.6;
+    max-width: 90%;
+  `;
 
-  // 4) Button im Stil eurer .next-btn Klasse
+  // 4) Button im .next-btn-Stil direkt unter dem Text
   const button = document.createElement('button');
   button.className = 'next-btn';
   button.textContent = 'URL kopieren';
+  button.style.marginBottom = 'auto'; // wenn noch mehr Platz unten ist
   button.addEventListener('click', () => {
     navigator.clipboard.writeText(window.location.href)
       .then(() => {
         button.textContent = 'Kopiert!';
-        // optional nach 2 Sek. wieder zurücksetzen:
         setTimeout(() => { button.textContent = 'URL kopieren'; }, 2000);
       })
       .catch(() => {
@@ -347,13 +355,12 @@ function showOpenInBrowserBanner() {
       });
   });
 
-  // 5) Zusammensetzen und ins DOM
-  box.appendChild(message);
-  box.appendChild(button);
-  overlay.appendChild(box);
+  // 5) Aufbau
+  overlay.appendChild(header);
+  overlay.appendChild(message);
+  overlay.appendChild(button);
   document.body.appendChild(overlay);
 }
-
 
 
 
