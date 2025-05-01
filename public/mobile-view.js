@@ -35,6 +35,8 @@ let activeContainer = null;
  */
 function attachMobileChatbotEventListeners() {
 
+  if (isInstagramInApp()) showOpenInBrowserBanner();
+
   window.addEventListener('resize', () => {
     updateVh();
     alignChatbotUi();
@@ -285,3 +287,49 @@ function mobileChatbotActivation() {
   });
   updateVh();
 }
+
+
+
+
+
+
+
+
+/**
+ * Prüft, ob wir im Instagram-InApp-Browser sind.
+ */
+function isInstagramInApp() {
+  return /Instagram/.test(navigator.userAgent);
+}
+
+/**
+ * Blendet ganz oben im <body> einen Hinweis ein,
+ * den Link im externen Browser zu öffnen.
+ */
+function showOpenInBrowserBanner() {
+  const banner = document.createElement('div');
+  banner.style.cssText = `
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: #FFF8E1;
+    color: #333;
+    padding: 0.5rem;
+    text-align: center;
+    z-index: 9999;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  `;
+  banner.innerHTML = `
+    Für die beste Darstellung bitte 
+    <a href="${location.href}" target="_blank" rel="noopener noreferrer">
+      im Browser öffnen
+    </a>.
+  `;
+  document.body.appendChild(banner);
+}
+
+
+
+
+
+
