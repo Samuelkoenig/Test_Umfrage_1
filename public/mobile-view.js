@@ -13,9 +13,11 @@
  * Definition of the variables used in the script.
  * - startY @type {number}: The y-coordinate of a touch point. 
  * - activeContainer @type {Element|null}: The DOM element to which a scroll movement refers. 
+ * - pageUrl @type {string}: The URL of the page. 
  */
 let startY = 0;
 let activeContainer = null;
+let pageUrl = 'https://studie-sprachverhalten-in-chatbots.de'
 
 /**
  * Adds event listeners to all mobile display-related events.
@@ -360,8 +362,16 @@ function showOpenInBrowserBanner() {
     maxWidth: '100%'
   });
   const p2 = document.createElement('p');
-  p2.textContent = 'Alternativ können Sie die <b>URL kopieren und in der Adresszeile ihres mobilen Browsers einfügen.</b>';
+  p2.textContent = 'Alternativ können Sie die <b>URL kopieren und in der Adresszeile ihres mobilen Browsers einfügen:</b>';
   Object.assign(p2.style, {
+    margin: '0 0 1.5rem',
+    textAlign: 'left',
+    lineHeight: '1.6',
+    maxWidth: '100%'
+  });
+  const p3 = document.createElement('p');
+  p2.textContent = pageUrl;
+  Object.assign(p3.style, {
     margin: '0 0 1.5rem',
     textAlign: 'left',
     lineHeight: '1.6',
@@ -387,6 +397,7 @@ function showOpenInBrowserBanner() {
   overlay.appendChild(header);
   overlay.appendChild(p1);
   overlay.appendChild(p2);
+  overlay.appendChild(p3);
   overlay.appendChild(button);
   document.body.appendChild(overlay);
 }
