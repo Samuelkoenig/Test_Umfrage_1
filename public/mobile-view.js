@@ -17,7 +17,7 @@
  */
 let startY = 0;
 let activeContainer = null;
-let pageUrl = 'https://studie-sprachverhalten-in-chatbots.de'
+let pageUrl = 'https://studie-sprachverhalten-in-chatbots.de'  // To be specified: The URL of the page. 
 
 /**
  * Adds event listeners to all mobile display-related events.
