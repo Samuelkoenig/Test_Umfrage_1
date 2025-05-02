@@ -363,7 +363,7 @@ function showOpenInBrowserBanner() {
   });
   const p2 = document.createElement('p');
   p2.innerHTML = `
-    Alternativ können Sie die <b>URL kopieren und in der Adresszeile ihres mobilen Browsers einfügen:</b>
+    Alternativ können Sie die <b>URL kopieren und in die Adresszeile ihres mobilen Browsers einfügen:</b>
   `;
   Object.assign(p2.style, {
     margin: '0 0 1.5rem',
