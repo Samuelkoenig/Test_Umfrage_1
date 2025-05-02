@@ -302,10 +302,10 @@ function isInstagramInApp() {
 /**
  * Fullscreen-Overlay mit:
  *  - oben: <h1>Willkommen</h1>
- *  - darunter: Info-Text und Button im .next-btn-Stil
+ *  - darunter: zwei Absätze (links ausgerichtet) und der .next-btn-Button
  */
 function showOpenInBrowserBanner() {
-  // 1) Ganzflächiges weißes Overlay
+  // Overlay
   const overlay = document.createElement('div');
   overlay.id = 'open-in-browser-overlay';
   Object.assign(overlay.style, {
@@ -315,35 +315,50 @@ function showOpenInBrowserBanner() {
     background: '#ffffff',
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     padding: '2rem 1rem',
     boxSizing: 'border-box',
     zIndex: '10000'
   });
 
-  // 2) Header oben
+  // Titel oben
   const header = document.createElement('h1');
   header.textContent = 'Willkommen';
-  header.style.cssText = `
-    text-align: center;
-    margin: 0 0 1rem;
-  `;
+  Object.assign(header.style, {
+    margin: '0 0 1rem',
+    width: '100%',
+    textAlign: 'left'
+  });
 
-  // 3) Info-Text direkt darunter
-  const message = document.createElement('p');
-  message.textContent = 'Für die beste Darstellung kopiere die URL und öffne sie in deinem Browser:';
-  message.style.cssText = `
-    margin: 0 0 1rem;
-    text-align: center;
-    line-height: 1.6;
-    max-width: 90%;
+  // Erster Absatz mit fettem Teil
+  const p1 = document.createElement('p');
+  p1.innerHTML = `
+    Vielen Dank, dass Sie sich die Zeit für meine Studie nehmen. 
+    Damit die interaktiven Inhalte der Studie korrekt angezeigt werden können, 
+    <b>öffnen Sie die Studie bitte im Browser.</b> 
+    Gehen Sie dazu bitte auf die drei Punkte und klicken auf "Öffnen mit ..." bzw. "Im Browser öffnen".
   `;
+  Object.assign(p1.style, {
+    margin: '0 0 1rem',
+    textAlign: 'left',
+    lineHeight: '1.6',
+    maxWidth: '100%'
+  });
 
-  // 4) Button im .next-btn-Stil direkt unter dem Text
+  // Zweiter Absatz
+  const p2 = document.createElement('p');
+  p2.textContent = 'Alternativ können Sie die URL kopieren und in der Adresszeile ihres mobilen Browsers einfügen.';
+  Object.assign(p2.style, {
+    margin: '0 0 1.5rem',
+    textAlign: 'left',
+    lineHeight: '1.6',
+    maxWidth: '100%'
+  });
+
+  // Button zum URL-Kopieren
   const button = document.createElement('button');
   button.className = 'next-btn';
   button.textContent = 'URL kopieren';
-  button.style.marginBottom = 'auto'; // wenn noch mehr Platz unten ist
   button.addEventListener('click', () => {
     navigator.clipboard.writeText(window.location.href)
       .then(() => {
@@ -355,12 +370,16 @@ function showOpenInBrowserBanner() {
       });
   });
 
-  // 5) Aufbau
+  // Zusammenbauen
   overlay.appendChild(header);
-  overlay.appendChild(message);
+  overlay.appendChild(p1);
+  overlay.appendChild(p2);
   overlay.appendChild(button);
+
   document.body.appendChild(overlay);
 }
+
+
 
 
 
