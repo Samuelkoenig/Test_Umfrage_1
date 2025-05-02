@@ -22,6 +22,9 @@ let activeContainer = null;
  * 
  * - The purpose of this function is to improve the view and robustness of the chatbot 
  *   interface on mobile devices. 
+ * - Initially checks whether the page is opened in an in-app browser (for example on 
+ *   Instagran, LinkedIn or Facebook). If this is the case, an overlay is displayed to 
+ *   guide the user to open the page in an external mobile browser. 
  * - When the visual size of the window is changed ('resize' and 'orientationchange' events, 
  *   e.g. by showing or hiding the virtual keyboard or browser bar), the new height of the 
  *   visual area of the window is calculated (using updateVh()) and the chatbot interface is 
@@ -35,7 +38,7 @@ let activeContainer = null;
  */
 function attachMobileChatbotEventListeners() {
 
-  if (isInstagramInApp()) showOpenInBrowserBanner();
+  if (checkInAppBrowser()) showOpenInBrowserBanner();
 
   window.addEventListener('resize', () => {
     updateVh();
@@ -288,23 +291,35 @@ function mobileChatbotActivation() {
   updateVh();
 }
 
+/**************************************************************************
+ * Overlay when the page is opened in an in-app browser
+ **************************************************************************/
 
-
-
-
-
-
-
-function isInstagramInApp() {
-  return /Instagram/.test(navigator.userAgent);
+/**
+ * Function to check whether the webpage is opened in an in-app browser
+ * 
+ * - Returns true if the webpage is opened in an in-app browser and false otherwise. 
+ * 
+ * @returns {boolean} Whether the client is in an in-app browser
+ */
+function checkInAppBrowser() {
+  const userAgent = navigator.userAgent || '';
+  return /Instagram|FBAN|FBAV|FB_IAB|LinkedInApp|LinkedIn/.test(userAgent);
 }
 
 /**
- * Fullscreen-Overlay mit:
- *  - oben: <h1>Willkommen</h1>
- *  - darunter: zwei Absätze (links ausgerichtet) und der .next-btn-Button
+ * Adds an overlay over the page when it is opened. 
+ * 
+ * - This function is executed when the client opened the webpage in an in-app
+ *   browser. If this is the case, an overlay is added with a button to copy 
+ *   copy the url. 
+ * - The reason for this is that in-app browsers may be unable to display the 
+ *   interactive chatbot interface elements correctly. 
+ * 
+ * @returns {void}
  */
 function showOpenInBrowserBanner() {
+
   // Overlay
   const overlay = document.createElement('div');
   overlay.id = 'open-in-browser-overlay';
@@ -321,7 +336,7 @@ function showOpenInBrowserBanner() {
     zIndex: '10000'
   });
 
-  // Titel oben
+  // Title
   const header = document.createElement('h1');
   header.textContent = 'Willkommen';
   Object.assign(header.style, {
@@ -330,13 +345,13 @@ function showOpenInBrowserBanner() {
     textAlign: 'left'
   });
 
-  // Erster Absatz mit fettem Teil
+  // Descriptive content
   const p1 = document.createElement('p');
   p1.innerHTML = `
     Vielen Dank, dass Sie sich die Zeit für meine Studie nehmen. 
     Damit die interaktiven Inhalte der Studie korrekt angezeigt werden können, 
     <b>öffnen Sie die Studie bitte im Browser.</b> 
-    Gehen Sie dazu bitte auf die drei Punkte und klicken auf "Öffnen mit ..." bzw. "Im Browser öffnen".
+    Gehen Sie dazu bitte auf die <b>drei Punkte und klicken auf "Öffnen mit ..." bzw. "Im Browser öffnen"</b>.
   `;
   Object.assign(p1.style, {
     margin: '0 0 1rem',
@@ -344,10 +359,8 @@ function showOpenInBrowserBanner() {
     lineHeight: '1.6',
     maxWidth: '100%'
   });
-
-  // Zweiter Absatz
   const p2 = document.createElement('p');
-  p2.textContent = 'Alternativ können Sie die URL kopieren und in der Adresszeile ihres mobilen Browsers einfügen.';
+  p2.textContent = 'Alternativ können Sie die <b>URL kopieren und in der Adresszeile ihres mobilen Browsers einfügen.</b>';
   Object.assign(p2.style, {
     margin: '0 0 1.5rem',
     textAlign: 'left',
@@ -355,9 +368,10 @@ function showOpenInBrowserBanner() {
     maxWidth: '100%'
   });
 
-  // Button zum URL-Kopieren
+  // Button for copying the URL
   const button = document.createElement('button');
   button.className = 'next-btn';
+  button.style.alignSelf = 'center';
   button.textContent = 'URL kopieren';
   button.addEventListener('click', () => {
     navigator.clipboard.writeText(window.location.href)
@@ -370,18 +384,9 @@ function showOpenInBrowserBanner() {
       });
   });
 
-  // Zusammenbauen
   overlay.appendChild(header);
   overlay.appendChild(p1);
   overlay.appendChild(p2);
   overlay.appendChild(button);
-
   document.body.appendChild(overlay);
 }
-
-
-
-
-
-
-
