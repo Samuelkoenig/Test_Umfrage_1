@@ -370,7 +370,7 @@ function showOpenInBrowserBanner() {
     maxWidth: '100%'
   });
   const p3 = document.createElement('p');
-  p2.textContent = pageUrl;
+  p3.textContent = pageUrl;
   Object.assign(p3.style, {
     margin: '0 0 1.5rem',
     textAlign: 'left',
