@@ -353,7 +353,7 @@ function showOpenInBrowserBanner() {
     Vielen Dank, dass Sie sich die Zeit für meine Studie nehmen. 
     Damit die interaktiven Inhalte der Studie korrekt angezeigt werden können, 
     <b>öffnen Sie die Studie bitte im Browser.</b> 
-    Gehen Sie dazu bitte auf die <b>drei Punkte und klicken auf "Öffnen mit ..." bzw. "Im Browser öffnen"</b>.
+    Gehen Sie dazu bitte auf die <b>drei Punkte und klicken auf <i>Öffnen mit ...</i> bzw. <i>Im Browser öffnen</i></b>.
   `;
   Object.assign(p1.style, {
     margin: '0 0 1rem',
