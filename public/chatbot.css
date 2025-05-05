@@ -1,4 +1,4 @@
-/* Container für das Chatbot-Interface */
+/* Chatbot interface container */
 #chatbot-interface {
   width: 100%;
   height: 100%;
@@ -12,12 +12,10 @@
   /*overflow: hidden;*/
 }
 
-/* Chatbot zunächst ausgeblendet */
 #chatbot-interface.chatbot-hidden {
   display: none;
 }
 
-/* Chatbot sichtbar, füllt je nach Darstellung (mobil/Browsersicht) den Raum aus */
 #chatbot-interface.chatbot-visible {
   display: flex;
   flex-direction: column;
@@ -26,7 +24,7 @@
   /*-webkit-overflow-scrolling: auto;*/
 }
 
-/* Header mit Schließen-Button */
+/* Chatbot interface header */
 .chatbot-header {
   display: flex;
   justify-content: space-between;
@@ -77,7 +75,7 @@
   overflow: hidden;
 }
 
-/* Nachrichtenbereich */
+/* Messages container */
 .chatbot-messages-container {
   flex: 1;
   overflow-y: auto;
@@ -88,7 +86,7 @@
   -webkit-overflow-scrolling: touch;
 }
 
-/* Scroll-Leisten dezent */
+/* Scrollbars in the messages container */
 .chatbot-messages-container::-webkit-scrollbar {
   width: 6px;
 }
@@ -97,7 +95,7 @@
   border-radius: 3px;
 }
 
-/* Nachrichten Bubble-Stile allgemein */
+/* Speechbubbles with the messages */
 .messages .bot-message,
 .messages .user-message {
   max-width: 80%;
@@ -112,12 +110,10 @@
   z-index: 0;
 }
 
-/* Entfernt den unteren Rand der letzten Nachricht */
 .messages > div:last-child {
   margin-bottom: 0;
 }
 
-/* Nachrichten Bubble-Stile in den Nachrichten vom Chatbot vs. User */
 .messages .bot-message {
   background: #3498db;
   color: #ffffff;
@@ -132,7 +128,7 @@
   margin-right: 12px;
 }
 
- /* Speechbubble tails */
+ /* Tails of the message speechbubbles */
 .messages .bot-message::before {
   content: "";
   position: absolute;
@@ -159,30 +155,23 @@
   z-index: -1;
 }
 
-/* Typing indicator*/
+/* Typing indicator */
 .typing-indicator {
-  display: flex;      /* Damit die 3 Punkte horizontal angeordnet sind */
+  display: flex;
   align-items: center;
-  margin-bottom: 10px;  /* ähnlicher Abstand wie Nachrichten */
-  margin-left: 12px;    /* linksbündig wie .bot-message */
-  /* Falls du keinen Abstand nach unten willst:
-     margin-bottom: 0; 
-     (oder später im Code anpassen) */
+  margin-bottom: 10px;
+  margin-left: 12px;
 }
 
-/* Die drei Punkte */
 .typing-indicator .dot {
-  width: 8px;        /* angenehme Größe */
+  width: 8px;
   height: 8px;
   border-radius: 50%;
   background-color: #3498db;
-  margin-right: 8px; /* leichter horizontaler Abstand */
-  
-  /* WICHTIG: Bouncing-Animation */
+  margin-right: 8px; 
   animation: typingBounce 1.7s infinite ease-in-out;
 }
 
-/* Verzögerung pro Punkt, damit sie nacheinander hüpfen */
 .typing-indicator .dot:nth-child(2) {
   animation-delay: 0.3s;
 }
@@ -195,14 +184,14 @@
     transform: translateY(0);
   }
   20% {
-    transform: translateY(-6px); /* Bewegungsradius nach oben */
+    transform: translateY(-6px);
   }
 }
 
-/* Eingabebereich */
+/* Input container */
 .input-container {
   display: flex;
-  align-items: flex-end; /* Ermöglicht das Wachsen des Textarea nach oben */
+  align-items: flex-end; 
   padding: 10px;
   box-sizing: border-box;
   border-top: 1px solid #ddd;
@@ -222,11 +211,9 @@
   border-radius: 20px;
   overflow: hidden;
   box-sizing: border-box;
-  /* Optionale Anpassungen zur Passform: */
-  /* Padding kann hier gesetzt werden, falls nötig */
 }
 
-/* Eingabefeld-Stile */
+/* Textara within the input container */
 .input-container textarea {
   flex: 1;
   display: 'block';
@@ -240,9 +227,9 @@
   outline: none;
   transition: border-color 0.3s;
   resize: none;
-  overflow-y: auto; /* Anfangs keine Scroll-Leiste */
-  max-height: calc(6 * 1.4em + 16px); /* 6 Zeilen + Padding -> Alternative: calc(6 * 1.375em + 16px);*/
-  min-height: 39px; /*calc(1.4em + 16px);*/ /* Mindesthöhe für eine Zeile -> Alternative: calc(1.375em + 16px);*/
+  overflow-y: auto; 
+  max-height: calc(6 * 1.4em + 16px); 
+  min-height: 39px; 
   box-sizing: border-box;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
@@ -251,7 +238,6 @@
   background: transparent;
 }
 
-/* Placeholder-Stil anpassen */
 .input-container textarea::placeholder {
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
@@ -273,7 +259,7 @@
   transition: 0.2;
 }
 
-/* Senden-Button */
+/* Senden button */
 .send-btn {
   width: 40px;
   height: 40px;
@@ -332,11 +318,10 @@
   background-color: #27ae60;
 }
 
-/* Anpassungen für die mobile Ansicht */
+/* Mobile view */
 @media (max-width: 600px) {
-  /* In der mobilen Ansicht soll der Chatbot den ganzen Bildschirm einnehmen */
   #chatbot-interface {
-      position: fixed; /*relative*/
+      position: fixed; 
       height: calc(var(--vh, 1vh) * 100 - 6px); 
       width: 100%;  
       top: 0;
@@ -344,17 +329,17 @@
       right: 0;
       bottom: 0;
       margin: 0;
-      margin-top: 6px; /*0*/
+      margin-top: 6px;
       border-radius: 0;
       z-index: 10;
-      /*overflow: hidden; /*kann eventuell weg*/
+      /*overflow: hidden; */
   }
 }
 
-/* Desktop-/Browser-Ansicht: Anpassung des Containers, der wie der Survey-Container mittig ausgerichtet ist */
+/* Desktop view */
 @media (min-width: 600.1px) {
   #chatbot-interface {
-      position: fixed; /*static;*/
+      position: fixed; 
       width: 100%;
       height: 750px;
       max-height: calc(var(--vh, 1vh) * 100 - 6px);
@@ -387,7 +372,6 @@
       );*/
   }
 
-  /* Dynamische Anpassung an Containerbreite in Desktop-Ansicht */
   .chatbot-messages-container,
   .input-container input[type="text"] {
       max-width: 100%;

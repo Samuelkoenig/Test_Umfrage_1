@@ -1,4 +1,4 @@
-/* Allgemeine Stile */
+/* General styles */
 html, body {
     margin: 0;
     padding: 0;
@@ -31,7 +31,7 @@ p, ul, li {
     display: none;
   }
 
-/* Container */
+/* Survey container */
 #survey-container {
     max-width: 800px;
     margin: 20px auto;
@@ -67,7 +67,7 @@ p, ul, li {
     overflow: hidden;
 }
 
-/* Fortschrittsleiste */
+/* Progress bar */
 #progress-bar {
     position: fixed;
     top: 0;
@@ -90,7 +90,7 @@ p, ul, li {
     transition: width 0.3s ease;
 }
 
-/* Fragen */
+/* Questions */
 .question {
     margin-top: 20px; 
     margin-bottom: 20px; 
@@ -118,7 +118,7 @@ p, ul, li {
     display: block;
 }
 
-/* Checkbox und Radio Container */
+/* Containers for the checkbox and the radio buttons */
 .radio-container, .checkbox-container {
     display: flex;
     align-items: center;
@@ -132,7 +132,7 @@ p, ul, li {
     margin-bottom: 8px; 
 }
 
-/* Likert-Skalen */
+/* Likert scales */
 .likert {
     display: flex;
     flex-wrap: wrap;
@@ -188,7 +188,7 @@ p, ul, li {
     line-height: 1.2;
 }
 
-/* Radio und Checkbox */
+/* Radiobuttons and cheeckboxes */
 .radio-checkmark, .checkmark {
     width: 22px;
     height: 22px;
@@ -329,7 +329,7 @@ p, ul, li {
     display: none;
 }
 
-/* Checkbox Haken */
+/* Checkbox checkmark */
 .checkbox-container input[type="checkbox"] {
     position: absolute;
     opacity: 0;
@@ -352,7 +352,7 @@ p, ul, li {
     transform: rotate(45deg);
 }
 
-/* Navigation Buttons */
+/* Navigation buttons */
 .navigation {
     display: flex;
     justify-content: space-between;
@@ -403,7 +403,7 @@ p, ul, li {
     background-color: #27ae60;
 }
 
-/* Container für den Open-Chatbot-Button unterhalb des Textes und oberhalb der Navigation */
+/* Open chatbot button */
 #open-chatbot-button-container {
     position: -webkit-sticky; 
     position: sticky;
@@ -414,7 +414,6 @@ p, ul, li {
     z-index: 200;
 }
 
-/* Roter runder Button zum Öffnen des Chatbots */
 .open-chatbot-btn {
     width: 50px;
     height: 50px;
@@ -465,7 +464,7 @@ p, ul, li {
     margin-bottom: 10px; 
 }
 
-/* Input-Feld für die E-Mail. */
+/* Email input field */
 #emailInput {
     margin: 10px auto;
     padding: 8px 10px;
@@ -488,7 +487,7 @@ p, ul, li {
     opacity: 1;
 }
   
-/* Button zum Absenden der E-Mail. */
+/* Email send button */
 #emailSubmitBtn {
     padding: 10px;
     cursor: pointer;
@@ -502,7 +501,7 @@ p, ul, li {
     background-color: #2980b9;
 }
 
-/* Der Bereich mit der Info zur E-Mail und dem Eingabefeld. */
+/* Email information section */
 #emailInfoSection {
     margin-top: 40px;
 }
@@ -511,7 +510,7 @@ p, ul, li {
     display: none;
 }
 
-/* Der Bereich mit der Erfolgsmeldung nach dem Absenden. */
+/* Success message after submitting an email. */
 #emailSuccessSection {
     margin-top: 40px;
 }
@@ -520,7 +519,7 @@ p, ul, li {
     display: none;
 }
 
-/* Responsive */
+/* Mobile view settings */
 @media (max-width: 600px) {
     #survey-container {
         max-width: 100%;
@@ -625,6 +624,7 @@ p, ul, li {
     }
 }
 
+/* Mobile view settings */
 @media (min-width: 600.1px) {
     #survey-container.chatbot-visible {
         max-width: 600px;
@@ -651,6 +651,7 @@ p, ul, li {
     }
 }
 
+/* Desktop view settings */
 @media (max-width: 799px) {
 
     .likert, .likert-7 {
