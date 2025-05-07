@@ -1,4 +1,4 @@
-# PAMI project 1: Automatic and Transparent Inspection Model
+# Study
 
 ## Prerequisites
 
@@ -18,7 +18,7 @@
     cd Test_Umfrage_1
     ```
 
-3. Install Python dependencies
+3. Install dependencies
 
     ```bash
     npm install
