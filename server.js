@@ -365,7 +365,7 @@ app.post('/sendmessage', async (req, res) => {
     type: "message",
     from: { id: "user1" },
     text,
-    channelData: { treatmentGroup: treatmentGroup }
+    channelData: { treatmentGroup: treatmentGroup, messageKey: messageKey}
   };
 
   try {
